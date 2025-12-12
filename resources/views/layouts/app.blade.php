@@ -11,6 +11,10 @@
         @livewireStyles
     </head>
     <body>
+        @if(config('app.debug'))
+            <x-tailwind_breakpoints_hint/>
+       @endif
+
         {{ $slot }}
 
         @livewireScripts
