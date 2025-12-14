@@ -1,6 +1,7 @@
 <?php
 
 return [
+
     /*
     |--------------------------------------------------------------------------
     | Authentication Language Lines
@@ -11,10 +12,7 @@ return [
     | these language lines according to your application's requirements.
     |
     */
-
-    'title' => 'Log in to your account',
-    'description' => 'Enter your email and password below to log in',
-    'failed' => 'Deze gegevens komen niet overeen met onze registratie.',
-    'password' => 'Het opgegeven wachtwoord is incorrect.',
-    'throttle' => 'Te veel loginpogingen. Probeer het alstublieft over :seconds seconden opnieuw.',
+    'title' => 'Reset Password',
+    'description' => 'Please enter your new password below',
+    'button' => 'Reset password',
 ];

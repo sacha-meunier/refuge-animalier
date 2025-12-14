@@ -12,9 +12,9 @@ return [
     |
     */
 
-    "failed" =>
-        "Diese Anmeldedaten stimmen nicht mit unseren Datensätzen überein.",
-    "password" => "Das angegebene Passwort ist falsch.",
-    "throttle" =>
-        "Zu viele Anmeldeversuche. Bitte versuchen Sie es in :seconds Sekunden erneut.",
+    'title' => 'Log in to your account',
+    'description' => 'Enter your email and password below to log in',
+    'failed' => 'Diese Anmeldedaten stimmen nicht mit unseren Datensätzen überein.',
+    'password' => 'Das angegebene Passwort ist falsch.',
+    'throttle' => 'Zu viele Anmeldeversuche. Bitte versuchen Sie es in :seconds Sekunden erneut.',
 ];
