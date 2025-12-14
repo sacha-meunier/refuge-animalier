@@ -12,8 +12,9 @@ return [
     |
     */
 
-    "failed" => "Deze gegevens komen niet overeen met onze registratie.",
-    "password" => "Het opgegeven wachtwoord is incorrect.",
-    "throttle" =>
-        "Te veel loginpogingen. Probeer het alstublieft over :seconds seconden opnieuw.",
+    'title' => 'Log in to your account',
+    'description' => 'Enter your email and password below to log in',
+    'failed' => 'Deze gegevens komen niet overeen met onze registratie.',
+    'password' => 'Het opgegeven wachtwoord is incorrect.',
+    'throttle' => 'Te veel loginpogingen. Probeer het alstublieft over :seconds seconden opnieuw.',
 ];

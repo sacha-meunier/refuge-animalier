@@ -1,3 +1,4 @@
+{{-- Livewire layout --}}
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
@@ -12,7 +13,7 @@
     </head>
     <body>
         @if(config('app.debug'))
-            <x-tailwind_breakpoints_hint/>
+            <x-layouts.partials.tailwind_breakpoints_hint>
        @endif
 
         {{ $slot }}

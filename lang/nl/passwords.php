@@ -12,9 +12,9 @@ return [
     |
     */
 
-    "reset" => "Uw wachtwoord is opnieuw ingesteld.",
-    "sent" => "We hebben uw wachtwoordherstelkoppeling per e-mail verzonden.",
-    "throttled" => "Wacht alstublieft voordat u het opnieuw probeert.",
-    "token" => "Dit wachtwoordhersteltoken is ongeldig.",
-    "user" => "We kunnen geen gebruiker met dit e-mailadres vinden.",
+    'reset' => 'Uw wachtwoord is opnieuw ingesteld.',
+    'sent' => 'We hebben uw wachtwoordherstelkoppeling per e-mail verzonden.',
+    'throttled' => 'Wacht alstublieft voordat u het opnieuw probeert.',
+    'token' => 'Dit wachtwoordhersteltoken is ongeldig.',
+    'user' => 'We kunnen geen gebruiker met dit e-mailadres vinden.',
 ];
