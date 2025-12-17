@@ -54,6 +54,8 @@ new class extends Component {
 
     </main>
 
+    <x-layouts.partials.user_select_dev_tool :user="$user"/>
+
     <footer class="flex flex-col gap-2">
         <div x-data="{ open: false }" class="relative">
             <button
