@@ -17,7 +17,7 @@
     </head>
     <body class="min-h-screen bg-background text-foreground flex">
         <x-layouts.partials.tailwind_breakpoints_hint/>
-        
+
         <livewire:layouts.sidebar/>
 
         {{ $slot }}
