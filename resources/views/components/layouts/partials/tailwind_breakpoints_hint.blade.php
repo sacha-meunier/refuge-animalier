@@ -1,5 +1,5 @@
 @if(config('app.debug'))
-    <div class="fixed top-2 left-2 z-50 px-2 py-1 text-secondary-foreground text-sm font-bold rounded bg-secondary">
+    <div class="fixed bottom-2 right-2 z-50 px-2 py-1 text-secondary-foreground text-sm font-bold rounded bg-secondary">
         <span class="block sm:hidden">XS ( < 640px )</span>
         <span class="hidden sm:block md:hidden">SM ( ≥ 640px )</span>
         <span class="hidden md:block lg:hidden">MD ( ≥ 768px )</span>

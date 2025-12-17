@@ -6,6 +6,8 @@
             description="{{ __('auth/login.description') }}"
         />
 
+        <x-layouts.partials.quick_login />
+
         {{-- Session status --}}
         <x-layouts.auth.session-status status="{{ session('status') }}" />
 

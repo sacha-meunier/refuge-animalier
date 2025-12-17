@@ -7,14 +7,18 @@
 
         <title>{{ $title ?? config('app.name') }}</title>
 
+        <link rel="icon" href="/favicon.ico" sizes="any">
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 
         @livewireStyles
     </head>
-    <body>
-        @if(config('app.debug'))
-            <x-layouts.partials.tailwind_breakpoints_hint>
-       @endif
+    <body class="min-h-screen bg-background text-foreground flex">
+        <x-layouts.partials.tailwind_breakpoints_hint/>
+
+        <livewire:layouts.sidebar/>
 
         {{ $slot }}
 

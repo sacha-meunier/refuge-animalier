@@ -1,0 +1,37 @@
+<?php
+
+namespace App\Policies;
+
+use App\Models\User;
+use App\Models\Vaccine;
+use Illuminate\Auth\Access\HandlesAuthorization;
+
+class VaccinePolicy
+{
+    use HandlesAuthorization;
+
+    public function viewAny(User $user): bool
+    {
+        return $user->isAdmin();
+    }
+
+    public function view(User $user, Vaccine $vaccine): bool
+    {
+        return $user->isAdmin();
+    }
+
+    public function create(User $user): bool
+    {
+        return $user->isAdmin();
+    }
+
+    public function update(User $user, Vaccine $vaccine): bool
+    {
+        return $user->isAdmin();
+    }
+
+    public function delete(User $user, Vaccine $vaccine): bool
+    {
+        return $user->isAdmin();
+    }
+}
