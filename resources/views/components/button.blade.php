@@ -7,14 +7,14 @@
 ])
 
 @php
-    $baseClasses = 'btn inline-flex items-center justify-center gap-1.5 rounded-lg transition-all duration-200 font-medium disabled:opacity-50 disabled:cursor-not-allowed';
+    $baseClasses = 'inline-flex items-center justify-center gap-1.5 rounded-lg transition-all duration-150 font-medium cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed';
 
     $variantClasses = [
-        'primary' => 'btn-primary',
-        'secondary' => 'btn-secondary',
-        'destructive' => 'btn-destructive',
-        'outline' => 'btn-outline',
-        'ghost' => 'btn-ghost',
+        'primary' => 'bg-primary text-primary-foreground hover:bg-primary/70',
+        'secondary' => 'bg-secondary text-secondary-foreground hover:bg-secondary/70',
+        'destructive' => 'bg-destructive text-destructive-foreground hover:bg-destructive/70',
+        'outline' => 'border border-border hover:bg-secondary/70',
+        'ghost' => 'text-foreground hover:bg-secondary/70',
     ];
 
     $sizeClasses = [
