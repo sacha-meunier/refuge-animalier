@@ -85,6 +85,82 @@ new class extends Component {
         ];
     }
 
+    // Column definitions for each tab
+    public function getSpeciesColumns(): array
+    {
+        return [
+            [
+                "key" => "avatar",
+                "label" => "Aperçu",
+                "type" => "avatar-text",
+                "avatarKey" => "avatar",
+            ],
+            [
+                "key" => "name",
+                "label" => "Nom de l'espèce",
+                "type" => "text"
+            ],
+            [
+                "key" => "breeds_count",
+                "label" => "Races associés",
+                "type" => "text",
+                "muted" => true,
+            ],
+            [
+                "key" => "created_at",
+                "label" => "Date de création",
+                "type" => "text",
+                "muted" => true,
+            ],
+        ];
+    }
+
+    public function getBreedsColumns(): array
+    {
+        return [
+            [
+                "key" => "avatar",
+                "label" => "Aperçu",
+                "type" => "avatar-text",
+                "avatarKey" => "avatar",
+            ],
+            [
+                "key" => "name",
+                "label" => "Nom de la race",
+                "type" => "text"
+            ],
+            [
+                "key" => "specie",
+                "label" => "Espèce",
+                "type" => "badge"
+            ],
+            [
+                "key" => "created_at",
+                "label" => "Date de création",
+                "type" => "text",
+                "muted" => true,
+            ],
+        ];
+    }
+
+    public function getVaccinesColumns(): array
+    {
+        return [
+            ["key" => "name", "label" => "Vaccine name", "type" => "text"],
+            ["key" => "category", "label" => "Category", "type" => "badge"],
+            [
+                "key" => "description",
+                "label" => "Description",
+                "type" => "text",
+            ],
+            [
+                "key" => "specie",
+                "label" => "Related species",
+                "type" => "badge",
+            ],
+        ];
+    }
+
     /* Setup for Livewire pagination */
     /*#[Computed]
     public function species()
@@ -105,28 +181,25 @@ new class extends Component {
         </div>
 
         {{-- Tabs Navigation --}}
-        <nav
-            class="flex items-center p-1 bg-accent rounded-xl"
-            aria-label="Tabs"
-        >
+        <nav class="flex items-center p-1 bg-accent rounded-xl" aria-label="Tabs">
             {{-- Species Tab --}}
             @can("view-any", Specie::class)
                 <x-tab_item tabname="species" activetab="{{ $activeTab }}">
-                    Species
+                    {{ __('pages/database/index.label_tabs_species') }}
                 </x-tab_item>
             @endcan
 
             {{-- Breeds Tab --}}
             @can("view-any", Breed::class)
                 <x-tab_item tabname="breeds" activetab="{{ $activeTab }}">
-                    Breeds
+                    {{ __('pages/database/index.label_tabs_breeds') }}
                 </x-tab_item>
             @endcan
 
             {{-- Vaccines Tab --}}
             @can("view-any", Vaccine::class)
                 <x-tab_item tabname="vaccines" activetab="{{ $activeTab }}">
-                    Vaccines
+                    {{ __('pages/database/index.label_tabs_vaccines') }}
                 </x-tab_item>
             @endcan
         </nav>
@@ -137,282 +210,65 @@ new class extends Component {
         @switch($activeTab)
             @case("species")
                 {{-- Search and Actions Bar --}}
-                <div
-                    class="h-14 px-6 flex items-center justify-between border-b border-border"
-                >
-                    {{-- Search Input --}}
-                    <livewire:search content="Search species"/>
-
-                    {{-- Actions --}}
-                    <div class="flex items-center gap-3">
-                        <x-button type="button" variant="outline" size="sm">
-                            Filters
-                        </x-button>
-
-                        @can("create", Specie::class)
-                            <x-button type="button" variant="primary" size="sm">
-                                Add a specie
-                            </x-button>
-                        @endcan
-                    </div>
-                </div>
+                <livewire:actions-bar
+                    searchPlaceholder="{{ __('pages/database/index.label_search_species')}}"
+                    showFilters="true"
+                    showAction="true"
+                    actionLabel="{{ __('pages/database/index.label_action_species')}}"
+                    actionPermission="create"
+                    :actionModel="Specie::class"
+                />
 
                 {{-- Table --}}
-                <table class="w-full h-14 border-b border-border">
-                    <thead class="h-14 border-b border-border">
-                    <tr>
-                        <livewire:cell
-                            tag="th"
-                            type="checkbox"
-                            class="w-12 pl-6 pr-4"
-                        />
-                        <livewire:cell
-                            tag="th"
-                            type="text"
-                            content="Aperçu"
-                        />
-                        <livewire:cell
-                            tag="th"
-                            type="text"
-                            content="Nom de l'espèce"
-                        />
-                        <livewire:cell
-                            tag="th"
-                            type="text"
-                            content="Races associés"
-                        />
-                        <livewire:cell
-                            tag="th"
-                            type="text"
-                            content="Date de création"
-                        />
-                        <livewire:cell
-                            tag="th"
-                            type="text"
-                            content=""
-                            class="w-12 pl-4 pr-1"
-                        />
-                    </tr>
-                    </thead>
-                    <tbody class="divide-y divide-border">
-                    @foreach ($this->getSpeciesData() as $specie)
-                        <tr class="h-14 hover:bg-muted/30 transition-colors">
-                            <livewire:cell
-                                type="checkbox"
-                                class="w-12 pl-6 pr-4"
-                            />
-                            <livewire:cell
-                                type="avatar-text"
-                                :avatar="$specie['avatar']"
-                                :content="$specie['avatar']"
-                            />
-                            <livewire:cell
-                                type="text"
-                                :content="$specie['name']"
-                            />
-                            <livewire:cell
-                                type="text"
-                                :content="$specie['breeds_count'] . ' races'"
-                                :muted="true"
-                            />
-                            <livewire:cell
-                                type="text"
-                                :content="$specie['created_at']"
-                                :muted="true"
-                            />
-                            <livewire:cell type="button"/>
-                        </tr>
-                    @endforeach
-                    </tbody>
-                </table>
-
-                {{-- Pagination --}}
-                {{--{{ $this->species->links() }}--}}
+                <livewire:data-table
+                    :columns="$this->getSpeciesColumns()"
+                    :data="$this->getSpeciesData()"
+                    showCheckbox="true"
+                    showActions="true"
+                    enablePagination="false"
+                />
                 @break
+
             @case("breeds")
                 {{-- Search and Actions Bar --}}
-                <div
-                    class="h-14 px-6 flex items-center justify-between border-b border-border"
-                >
-                    {{-- Search Input --}}
-                    <livewire:search content="Search breeds"/>
-
-                    {{-- Actions --}}
-                    <div class="flex items-center gap-3">
-                        <x-button type="button" variant="outline" size="sm">
-                            Filters
-                        </x-button>
-
-                        @can("create", Breed::class)
-                            <x-button type="button" variant="primary" size="sm">
-                                Add a breed
-                            </x-button>
-                        @endcan
-                    </div>
-                </div>
+                <livewire:actions-bar
+                    searchPlaceholder="{{ __('pages/database/index.label_search_breeds')}}"
+                    showFilters="true"
+                    showAction="true"
+                    actionLabel="{{ __('pages/database/index.label_action_breeds')}}"
+                    actionPermission="create"
+                    :actionModel="Breed::class"
+                />
 
                 {{-- Table --}}
-                <table class="w-full h-14 border-b border-border">
-                    <thead class="h-14 border-b border-border">
-                    <tr>
-                        <livewire:cell
-                            tag="th"
-                            type="checkbox"
-                            class="w-12 pl-6 pr-4"
-                        />
-                        <livewire:cell
-                            tag="th"
-                            type="text"
-                            content="Aperçu"
-                        />
-                        <livewire:cell
-                            tag="th"
-                            type="text"
-                            content="Nom de l'espèce"
-                        />
-                        <livewire:cell
-                            tag="th"
-                            type="text"
-                            content="Races associés"
-                        />
-                        <livewire:cell
-                            tag="th"
-                            type="text"
-                            content="Date de création"
-                        />
-                        <livewire:cell
-                            tag="th"
-                            type="text"
-                            content=""
-                            class="w-12 pl-4 pr-1"
-                        />
-                    </tr>
-                    </thead>
-                    <tbody class="divide-y divide-border">
-                    @foreach ($this->getBreedsData() as $breed)
-                        <tr class="h-14 hover:bg-muted/30 transition-colors">
-                            <livewire:cell
-                                type="checkbox"
-                                class="w-12 pl-6 pr-4"
-                            />
-                            <livewire:cell
-                                type="avatar-text"
-                                :avatar="$breed['avatar']"
-                                :content="$breed['avatar']"
-                            />
-                            <livewire:cell
-                                type="text"
-                                :content="$breed['name']"
-                            />
-                            <livewire:cell
-                                type="badge"
-                                :content="$breed['specie']"
-                            />
-                            <livewire:cell
-                                type="text"
-                                :content="$breed['created_at']"
-                                :muted="true"
-                            />
-                            <livewire:cell type="button"/>
-                        </tr>
-                    @endforeach
-                    </tbody>
-                </table>
-
-                {{-- Pagination --}}
-                {{--{{ $this->breeds->links() }}--}}
-
+                <livewire:data-table
+                    :columns="$this->getBreedsColumns()"
+                    :data="$this->getBreedsData()"
+                    showCheckbox="true"
+                    showActions="true"
+                    enablePagination="false"
+                />
                 @break
+
             @case("vaccines")
                 {{-- Search and Actions Bar --}}
-                <div
-                    class="h-14 px-6 flex items-center justify-between border-b border-border"
-                >
-                    {{-- Search Input --}}
-                    <livewire:search content="Search vaccines"/>
-
-                    {{-- Actions --}}
-                    <div class="flex items-center gap-3">
-                        <x-button type="button" variant="outline" size="sm">
-                            Filters
-                        </x-button>
-
-                        @can("create", Vaccine::class)
-                            <x-button type="button" variant="primary" size="sm">
-                                Add a vaccine
-                            </x-button>
-                        @endcan
-                    </div>
-                </div>
+                <livewire:actions-bar
+                    searchPlaceholder="{{ __('pages/database/index.label_search_vaccines')}}"
+                    showFilters="true"
+                    showAction="true"
+                    actionLabel="{{ __('pages/database/index.label_action_vaccines')}}"
+                    actionPermission="create"
+                    :actionModel="Specie::class"
+                />
 
                 {{-- Table --}}
-                <table class="w-full h-14 border-b border-border">
-                    <thead class="h-14 border-b border-border">
-                    <tr>
-                        <livewire:cell
-                            tag="th"
-                            type="checkbox"
-                            class="w-12 pl-6 pr-4"
-                        />
-                        <livewire:cell
-                            tag="th"
-                            type="text"
-                            content="Vaccine name"
-                        />
-                        <livewire:cell
-                            tag="th"
-                            type="text"
-                            content="Category"
-                        />
-                        <livewire:cell
-                            tag="th"
-                            type="text"
-                            content="Description"
-                        />
-                        <livewire:cell
-                            tag="th"
-                            type="text"
-                            content="Related species"
-                        />
-                        <livewire:cell
-                            tag="th"
-                            type="text"
-                            content=""
-                            class="w-12 pl-4 pr-1"
-                        />
-                    </tr>
-                    </thead>
-                    <tbody class="divide-y divide-border">
-                    @foreach ($this->getVaccinesData() as $vaccine)
-                        <tr class="h-14 hover:bg-muted/30 transition-colors">
-                            <livewire:cell
-                                type="checkbox"
-                                class="w-12 pl-6 pr-4"
-                            />
-                            <livewire:cell
-                                type="text"
-                                :content="$vaccine['name']"
-                            />
-                            <livewire:cell
-                                type="badge"
-                                :content="$vaccine['category']"
-                            />
-                            <livewire:cell
-                                type="text"
-                                :content="$vaccine['description']"
-                            />
-                            <livewire:cell
-                                type="badge"
-                                :content="$vaccine['specie']"
-                            />
-                            <livewire:cell type="button"/>
-                        </tr>
-                    @endforeach
-                    </tbody>
-                </table>
-
-                {{-- Pagination --}}
-                {{--{{ $this->vaccines->links() }}--}}
+                <livewire:data-table
+                    :columns="$this->getVaccinesColumns()"
+                    :data="$this->getVaccinesData()"
+                    showCheckbox="true"
+                    showActions="true"
+                    enablePagination="false"
+                />
                 @break
         @endswitch
     </main>
