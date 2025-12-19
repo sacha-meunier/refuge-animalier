@@ -9,4 +9,5 @@ return [
     |
     */
     'title' => 'Adoptions',
+    'action_bar_search_label' => 'Search adoption request',
 ];
