@@ -16,7 +16,7 @@ new class extends Component {
 };
 ?>
 
-<nav class="bg-sidebar text-sidebar-foreground w-2xs flex flex-col gap-7 p-4">
+<nav class="bg-sidebar text-sidebar-foreground w-2xs min-w-2xs flex-grow-0 flex flex-col gap-7 p-4">
     <header>
         <a class="flex items-center gap-2 h-8 px-2 rounded-lg hover:bg-sidebar-accent/60 hover:text-sidebar-accent-foreground transition-all duration-150"
            href="{{ route('dashboard') }}" wire:navigate>
