@@ -65,8 +65,8 @@
     --spacing: 0.25rem;
 
     @media (prefers-color-scheme: dark) {
-        --background: oklch(0 0 0);
-        --foreground: oklch(1 0 0);
+        --background: oklch(0.1800 0 0);
+        --foreground: oklch(0.9 0 0);
         --card: oklch(0.1400 0 0);
         --card-foreground: oklch(1 0 0);
         --popover: oklch(0.25 0 0);
@@ -89,8 +89,8 @@
         --chart-3: oklch(0.5600 0 0);
         --chart-4: oklch(0.4400 0 0);
         --chart-5: oklch(0.9200 0 0);
-        --sidebar: oklch(0.1800 0 0);
-        --sidebar-foreground: oklch(1 0 0);
+        --sidebar: oklch(0.15 0 0);
+        --sidebar-foreground: oklch(0.9 0 0);
         --sidebar-primary: oklch(1 0 0);
         --sidebar-primary-foreground: oklch(0 0 0);
         --sidebar-accent: oklch(0.3200 0 0);
