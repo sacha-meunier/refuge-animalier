@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -23,7 +24,6 @@ class Animal extends Model
         'coat_id',
         'specie_id',
         'breed_id',
-        'user_id',
     ];
 
     protected $casts = [
@@ -32,11 +32,6 @@ class Animal extends Model
         'pictures' => 'array',
         'published' => 'boolean',
     ];
-
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
-    }
 
     public function coat(): BelongsTo
     {
@@ -56,5 +51,19 @@ class Animal extends Model
     public function notes(): HasMany
     {
         return $this->hasMany(Note::class);
+    }
+
+    public function formattedAge(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->age?->diffForHumans(['parts' => 1, 'join' => true, 'syntax' => true]) ?? __('dates.not_available'),
+        );
+    }
+
+    protected function formattedAdmissionDate(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->admission_date?->diffForHumans() ?? __('dates.not_available'),
+        );
     }
 }
