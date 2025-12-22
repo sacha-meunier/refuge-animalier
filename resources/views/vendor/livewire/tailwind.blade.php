@@ -11,12 +11,12 @@
             : "";
 @endphp
 
-<div>
+<div class="flex align-center justify-items-stretch w-full">
     @if ($paginator->hasPages())
         <nav
             role="navigation"
             aria-label="Pagination Navigation"
-            class="flex items-center justify-between"
+            class="flex items-center justify-between w-full"
         >
             <div class="flex justify-between flex-1 sm:hidden">
                 <span>
