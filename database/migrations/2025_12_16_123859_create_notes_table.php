@@ -13,7 +13,6 @@ return new class extends Migration {
             $table->id();
             $table->string('title');
             $table->string('content');
-            $table->dateTime('date');
             $table->foreignIdFor(Animal::class)->constrained();
             $table->foreignIdFor(User::class)->constrained();
             $table->timestamps();

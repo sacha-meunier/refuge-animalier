@@ -14,13 +14,8 @@ class Note extends Model
     protected $fillable = [
         'title',
         'content',
-        'date',
         'animal_id',
         'user_id',
-    ];
-
-    protected $casts = [
-        'date' => 'datetime',
     ];
 
     public function animal(): BelongsTo
@@ -36,7 +31,7 @@ class Note extends Model
     public function formattedDate(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->date?->diffForHumans() ?? __('dates.not_available'),
+            get: fn () => $this->created_at?->diffForHumans() ?? __('dates.not_available'),
         );
     }
 }

@@ -17,9 +17,8 @@ class NoteFactory extends Factory
         return [
             'title' => $this->faker->sentence(),
             'content' => $this->faker->text(),
-            'date' => $this->faker->dateTimeThisYear(),
 
-            'created_at' => Carbon::now(),
+            'created_at' => $this->faker->dateTimeThisYear(),
             'updated_at' => Carbon::now(),
 
             'animal_id' => Animal::factory(),
