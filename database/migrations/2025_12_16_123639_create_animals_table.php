@@ -23,10 +23,9 @@ return new class extends Migration {
             $table->boolean('published');
             $table->dateTime('admission_date');
             $table->foreignIdFor(Coat::class)->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(Note::class)->nullable()->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Specie::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Breed::class)->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(User::class)->nullable()->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Note::class)->nullable()->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }
