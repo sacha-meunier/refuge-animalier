@@ -21,13 +21,13 @@ class Animal extends Model
         'published',
         'admission_date',
         'coat_id',
-        'note_id',
         'specie_id',
         'breed_id',
         'user_id',
     ];
 
     protected $casts = [
+        'age' => 'datetime',
         'admission_date' => 'datetime',
         'pictures' => 'array',
         'published' => 'boolean',
@@ -41,11 +41,6 @@ class Animal extends Model
     public function coat(): BelongsTo
     {
         return $this->belongsTo(Coat::class);
-    }
-
-    public function note(): BelongsTo
-    {
-        return $this->belongsTo(Note::class);
     }
 
     public function specie(): BelongsTo

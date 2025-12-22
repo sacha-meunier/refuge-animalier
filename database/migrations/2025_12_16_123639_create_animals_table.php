@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->id();
             $table->string('name');
             $table->enum('gender', ['male', 'female']);
-            $table->tinyInteger('age');
+            $table->dateTime('age');
             $table->string('description');
             $table->enum('status', ['validated', 'in_progress', 'adopted'])->default('in_progress');
             $table->string('pictures')->nullable();
@@ -25,7 +25,6 @@ return new class extends Migration {
             $table->foreignIdFor(Coat::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Specie::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Breed::class)->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(Note::class)->nullable()->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }
