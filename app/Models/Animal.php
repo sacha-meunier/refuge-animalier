@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\AnimalGender;
+use App\Enums\AnimalStatus;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -31,6 +33,8 @@ class Animal extends Model
         'admission_date' => 'datetime',
         'pictures' => 'array',
         'published' => 'boolean',
+        'gender' => AnimalGender::class,
+        'status' => AnimalStatus::class,
     ];
 
     public function coat(): BelongsTo
