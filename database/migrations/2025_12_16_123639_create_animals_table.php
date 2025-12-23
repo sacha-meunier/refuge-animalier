@@ -1,5 +1,7 @@
 <?php
 
+use App\Enums\AnimalGender;
+use App\Enums\AnimalStatus;
 use App\Models\Coat;
 use App\Models\Note;
 use App\Models\Breed;
@@ -15,10 +17,10 @@ return new class extends Migration {
         Schema::create('animals', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->enum('gender', ['male', 'female']);
+            $table->enum('gender', AnimalGender::cases());
             $table->dateTime('age');
             $table->string('description');
-            $table->enum('status', ['validated', 'in_progress', 'adopted'])->default('in_progress');
+            $table->enum('status', AnimalStatus::cases())->default(AnimalStatus::IN_PROGRESS);
             $table->string('pictures')->nullable();
             $table->boolean('published');
             $table->dateTime('admission_date');
