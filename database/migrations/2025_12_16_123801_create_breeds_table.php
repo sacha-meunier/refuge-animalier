@@ -10,9 +10,10 @@ return new class extends Migration {
     {
         Schema::create('breeds', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
+            $table->string('name');
             $table->foreignIdFor(Specie::class)->constrained()->cascadeOnDelete();
             $table->timestamps();
+            $table->unique(['specie_id', 'name']);
         });
     }
 
