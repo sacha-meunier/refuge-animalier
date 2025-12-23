@@ -2,59 +2,10 @@
 
 use Livewire\Component;
 use App\Models\User;
+use Livewire\WithPagination;
 
 new class extends Component {
-    // Column definitions for each tab
-    public function getMembersColumns(): array
-    {
-        return [
-            [
-                "key" => "name",
-                "label" => "Name",
-                "type" => "avatar-text",
-                "avatarKey" => "avatar",
-            ],
-            [
-                "key" => "email",
-                "label" => "Email",
-                "type" => "text",
-                "muted" => true,
-            ],
-            [
-                "key" => "planning",
-                "label" => "Planning",
-                "type" => "text",
-                "muted" => true,
-            ],
-            [
-                "key" => "role",
-                "label" => "role",
-                "type" => "badge",
-            ],
-        ];
-    }
-
-    // Static data for demo
-    public function getMembersData(): array
-    {
-        return [
-            [
-                "id" => 1,
-                "name" => "Caleb Porzio",
-                "email" => "porziocaleb@gmail.com",
-                "planning" => "LMMJVSD",
-                "role" => "Admin",
-            ],
-            [
-                "id" => 2,
-                "name" => "Caleb Porzio",
-                "email" => "porziocaleb@gmail.com",
-                "planning" => "LMMJVSD",
-                "role" => "Admin",
-            ],
-        ];
-    }
-
+    use WithPagination;
 };
 ?>
 
@@ -70,11 +21,5 @@ new class extends Component {
         searchPlaceholder="{{ __('pages/members/index.action_bar_search_label')}}"
         showFilters="true"
     />
-    <livewire:data-table
-        :columns="$this->getMembersColumns()"
-        :data="$this->getMembersData()"
-        showCheckbox="true"
-        showActions="true"
-        enablePagination="false"
-    />
+    <livewire:tables.members/>
 </div>

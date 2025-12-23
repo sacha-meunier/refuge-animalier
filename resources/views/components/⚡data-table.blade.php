@@ -89,7 +89,7 @@ new class extends Component {
 
     @if($enablePagination)
         {{-- Placeholder for pagination component --}}
-         {{--{{ $data->links() }}--}}
+        {{--{{ $this->data->links() }}--}}
     @endif
 </div>
 
