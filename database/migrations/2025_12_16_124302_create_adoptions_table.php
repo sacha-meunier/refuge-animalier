@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\AdoptionStatus;
 use App\Models\Animal;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -14,6 +15,7 @@ return new class extends Migration {
             $table->string('email');
             $table->tinyInteger('phone');
             $table->string('content');
+            $table->enum('status', AdoptionStatus::cases())->default(AdoptionStatus::PENDING);
             $table->foreignIdFor(Animal::class)->constrained()->cascadeOnDelete();
             $table->timestamps();
         });

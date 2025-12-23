@@ -13,4 +13,10 @@ return [
         'in_progress' => 'En cours',
         'adopted' => 'Adopté',
     ],
+    'adoptions' => [
+        'pending' => 'En attente',
+        'in_progress' => 'En cours',
+        'validated' => 'Validé',
+        'rejected' => 'Rejeté',
+    ],
 ];
