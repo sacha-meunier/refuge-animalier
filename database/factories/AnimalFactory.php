@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Enums\AnimalGender;
+use App\Enums\AnimalStatus;
 use App\Models\Animal;
 use App\Models\Breed;
 use App\Models\Coat;
@@ -17,10 +19,10 @@ class AnimalFactory extends Factory
     {
         return [
             'name' => $this->faker->firstName(),
-            'gender' => fake()->randomElement(['male', 'female']),
+            'gender' => fake()->randomElement(AnimalGender::cases()),
             'age' => $this->faker->dateTimeThisDecade(),
             'description' => $this->faker->text(),
-            'status' => fake()->randomElement(['validated', 'in_progress', 'adopted']),
+            'status' => fake()->randomElement(AnimalStatus::cases()),
             'published' => $this->faker->boolean(80),
             'admission_date' => $this->faker->dateTimeThisYear,
 
