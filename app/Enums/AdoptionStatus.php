@@ -18,4 +18,14 @@ enum AdoptionStatus: string
             self::REJECTED => __('statuses.adoptions.rejected'),
         };
     }
+
+    public function color(): string
+    {
+        return match($this) {
+            self::PENDING => 'bg-badge-warning text-badge-warning-foreground',
+            self::IN_PROGRESS => 'bg-badge-info text-badge-info-foreground',
+            self::VALIDATED => 'bg-badge-success text-badge-success-foreground',
+            self::REJECTED => 'bg-badge-danger text-badge-danger-foreground',
+        };
+    }
 }

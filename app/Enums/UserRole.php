@@ -14,4 +14,12 @@ enum UserRole: string
             self::VOLUNTEER => __('roles.volunteer'),
         };
     }
+
+    public function color(): string
+    {
+        return match($this) {
+            self::ADMIN => 'bg-badge-info text-badge-info-foreground',
+            self::VOLUNTEER => 'bg-badge-neutral text-badge-neutral-foreground',
+        };
+    }
 }

@@ -44,9 +44,9 @@ new class extends Component {
 
                     <livewire:cell type="text" content="{{ $adoption->username }}"/>
 
-                    <livewire:cell type="text" content="{{ $adoption->status->label() }}"/>
+                    <livewire:cell type="badge" content="{{ $adoption->status->label() }}" badge-color="{{ $adoption->status->color() }}"/>
 
-                    <livewire:cell type="text" content="{{ $adoption->formatted_date }}"/>
+                    <livewire:cell type="text" content="{{ $adoption->formatted_date }}" muted="true"/>
 
                     <livewire:cell type="button" />
                 </tr>

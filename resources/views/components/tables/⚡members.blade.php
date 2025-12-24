@@ -42,7 +42,7 @@ new class extends Component {
 
                     <livewire:cell type="text" content="{{ $user->email }}"/>
 
-                    <livewire:cell type="badge" content="{{ $user->role->label() }}"/>
+                    <livewire:cell type="badge" content="{{ $user->role->label() }}" badge-color="{{ $user->role->color() }}"/>
 
                     <livewire:cell type="button" />
                 </tr>
