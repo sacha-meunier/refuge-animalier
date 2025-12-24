@@ -42,7 +42,7 @@ new class extends Component {
 
                     <livewire:cell type="text" content="{{ $adoption->animal->name }}"/>
 
-                    <livewire:cell type="text" content="{{ $adoption->username }}"/>
+                    <livewire:cell type="text" content="{{ $adoption->contact->username }}"/>
 
                     <livewire:cell type="badge" content="{{ $adoption->status->label() }}" badge-color="{{ $adoption->status->color() }}"/>
 
