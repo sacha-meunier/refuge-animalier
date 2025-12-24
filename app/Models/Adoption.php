@@ -13,12 +13,10 @@ class Adoption extends Model
     use HasFactory;
 
     protected $fillable = [
-        'username',
-        'email',
-        'phone',
         'content',
         'status',
-        'animal_id'
+        'animal_id',
+        'contact_id'
     ];
 
     protected $casts = [
@@ -28,6 +26,11 @@ class Adoption extends Model
     public function animal(): BelongsTo
     {
         return $this->belongsTo(Animal::class);
+    }
+
+    public function contact(): BelongsTo
+    {
+        return $this->belongsTo(Contact::class);
     }
 
     public function formattedDate(): Attribute
