@@ -16,7 +16,7 @@ class AdoptionFactory extends Factory
     public function definition(): array
     {
         return [
-            'content' => $this->faker->text(),
+            'content' => $this->faker->sentence(),
             'status' => fake()->randomElement(AdoptionStatus::cases()),
 
             'created_at' => Carbon::now(),
