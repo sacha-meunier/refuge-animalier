@@ -2,6 +2,7 @@
 
 use App\Models\Adoption;
 use App\Models\Animal;
+use App\Models\Contact;
 use App\Models\Note;
 use App\Models\User;
 use Livewire\Component;
@@ -40,6 +41,10 @@ new class extends Component {
 
                 @can('view-any', Note::class)
                     <x-sidebar_link route="{{ route('notes.index') }}" page="notes" icon="files"/>
+                @endcan
+
+                @can('view-any', Contact::class)
+                    <x-sidebar_link route="{{ route('contacts.index') }}" page="contacts" icon="contact"/>
                 @endcan
             </section>
 

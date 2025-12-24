@@ -2,12 +2,18 @@
 
 namespace App\Models;
 
+use App\Enums\AnimalGender;
+use App\Enums\AnimalStatus;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Animal extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'name',
         'gender',
@@ -18,31 +24,22 @@ class Animal extends Model
         'published',
         'admission_date',
         'coat_id',
-        'note_id',
         'specie_id',
-        'race_id',
-        'user_id',
+        'breed_id',
     ];
 
     protected $casts = [
+        'age' => 'datetime',
         'admission_date' => 'datetime',
         'pictures' => 'array',
         'published' => 'boolean',
+        'gender' => AnimalGender::class,
+        'status' => AnimalStatus::class,
     ];
-
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
-    }
 
     public function coat(): BelongsTo
     {
         return $this->belongsTo(Coat::class);
-    }
-
-    public function note(): BelongsTo
-    {
-        return $this->belongsTo(Note::class);
     }
 
     public function specie(): BelongsTo
@@ -50,7 +47,7 @@ class Animal extends Model
         return $this->belongsTo(Specie::class);
     }
 
-    public function race(): BelongsTo
+    public function breed(): BelongsTo
     {
         return $this->belongsTo(Breed::class);
     }
@@ -58,5 +55,19 @@ class Animal extends Model
     public function notes(): HasMany
     {
         return $this->hasMany(Note::class);
+    }
+
+    public function formattedAge(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->age?->diffForHumans(['parts' => 1, 'join' => true, 'syntax' => true]) ?? __('dates.not_available'),
+        );
+    }
+
+    protected function formattedAdmissionDate(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->admission_date?->diffForHumans() ?? __('dates.not_available'),
+        );
     }
 }

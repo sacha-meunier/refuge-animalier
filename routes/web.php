@@ -18,6 +18,7 @@ Route::domain(config('app.admin_domain'))
         require base_path('routes/animals.php');
         require base_path('routes/adoptions.php');
         require base_path('routes/notes.php');
+        require base_path('routes/contacts.php');
         require base_path('routes/members.php');
         require base_path('routes/database.php');
         require base_path('routes/settings.php');

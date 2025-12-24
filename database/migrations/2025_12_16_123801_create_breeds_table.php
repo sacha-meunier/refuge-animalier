@@ -13,6 +13,7 @@ return new class extends Migration {
             $table->string('name');
             $table->foreignIdFor(Specie::class)->constrained()->cascadeOnDelete();
             $table->timestamps();
+            $table->unique(['specie_id', 'name']);
         });
     }
 

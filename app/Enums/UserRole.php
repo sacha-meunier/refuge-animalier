@@ -10,8 +10,16 @@ enum UserRole: string
     public function label(): string
     {
         return match($this) {
-            self::ADMIN => 'Admin',
-            self::VOLUNTEER => 'Volunteer',
+            self::ADMIN => __('roles.admin'),
+            self::VOLUNTEER => __('roles.volunteer'),
+        };
+    }
+
+    public function color(): string
+    {
+        return match($this) {
+            self::ADMIN => 'bg-badge-info text-badge-info-foreground',
+            self::VOLUNTEER => 'bg-badge-neutral text-badge-neutral-foreground',
         };
     }
 }

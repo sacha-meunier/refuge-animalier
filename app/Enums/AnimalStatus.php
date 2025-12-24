@@ -14,9 +14,18 @@ enum AnimalStatus: string
     public function label(): string
     {
         return match($this) {
-            self::VALIDATED => 'Validated',
-            self::IN_PROGRESS => 'In progress',
-            self::ADOPTED => 'Adopted',
+            self::VALIDATED => __('statuses.animals.validated'),
+            self::IN_PROGRESS => __('statuses.animals.in_progress'),
+            self::ADOPTED => __('statuses.animals.adopted'),
+        };
+    }
+
+    public function color(): string
+    {
+        return match($this) {
+            self::IN_PROGRESS => 'bg-badge-neutral text-badge-neutral-foreground',
+            self::VALIDATED => 'bg-badge-info text-badge-info-foreground',
+            self::ADOPTED => 'bg-badge-success text-badge-success-foreground',
         };
     }
 }

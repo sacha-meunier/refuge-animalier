@@ -11,8 +11,8 @@ return new class extends Migration {
     {
         Schema::create('notes', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
             $table->string('content');
-            $table->date('date');
             $table->foreignIdFor(Animal::class)->constrained();
             $table->foreignIdFor(User::class)->constrained();
             $table->timestamps();
