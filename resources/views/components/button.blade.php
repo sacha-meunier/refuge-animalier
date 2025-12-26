@@ -33,6 +33,7 @@
 @if($href)
     <a
         href="{{ $href }}"
+        wire:navigate
         {{ $attributes->merge(['class' => $classes]) }}
     >
         {{ $slot }}
