@@ -10,11 +10,32 @@ new class extends Component {
     use WithPagination;
 
     public int $paginate = 10;
+    public ?int $selectedAnimalId = null;
+
+    protected $listeners = ["closeAnimalModal" => "closeModal"];
 
     #[Computed]
     public function animals()
     {
         return Animal::paginate($this->paginate);
+    }
+
+    #[Computed]
+    public function selectedAnimal()
+    {
+        return $this->selectedAnimalId
+            ? Animal::find($this->selectedAnimalId)
+            : null;
+    }
+
+    public function showAnimal(int $animalId)
+    {
+        $this->selectedAnimalId = $animalId;
+    }
+
+    public function closeModal()
+    {
+        $this->selectedAnimalId = null;
     }
 };
 ?>
@@ -40,7 +61,11 @@ new class extends Component {
         </thead>
         <tbody>
             @forelse ($this->animals as $animal)
-                <tr class="h-14 hover:bg-muted/50" wire:key="{{ $animal->id }}">
+                <tr
+                    class="h-14 hover:bg-muted/50 cursor-pointer"
+                    wire:key="{{ $animal->id }}"
+                    wire:click="showAnimal({{ $animal->id }})"
+                >
                     <livewire:cell type="checkbox" class="w-12 pl-6 pr-4" />
 
                     <livewire:cell type="text" content="{{ $animal->name }}"/>
@@ -68,4 +93,11 @@ new class extends Component {
     <div class="h-14 px-6 flex align-center">
         {{ $this->animals->links() }}
     </div>
+
+    @if ($this->selectedAnimal)
+        <livewire:modal.animal
+            :animal="$this->selectedAnimal"
+            :key="'animal-modal-'.$this->selectedAnimal->id"
+        />
+    @endif
 </div>

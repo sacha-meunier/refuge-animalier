@@ -9,7 +9,11 @@
     <x-breadcrumb :breadcrumb="$breadcrumb"/>
 
     {{-- Close button --}}
-    <x-button @click="open = false" variant="ghost" size="sm">
-        <x-svg.close/>
+    <x-button
+        @click="open = false; $wire.call('closeModal')"
+        variant="ghost"
+        size="sm"
+    >
+        <x-svg.close />
     </x-button>
 </div>
