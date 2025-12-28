@@ -10,13 +10,23 @@ new class extends Component {
     {
         $this->dispatch("closeAnimalModal");
     }
+
+    public function delete()
+    {
+        $this->authorize("delete", $this->animal);
+
+        $this->animal->delete();
+
+        $this->dispatch("animalDeleted");
+        $this->dispatch("closeAnimalModal");
+    }
 };
 ?>
 
 <x-modal onClose="closeModal">
     <x-modal.header
         :breadcrumb="[
-            ['label' => __('pages/animals/index.title'), /*'route' => 'animals.index'*/],
+            ['label' => __('pages/animals/index.title'), 'route' => 'animals.index'],
             ['label' => $animal?->name]
         ]"
     />
@@ -89,6 +99,7 @@ new class extends Component {
             <x-button
                 variant="destructive"
                 size="sm"
+                wire:click="delete"
                 wire:confirm="{{ __('modals/modals.confirm_delete') }}"
             >
                 {{ __("modals/modals.button_delete") }}

@@ -12,7 +12,10 @@ new class extends Component {
     public int $paginate = 10;
     public ?int $selectedAnimalId = null;
 
-    protected $listeners = ["closeAnimalModal" => "closeModal"];
+    protected $listeners = [
+        "closeAnimalModal" => "closeModal",
+        "animalDeleted" => '$refresh',
+    ];
 
     #[Computed]
     public function animals()
