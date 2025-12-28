@@ -28,6 +28,8 @@ new class extends Component {
             "description" => $this->description,
         ]);
 
+        //$this->animal->update($this->form->all());
+
         $this->dispatch("animalUpdated");
         $this->dispatch("closeAnimalModal");
     }
