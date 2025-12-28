@@ -12,5 +12,7 @@ return [
     'button_edit' => 'Edit',
     'button_delete' => 'Delete',
     'button_publish' => 'Publish',
+    'button_save' => 'Save',
     'confirm_delete' => 'Are you sure you want to delete this animal?',
+    'edit_animal' => 'Edit animal',
 ];

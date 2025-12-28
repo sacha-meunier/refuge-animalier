@@ -11,10 +11,12 @@ new class extends Component {
 
     public int $paginate = 10;
     public ?int $selectedAnimalId = null;
+    public ?string $modalMode = null;
 
     protected $listeners = [
         "closeAnimalModal" => "closeModal",
         "animalDeleted" => '$refresh',
+        "switchToEditMode" => "editAnimal",
     ];
 
     #[Computed]
@@ -34,11 +36,21 @@ new class extends Component {
     public function showAnimal(int $animalId)
     {
         $this->selectedAnimalId = $animalId;
+        $this->modalMode = "show";
+    }
+
+    public function editAnimal(?int $animalId = null)
+    {
+        if ($animalId) {
+            $this->selectedAnimalId = $animalId;
+        }
+        $this->modalMode = "edit";
     }
 
     public function closeModal()
     {
         $this->selectedAnimalId = null;
+        $this->modalMode = null;
     }
 };
 ?>
@@ -97,10 +109,17 @@ new class extends Component {
         {{ $this->animals->links() }}
     </div>
 
-    @if ($this->selectedAnimal)
-        <livewire:modal.animal
+    @if ($this->selectedAnimal && $modalMode === "show")
+        <livewire:modal.animal-show
             :animal="$this->selectedAnimal"
-            :key="'animal-modal-'.$this->selectedAnimal->id"
+            :key="'animal-show-'.$this->selectedAnimal->id"
+        />
+    @endif
+
+    @if ($this->selectedAnimal && $modalMode === "edit")
+        <livewire:modal.animal-edit
+            :animal="$this->selectedAnimal"
+            :key="'animal-edit-'.$this->selectedAnimal->id"
         />
     @endif
 </div>

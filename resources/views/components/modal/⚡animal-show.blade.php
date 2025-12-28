@@ -82,7 +82,12 @@ new class extends Component {
 
     <x-modal.footer>
         @can("update", $animal)
-            <x-button type="button" variant="primary" size="sm">
+            <x-button
+                type="button"
+                variant="primary"
+                size="sm"
+                wire:click="$dispatch('switchToEditMode')"
+            >
                 {{ __("modals/modals.button_edit") }}
             </x-button>
         @endcan
