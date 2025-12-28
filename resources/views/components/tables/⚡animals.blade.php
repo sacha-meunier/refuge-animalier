@@ -16,6 +16,7 @@ new class extends Component {
     protected $listeners = [
         "closeAnimalModal" => "closeModal",
         "animalDeleted" => '$refresh',
+        "animalUpdated" => '$refresh',
         "switchToEditMode" => "editAnimal",
     ];
 

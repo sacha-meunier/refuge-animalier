@@ -9,7 +9,7 @@ enum UserRole: string
 
     public function label(): string
     {
-        return match($this) {
+        return match ($this) {
             self::ADMIN => __('roles.admin'),
             self::VOLUNTEER => __('roles.volunteer'),
         };
@@ -17,7 +17,7 @@ enum UserRole: string
 
     public function color(): string
     {
-        return match($this) {
+        return match ($this) {
             self::ADMIN => 'bg-badge-info text-badge-info-foreground',
             self::VOLUNTEER => 'bg-badge-neutral text-badge-neutral-foreground',
         };

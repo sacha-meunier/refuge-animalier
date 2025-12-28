@@ -6,7 +6,6 @@ use App\Models\Breed;
 use App\Models\Coat;
 use App\Models\Specie;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class ReferenceDataSeeder extends Seeder
 {
@@ -43,7 +42,7 @@ class ReferenceDataSeeder extends Seeder
         }
 
         // Insert all breeds
-        if (!empty($breeds)) {
+        if (! empty($breeds)) {
             Breed::insert($breeds);
         }
 

@@ -7,13 +7,13 @@ enum AnimalStatus: string
     case VALIDATED = 'validated';
     case IN_PROGRESS = 'in_progress';
     case ADOPTED = 'adopted';
-    //case available = 'available';
-    //case IN_CARE = 'in_care';
-    //case RESERVED = 'reserved';
+    // case available = 'available';
+    // case IN_CARE = 'in_care';
+    // case RESERVED = 'reserved';
 
     public function label(): string
     {
-        return match($this) {
+        return match ($this) {
             self::VALIDATED => __('statuses.animals.validated'),
             self::IN_PROGRESS => __('statuses.animals.in_progress'),
             self::ADOPTED => __('statuses.animals.adopted'),
@@ -22,7 +22,7 @@ enum AnimalStatus: string
 
     public function color(): string
     {
-        return match($this) {
+        return match ($this) {
             self::IN_PROGRESS => 'bg-badge-neutral text-badge-neutral-foreground',
             self::VALIDATED => 'bg-badge-info text-badge-info-foreground',
             self::ADOPTED => 'bg-badge-success text-badge-success-foreground',
