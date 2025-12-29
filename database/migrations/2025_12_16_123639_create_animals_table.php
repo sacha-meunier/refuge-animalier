@@ -16,16 +16,16 @@ return new class extends Migration
         Schema::create('animals', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->enum('gender', AnimalGender::cases());
-            $table->dateTime('age');
-            $table->string('description');
+            $table->enum('gender', AnimalGender::cases())->nullable();
+            $table->dateTime('age')->nullable();
+            $table->string('description')->nullable();
             $table->enum('status', AnimalStatus::cases())->default(AnimalStatus::IN_PROGRESS);
             $table->string('pictures')->nullable();
-            $table->boolean('published');
-            $table->dateTime('admission_date');
-            $table->foreignIdFor(Coat::class)->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(Specie::class)->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(Breed::class)->constrained()->cascadeOnDelete();
+            $table->boolean('published')->nullable();
+            $table->dateTime('admission_date')->nullable();
+            $table->foreignIdFor(Coat::class)->nullable()->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Specie::class)->nullable()->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Breed::class)->nullable()->constrained()->cascadeOnDelete();
             $table->timestamps();
             $table->softDeletes();
         });

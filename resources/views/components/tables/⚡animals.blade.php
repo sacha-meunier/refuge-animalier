@@ -91,10 +91,9 @@ new class extends Component {
 
                 <livewire:cell type="text" content="{{ $animal->formatted_age }}"/>
 
-                <livewire:cell type="text" content="{{ $animal->gender->label() }}"/>
+                <livewire:cell type="text" content="{{ $animal->gender_label }}"/>
 
-                <livewire:cell type="badge" content="{{ $animal->status->label() }}"
-                               badge-color="{{ $animal->status->color() }}"/>
+                <livewire:cell type="badge" content="{{ $animal->status_label }}" badge-color="{{ $animal->status_color }}"/>
 
                 <livewire:cell type="text" content="{{ $animal->formatted_admission_date }}"/>
 
