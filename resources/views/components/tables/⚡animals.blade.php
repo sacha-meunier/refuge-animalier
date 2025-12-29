@@ -15,7 +15,6 @@ new class extends Component {
     public ?string $modalMode = null;
 
     protected $listeners = [
-        "closeAnimalModal" => "closeModal",
         "animalDeleted" => "refreshAnimals",
         "animalUpdated" => '$refresh',
         "switchToEditMode" => "editAnimal",
@@ -54,6 +53,8 @@ new class extends Component {
         unset($this->animals);
     }
 
+
+    #[On('close-modal')]
     public function closeModal()
     {
         $this->selectedAnimalId = null;

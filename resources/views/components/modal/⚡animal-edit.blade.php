@@ -16,7 +16,7 @@ new class extends Component {
 
     public function closeModal()
     {
-        $this->dispatch("closeAnimalModal");
+        $this->dispatch('close-modal');
     }
 
     public function save()
@@ -31,12 +31,12 @@ new class extends Component {
         //$this->animal->update($this->form->all());
 
         $this->dispatch("animalUpdated");
-        $this->dispatch("closeAnimalModal");
+        $this->dispatch('close-modal');
     }
 
     public function cancel()
     {
-        $this->dispatch("closeAnimalModal");
+        $this->dispatch('close-modal');
     }
 };
 ?>

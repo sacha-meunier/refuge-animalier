@@ -8,7 +8,7 @@ new class extends Component {
 
     public function closeModal()
     {
-        $this->dispatch("closeAnimalModal");
+        $this->dispatch('close-modal');
     }
 
     public function delete()
@@ -18,7 +18,7 @@ new class extends Component {
         $this->animal->delete();
 
         $this->dispatch("animalDeleted");
-        $this->dispatch("closeAnimalModal");
+        $this->dispatch('close-modal');
     }
 };
 ?>
