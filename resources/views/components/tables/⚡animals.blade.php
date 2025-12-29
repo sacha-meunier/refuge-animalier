@@ -14,12 +14,6 @@ new class extends Component {
     public ?int $selectedAnimalId = null;
     public ?string $modalMode = null;
 
-    protected $listeners = [
-        "animalDeleted" => "refreshAnimals",
-        "animalUpdated" => '$refresh',
-        "switchToEditMode" => "editAnimal",
-    ];
-
     #[Computed]
     public function animals()
     {
@@ -40,6 +34,7 @@ new class extends Component {
         $this->modalMode = "show";
     }
 
+    #[On('switch-to-edit-mode')]
     public function editAnimal(?int $animalId = null)
     {
         if ($animalId) {
@@ -48,11 +43,12 @@ new class extends Component {
         $this->modalMode = "edit";
     }
 
+    #[On('delete-animal')]
+    #[On('update-animal')]
     public function refreshAnimals()
     {
         unset($this->animals);
     }
-
 
     #[On('close-modal')]
     public function closeModal()

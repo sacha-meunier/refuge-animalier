@@ -30,7 +30,7 @@ new class extends Component {
 
         //$this->animal->update($this->form->all());
 
-        $this->dispatch("animalUpdated");
+        $this->dispatch("update-animal");
         $this->dispatch('close-modal');
     }
 

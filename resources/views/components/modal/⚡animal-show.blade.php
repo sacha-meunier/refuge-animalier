@@ -17,7 +17,7 @@ new class extends Component {
 
         $this->animal->delete();
 
-        $this->dispatch("animalDeleted");
+        $this->dispatch("delete-animal");
         $this->dispatch('close-modal');
     }
 };
@@ -86,7 +86,7 @@ new class extends Component {
                 type="button"
                 variant="primary"
                 size="sm"
-                wire:click="$dispatch('switchToEditMode')"
+                wire:click="$dispatch('switch-to-edit-mode')"
             >
                 {{ __("modals/modals.button_edit") }}
             </x-button>
