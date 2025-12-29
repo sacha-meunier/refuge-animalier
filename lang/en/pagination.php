@@ -15,5 +15,6 @@ return [
 
     'previous' => '&laquo; Previous',
     'next' => 'Next &raquo;',
+    'no_data' => 'No data available',
 
 ];
