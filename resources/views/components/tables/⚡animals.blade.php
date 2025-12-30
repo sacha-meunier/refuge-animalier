@@ -129,7 +129,10 @@ new class extends Component {
         </div>
     @endif
 
-    <table class="w-full h-14 border-b border-border">
+    <table
+        class="w-full h-14 border-b border-border"
+        x-data="{ hoverAll: false }"
+    >
         <thead class="h-14 border-b border-border">
             <tr>
                 <th
@@ -137,8 +140,10 @@ new class extends Component {
                 >
                     <input
                         type="checkbox"
-                        class="w-4 h-4 rounded border-border text-primary focus:ring-primary focus:ring-offset-0 cursor-pointer"
+                        class="w-4 h-4 rounded border-border text-primary focus:ring-primary focus:ring-offset-0 cursor-pointer hover:ring-2 hover:ring-primary/50 transition-all"
                         wire:model.live="selectAll"
+                        @mouseenter="hoverAll = true"
+                        @mouseleave="hoverAll = false"
                     />
                 </th>
 
@@ -189,7 +194,8 @@ new class extends Component {
                     <td class="w-12 pl-6 pr-4" wire:click.stop>
                         <input
                             type="checkbox"
-                            class="w-4 h-4 rounded border-border text-primary focus:ring-primary focus:ring-offset-0 cursor-pointer"
+                            class="w-4 h-4 rounded border-border text-primary focus:ring-primary focus:ring-offset-0 cursor-pointer transition-all"
+                            :class="hoverAll ? 'ring-2 ring-primary/50' : 'hover:ring-2 hover:ring-primary/50'"
                             value="{{ $animal->id }}"
                             wire:model.live="selectedIds"
                         />
