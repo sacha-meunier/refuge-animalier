@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\Forms\AnimalForm;
 use App\Models\Animal;
 use App\Models\Breed;
 use App\Models\Coat;
@@ -13,6 +14,8 @@ use Livewire\WithPagination;
 
 new class extends Component {
     use WithPagination;
+
+    public AnimalForm $form;
 
     public int $paginate = 10;
     public ?int $selectedAnimalId = null;
@@ -68,10 +71,15 @@ new class extends Component {
         $this->modalMode = "edit";
     }
 
-    #[On('delete-animal')]
-    #[On('update-animal')]
-    public function refreshAnimals()
+    #[On("delete-animal")]
+    public function deleteAnimal(int $animalId)
     {
+        $animal = Animal::findOrFail($animalId);
+        $this->authorize("delete", $animal);
+
+        $this->form->delete($animal);
+
+        $this->closeModal();
         unset($this->animals);
     }
 
@@ -151,10 +159,10 @@ new class extends Component {
         {{ $this->animals->links() }}
     </div>
 
-    @if ($this->selectedAnimal && $modalMode === "show")
+    @if ($selectedAnimalId && $this->selectedAnimal && $modalMode === "show")
         <livewire:modal.animal-show
             :animal="$this->selectedAnimal"
-            :key="'animal-show-'.$this->selectedAnimal->id"
+            :key="'animal-show-'.$selectedAnimalId"
         />
     @endif
 

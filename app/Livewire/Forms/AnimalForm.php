@@ -38,4 +38,9 @@ class AnimalForm extends Form
         $this->validate();
         Animal::create($this->all());
     }
+
+    public function delete(Animal $animal)
+    {
+        $animal->delete();
+    }
 }
