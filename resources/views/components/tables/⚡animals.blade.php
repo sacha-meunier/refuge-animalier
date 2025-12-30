@@ -1,7 +1,11 @@
 <?php
 
 use App\Models\Animal;
-use App\Models\User;
+use App\Models\Breed;
+use App\Models\Coat;
+use App\Enums\AnimalGender;
+use App\Enums\AnimalStatus;
+use Illuminate\Support\Collection;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -12,12 +16,33 @@ new class extends Component {
 
     public int $paginate = 10;
     public ?int $selectedAnimalId = null;
-    public ?string $modalMode = null;
+    public ?string $modalMode = "";
 
     #[Computed]
     public function animals()
     {
         return Animal::paginate($this->paginate);
+    }
+
+    #[On("open-create-modal")]
+    public function createAnimal()
+    {
+        $this->selectedAnimalId = null;
+        $this->modalMode = "create";
+    }
+
+    #[On("refresh-animals")]
+    public function refreshAnimals()
+    {
+        $this->resetPage();
+        $this->closeModal();
+    }
+
+    #[On("close-modal")]
+    public function closeModal()
+    {
+        $this->selectedAnimalId = null;
+        $this->modalMode = null;
     }
 
     #[Computed]
@@ -138,5 +163,8 @@ new class extends Component {
             :animal="$this->selectedAnimal"
             :key="'animal-edit-'.$this->selectedAnimal->id"
         />
+
+    @if ($modalMode === "create")
+        <livewire:modal.animal-create :key="'animal-create'" />
     @endif
 </div>

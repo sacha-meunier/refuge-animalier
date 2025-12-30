@@ -5,13 +5,14 @@
 <div
     x-data="{ open: true }"
     x-show="open"
-    @keyup.escape.window="open = false; $wire.call('{{ $onClose }}')"
+    @keyup.escape.window="open = false; $dispatch('close-modal')"
+    @close-modal.window="open = false"
 >
     <!-- Backdrop -->
     <div
         x-show="open"
         class="fixed inset-0 bg-background/60"
-        @click="open = false; $wire.call('{{ $onClose }}')"
+        @click="open = false; $dispatch('close-modal')"
     ></div>
 
     <!-- Modal -->
