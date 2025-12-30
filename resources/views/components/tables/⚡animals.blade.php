@@ -20,6 +20,8 @@ new class extends Component {
     public int $paginate = 10;
     public ?int $selectedAnimalId = null;
     public ?string $modalMode = "";
+    public array $selectedIds = [];
+    public bool $selectAll = false;
 
     #[Computed]
     public function animals()
@@ -83,67 +85,151 @@ new class extends Component {
         unset($this->animals);
     }
 
-    #[On('close-modal')]
-    public function closeModal()
+    public function deleteSelected()
     {
-        $this->selectedAnimalId = null;
-        $this->modalMode = null;
+        foreach ($this->selectedIds as $id) {
+            $animal = Animal::findOrFail($id);
+            $this->authorize("delete", $animal);
+            $this->form->delete($animal);
+        }
+
+        $this->selectedIds = [];
+        $this->selectAll = false;
+        unset($this->animals);
+    }
+
+    public function updatedSelectAll($value)
+    {
+        if ($value) {
+            $this->selectedIds = $this->animals->pluck("id")->toArray();
+        } else {
+            $this->selectedIds = [];
+        }
     }
 };
 ?>
 
 <div>
+    @if (count($selectedIds) > 0)
+        <div
+            class="h-14 px-6 flex items-center gap-4 bg-muted/50 border-b border-border"
+        >
+            <span class="text-sm text-muted-foreground">
+                {{ count($selectedIds) }}
+                {{ count($selectedIds) === 1 ? __("pagination.selected_singular") : __("pagination.selected_plural") }}
+            </span>
+            <x-button
+                variant="destructive"
+                size="sm"
+                wire:click="deleteSelected"
+                wire:confirm="{{ __('modals/modals.confirm_delete_multiple') }}"
+            >
+                {{ __("modals/modals.button_delete") }}
+            </x-button>
+        </div>
+    @endif
+
     <table class="w-full h-14 border-b border-border">
         <thead class="h-14 border-b border-border">
-        <tr>
-            <livewire:cell tag="th" type="checkbox" class="w-12 pl-6 pr-4"/>
+            <tr>
+                <th
+                    class="w-12 pl-6 pr-4 text-left text-xs font-medium text-muted-foreground tracking-wider"
+                >
+                    <input
+                        type="checkbox"
+                        class="w-4 h-4 rounded border-border text-primary focus:ring-primary focus:ring-offset-0 cursor-pointer"
+                        wire:model.live="selectAll"
+                    />
+                </th>
 
-            <livewire:cell tag="th" type="text" content="{{ __('pages/animals/index.th_animal_name') }}"/>
+                <livewire:cell
+                    tag="th"
+                    type="text"
+                    content="{{ __('pages/animals/index.th_animal_name') }}"
+                />
 
-            <livewire:cell tag="th" type="text" content="{{ __('pages/animals/index.th_age') }}"/>
+                <livewire:cell
+                    tag="th"
+                    type="text"
+                    content="{{ __('pages/animals/index.th_age') }}"
+                />
 
-            <livewire:cell tag="th" type="text" content="{{ __('pages/animals/index.th_gender') }}"/>
+                <livewire:cell
+                    tag="th"
+                    type="text"
+                    content="{{ __('pages/animals/index.th_gender') }}"
+                />
 
-            <livewire:cell tag="th" type="text" content="{{ __('pages/animals/index.th_status') }}"/>
+                <livewire:cell
+                    tag="th"
+                    type="text"
+                    content="{{ __('pages/animals/index.th_status') }}"
+                />
 
-            <livewire:cell tag="th" type="text" content="{{ __('pages/animals/index.th_admission_date') }}"/>
+                <livewire:cell
+                    tag="th"
+                    type="text"
+                    content="{{ __('pages/animals/index.th_admission_date') }}"
+                />
 
-            <livewire:cell tag="th" type="text" content="" class="w-12 pl-4 pr-1"/>
-        </tr>
+                <livewire:cell
+                    tag="th"
+                    type="text"
+                    content=""
+                    class="w-12 pl-4 pr-1"
+                />
+            </tr>
         </thead>
         <tbody>
             @forelse ($this->animals as $animal)
                 <tr
                     class="h-14 hover:bg-muted/50 cursor-pointer"
                     wire:key="animal-row-{{ $animal->id }}-{{ $animal->updated_at->timestamp }}"
-                    wire:click="showAnimal({{ $animal->id }})"
                 >
-                    <livewire:cell type="checkbox" class="w-12 pl-6 pr-4" />
+                    <td class="w-12 pl-6 pr-4" wire:click.stop>
+                        <input
+                            type="checkbox"
+                            class="w-4 h-4 rounded border-border text-primary focus:ring-primary focus:ring-offset-0 cursor-pointer"
+                            value="{{ $animal->id }}"
+                            wire:model.live="selectedIds"
+                        />
+                    </td>
 
-                    <livewire:cell type="text" content="{{ $animal->name }}" />
+                    <livewire:cell
+                        type="text"
+                        content="{{ $animal->name }}"
+                        wire:click="showAnimal({{ $animal->id }})"
+                    />
 
                     <livewire:cell
                         type="text"
                         content="{{ $animal->formatted_age ?? __('dates.not_available') }}"
+                        wire:click="showAnimal({{ $animal->id }})"
                     />
 
                     <livewire:cell
                         type="text"
                         content="{{ $animal->gender?->label() ?? __('dates.not_available') }}"
+                        wire:click="showAnimal({{ $animal->id }})"
                     />
 
                     <livewire:cell
                         type="badge"
                         content="{{ $animal->status?->label() ?? __('dates.not_available') }}"
                         badge-color="{{ $animal->status?->color() ?? '' }}"
+                        wire:click="showAnimal({{ $animal->id }})"
                     />
 
                     <livewire:cell
                         type="text"
                         content="{{ $animal->formatted_admission_date ?? __('dates.not_available') }}"
+                        wire:click="showAnimal({{ $animal->id }})"
                     />
 
-                    <livewire:cell type="button" />
+                    <livewire:cell
+                        type="button"
+                        wire:click="showAnimal({{ $animal->id }})"
+                    />
                 </tr>
             @empty
                 <tr>
