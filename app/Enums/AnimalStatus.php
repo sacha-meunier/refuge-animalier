@@ -4,8 +4,8 @@ namespace App\Enums;
 
 enum AnimalStatus: string
 {
-    case VALIDATED = 'validated';
     case IN_PROGRESS = 'in_progress';
+    case VALIDATED = 'validated';
     case ADOPTED = 'adopted';
     // case available = 'available';
     // case IN_CARE = 'in_care';
@@ -14,8 +14,8 @@ enum AnimalStatus: string
     public function label(): string
     {
         return match ($this) {
-            self::VALIDATED => __('statuses.animals.validated'),
             self::IN_PROGRESS => __('statuses.animals.in_progress'),
+            self::VALIDATED => __('statuses.animals.validated'),
             self::ADOPTED => __('statuses.animals.adopted'),
         };
     }
