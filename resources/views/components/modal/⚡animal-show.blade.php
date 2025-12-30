@@ -25,10 +25,8 @@ new class extends Component {
 
 <x-modal onClose="closeModal">
     <x-modal.header
-        :breadcrumb="[
-            ['label' => __('pages/animals/index.title'), 'route' => 'animals.index'],
-            ['label' => $animal?->name]
-        ]"
+        old_page="{{ __('pages/animals/index.title') }}"
+        current_page="{{ $animal?->name }}"
     />
 
     <x-modal.content>
