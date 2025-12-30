@@ -79,33 +79,46 @@ new class extends Component {
         </tr>
         </thead>
         <tbody>
-        @forelse ($this->animals as $animal)
-            <tr
-                class="h-14 hover:bg-muted/50 cursor-pointer"
-                wire:key="animal-row-{{ $animal->id }}-{{ $animal->updated_at->timestamp }}"
-                wire:click="showAnimal({{ $animal->id }})"
-            >
-                <livewire:cell type="checkbox" class="w-12 pl-6 pr-4"/>
+            @forelse ($this->animals as $animal)
+                <tr
+                    class="h-14 hover:bg-muted/50 cursor-pointer"
+                    wire:key="animal-row-{{ $animal->id }}-{{ $animal->updated_at->timestamp }}"
+                    wire:click="showAnimal({{ $animal->id }})"
+                >
+                    <livewire:cell type="checkbox" class="w-12 pl-6 pr-4" />
 
-                <livewire:cell type="text" content="{{ $animal->name }}"/>
+                    <livewire:cell type="text" content="{{ $animal->name }}" />
 
-                <livewire:cell type="text" content="{{ $animal->formatted_age }}"/>
+                    <livewire:cell
+                        type="text"
+                        content="{{ $animal->formatted_age ?? __('dates.not_available') }}"
+                    />
 
-                <livewire:cell type="text" content="{{ $animal->gender_label }}"/>
+                    <livewire:cell
+                        type="text"
+                        content="{{ $animal->gender?->label() ?? __('dates.not_available') }}"
+                    />
 
-                <livewire:cell type="badge" content="{{ $animal->status_label }}" badge-color="{{ $animal->status_color }}"/>
+                    <livewire:cell
+                        type="badge"
+                        content="{{ $animal->status?->label() ?? __('dates.not_available') }}"
+                        badge-color="{{ $animal->status?->color() ?? '' }}"
+                    />
 
-                <livewire:cell type="text" content="{{ $animal->formatted_admission_date }}"/>
+                    <livewire:cell
+                        type="text"
+                        content="{{ $animal->formatted_admission_date ?? __('dates.not_available') }}"
+                    />
 
-                <livewire:cell type="button"/>
-            </tr>
-        @empty
-            <tr>
-                <td class="h-32 text-center text-sm text-muted-foreground">
-                    {{ __('pagination.no_data') }}
-                </td>
-            </tr>
-        @endforelse
+                    <livewire:cell type="button" />
+                </tr>
+            @empty
+                <tr>
+                    <td class="h-32 text-center text-sm text-muted-foreground">
+                        {{ __('pagination.no_data') }}
+                    </td>
+                </tr>
+            @endforelse
         </tbody>
     </table>
 

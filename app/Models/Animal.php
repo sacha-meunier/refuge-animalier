@@ -61,35 +61,14 @@ class Animal extends Model
     public function formattedAge(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->age?->diffForHumans(['parts' => 1, 'join' => true, 'syntax' => true]) ?? __('dates.not_available'),
+            get: fn () => $this->age?->diffForHumans(['parts' => 1, 'join' => true, 'syntax' => true]),
         );
     }
 
     protected function formattedAdmissionDate(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->admission_date?->diffForHumans() ?? __('dates.not_available'),
-        );
-    }
-
-    protected function genderLabel(): Attribute
-    {
-        return Attribute::make(
-            get: fn () => $this->gender?->label()  ?? __('dates.not_available'),
-        );
-    }
-
-    protected function statusLabel(): Attribute
-    {
-        return Attribute::make(
-            get: fn () => $this->status->label()  ?? __('dates.not_available'),
-        );
-    }
-
-    protected function statusColor(): Attribute
-    {
-        return Attribute::make(
-            get: fn () => $this->status->color(),
+            get: fn () => $this->admission_date?->diffForHumans(),
         );
     }
 }
