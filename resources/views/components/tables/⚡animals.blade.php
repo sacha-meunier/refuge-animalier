@@ -110,25 +110,6 @@ new class extends Component {
 ?>
 
 <div>
-    @if (count($selectedIds) > 0)
-        <div
-            class="h-14 px-6 flex items-center gap-4 bg-muted/50 border-b border-border"
-        >
-            <span class="text-sm text-muted-foreground">
-                {{ count($selectedIds) }}
-                {{ count($selectedIds) === 1 ? __("pagination.selected_singular") : __("pagination.selected_plural") }}
-            </span>
-            <x-button
-                variant="destructive"
-                size="sm"
-                wire:click="deleteSelected"
-                wire:confirm="{{ __('modals/modals.confirm_delete_multiple') }}"
-            >
-                {{ __("modals/modals.button_delete") }}
-            </x-button>
-        </div>
-    @endif
-
     <table
         class="w-full h-14 border-b border-border"
         x-data="{ hoverAll: false }"
@@ -190,6 +171,7 @@ new class extends Component {
                 <tr
                     class="h-14 hover:bg-muted/50 cursor-pointer"
                     wire:key="animal-row-{{ $animal->id }}-{{ $animal->updated_at->timestamp }}"
+                    wire:click="showAnimal({{ $animal->id }})"
                 >
                     <td class="w-12 pl-6 pr-4" wire:click.stop>
                         <input
@@ -201,41 +183,30 @@ new class extends Component {
                         />
                     </td>
 
-                    <livewire:cell
-                        type="text"
-                        content="{{ $animal->name }}"
-                        wire:click="showAnimal({{ $animal->id }})"
-                    />
+                    <livewire:cell type="text" content="{{ $animal->name }}" />
 
                     <livewire:cell
                         type="text"
                         content="{{ $animal->formatted_age ?? __('dates.not_available') }}"
-                        wire:click="showAnimal({{ $animal->id }})"
                     />
 
                     <livewire:cell
                         type="text"
                         content="{{ $animal->gender?->label() ?? __('dates.not_available') }}"
-                        wire:click="showAnimal({{ $animal->id }})"
                     />
 
                     <livewire:cell
                         type="badge"
                         content="{{ $animal->status?->label() ?? __('dates.not_available') }}"
                         badge-color="{{ $animal->status?->color() ?? '' }}"
-                        wire:click="showAnimal({{ $animal->id }})"
                     />
 
                     <livewire:cell
                         type="text"
                         content="{{ $animal->formatted_admission_date ?? __('dates.not_available') }}"
-                        wire:click="showAnimal({{ $animal->id }})"
                     />
 
-                    <livewire:cell
-                        type="button"
-                        wire:click="showAnimal({{ $animal->id }})"
-                    />
+                    <livewire:cell type="button" wire:click.stop />
                 </tr>
             @empty
                 <tr>
@@ -247,7 +218,24 @@ new class extends Component {
         </tbody>
     </table>
 
-    <div class="h-14 px-6 flex align-center">
+    <div class="h-14 px-6 gap-6 flex align-center">
+        @if (count($selectedIds) > 0)
+            <div class="flex items-center gap-4">
+                <p class="text-sm text-muted-foreground whitespace-nowrap">
+                    {{ count($selectedIds) }}
+                    {{ count($selectedIds) === 1 ? __('pagination.selected_singular') : __('pagination.selected_plural') }}
+                </p>
+                <x-button
+                    variant="destructive"
+                    size="sm"
+                    wire:click="deleteSelected"
+                    wire:confirm="{{ __('modals/modals.confirm_delete_multiple') }}"
+                >
+                    {{ __('modals/modals.button_delete') }}
+                </x-button>
+            </div>
+        @endif
+
         {{ $this->animals->links() }}
     </div>
 

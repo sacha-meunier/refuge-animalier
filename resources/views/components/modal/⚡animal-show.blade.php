@@ -8,7 +8,6 @@ new class extends Component {
 
     public function delete()
     {
-        $this->authorize("delete", $this->animal);
         $this->dispatch("delete-animal", animalId: $this->animal->id);
     }
 };
