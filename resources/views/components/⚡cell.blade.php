@@ -83,14 +83,28 @@ new class extends Component {
 
             @break
         @case("button")
-            {{-- TODO update existing button component to use icons --}}
-            <button class="p-1 hover:bg-muted rounded transition-colors">
-                @if ($content)
-                    {{ $content }}
-                @else
+            @if ($slot)
+                {{-- Button with popover --}}
+                <div x-data="{ open: false }" class="relative">
+                    {{-- Trigger button --}}
+                    <button
+                        @click="open = !open"
+                        class="p-2 hover:bg-muted rounded-md transition-colors"
+                    >
+                        <x-svg.elipsis-horizontal />
+                    </button>
+
+                    {{-- Popover --}}
+                    <x-popover align="right">
+                        {{ $slot }}
+                    </x-popover>
+                </div>
+            @else
+                {{-- Simple button without popover --}}
+                <button class="p-1 hover:bg-muted rounded transition-colors">
                     <x-svg.elipsis-horizontal />
-                @endif
-            </button>
+                </button>
+            @endif
 
             @break
         @case("text")

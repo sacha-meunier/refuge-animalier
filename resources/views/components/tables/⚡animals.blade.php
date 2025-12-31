@@ -122,6 +122,18 @@ new class extends Component {
         unset($this->animals);
     }
 
+    public function deleteAnimalOrSelected(int $animalId)
+    {
+        if (count($this->selectedIds) > 0) {
+            $this->deleteSelected();
+        } else {
+            $animal = Animal::findOrFail($animalId);
+            $this->authorize("delete", $animal);
+            $this->form->delete($animal);
+            unset($this->animals);
+        }
+    }
+
     public function deleteSelected()
     {
         foreach ($this->selectedIds as $id) {
@@ -249,7 +261,36 @@ new class extends Component {
                         content="{{ $animal->formatted_admission_date ?? __('dates.not_available') }}"
                     />
 
-                    <livewire:cell type="button" wire:click.stop />
+                    <livewire:cell
+                        type="button"
+                        wire:click.stop
+                        class="w-12 pl-4 pr-1"
+                    >
+                        @can("update", $animal)
+                            <x-popover-item
+                                wire:click="editAnimal({{ $animal->id }})"
+                            >
+                                <x-svg.square-pen class="size-4"/>
+                                {{ __("modals/modals.button_edit") }}
+                            </x-popover-item>
+                        @endcan
+
+                        @can("delete", $animal)
+                            <x-popover-item
+                                wire:click="deleteAnimalOrSelected({{ $animal->id }})"
+                                wire:confirm="{{ count($selectedIds) ? __('modals/modals.confirm_delete_multiple') : __('modals/modals.confirm_delete') }}"
+                                variant="destructive"
+                            >
+                                <x-svg.trash class="size-4"/>
+                                @if (count($selectedIds) > 0)
+                                    {{ __("modals/modals.button_delete") }}
+                                    ({{ count($selectedIds) }})
+                                @else
+                                    {{ __("modals/modals.button_delete") }}
+                                @endif
+                            </x-popover-item>
+                        @endcan
+                    </livewire:cell>
                 </tr>
             @empty
                 <tr>
@@ -262,23 +303,6 @@ new class extends Component {
     </table>
 
     <div class="h-14 px-6 gap-6 flex align-center">
-        @if (count($selectedIds) > 0)
-            <div class="flex items-center gap-4">
-                <p class="text-sm text-muted-foreground whitespace-nowrap">
-                    {{ count($selectedIds) }}
-                    {{ count($selectedIds) === 1 ? __('pagination.selected_singular') : __('pagination.selected_plural') }}
-                </p>
-                <x-button
-                    variant="destructive"
-                    size="sm"
-                    wire:click="deleteSelected"
-                    wire:confirm="{{ __('modals/modals.confirm_delete_multiple') }}"
-                >
-                    {{ __('modals/modals.button_delete') }}
-                </x-button>
-            </div>
-        @endif
-
         {{ $this->animals->links() }}
     </div>
 
