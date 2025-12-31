@@ -23,6 +23,30 @@ new class extends Component {
     public array $selectedIds = [];
     public bool $selectAll = false;
 
+    #[Computed(persist: true)]
+    public function genders()
+    {
+        return AnimalGender::cases();
+    }
+
+    #[Computed(persist: true)]
+    public function breeds()
+    {
+        return Breed::all();
+    }
+
+    #[Computed(persist: true)]
+    public function coats()
+    {
+        return Coat::all();
+    }
+
+    #[Computed(persist: true)]
+    public function statuses()
+    {
+        return AnimalStatus::cases();
+    }
+
     #[Computed]
     public function animals()
     {
@@ -39,7 +63,7 @@ new class extends Component {
     #[On('refresh-animals')]
     public function refreshAnimals()
     {
-        $this->resetPage();
+        unset($this->animals);
         $this->closeModal();
     }
 
@@ -255,11 +279,21 @@ new class extends Component {
     @if ($selectedAnimalId && $this->selectedAnimal && $modalMode === "edit")
         <livewire:modal.animal-edit
             :animal="$this->selectedAnimal"
+            :genders="$this->genders"
+            :breeds="$this->breeds"
+            :coats="$this->coats"
+            :statuses="$this->statuses"
             :key="'animal-edit-'.$selectedAnimalId"
         />
     @endif
 
     @if ($modalMode === "create")
-        <livewire:modal.animal-create :key="'animal-create'" />
+        <livewire:modal.animal-create
+            :genders="$this->genders"
+            :breeds="$this->breeds"
+            :coats="$this->coats"
+            :statuses="$this->statuses"
+            :key="'animal-create'"
+        />
     @endif
 </div>

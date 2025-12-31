@@ -13,18 +13,14 @@ use Livewire\Component;
 new class extends Component {
     public Animal $animal;
     public AnimalForm $form;
-    public array $genders = [];
+    public array $genders;
     public Collection $breeds;
     public Collection $coats;
-    public array $statuses = [];
+    public array $statuses;
 
     public function mount(Animal $animal)
     {
         $this->form->setAnimal($animal);
-        $this->genders = AnimalGender::cases();
-        $this->breeds = Breed::all();
-        $this->coats = Coat::all();
-        $this->statuses = AnimalStatus::cases();
     }
 
     public function save()
@@ -64,7 +60,7 @@ new class extends Component {
                 />
                 <div>
                     @error("form.name")
-                    <span class="text-destructive">{{ $message }}</span>
+                        <span class="text-destructive">{{ $message }}</span>
                     @enderror
                 </div>
             </div>
@@ -82,7 +78,7 @@ new class extends Component {
                 ></textarea>
                 <div>
                     @error("form.description")
-                    <span class="text-destructive">{{ $message }}</span>
+                        <span class="text-destructive">{{ $message }}</span>
                     @enderror
                 </div>
             </div>
@@ -112,7 +108,9 @@ new class extends Component {
                     </select>
                     <div>
                         @error("form.gender")
-                        <span class="text-destructive">{{ $message }}</span>
+                            <span class="text-destructive">
+                                {{ $message }}
+                            </span>
                         @enderror
                     </div>
                 </div>
@@ -143,7 +141,9 @@ new class extends Component {
                     </select>
                     <div>
                         @error("form.breed_id")
-                        <span class="text-destructive">{{ $message }}</span>
+                            <span class="text-destructive">
+                                {{ $message }}
+                            </span>
                         @enderror
                     </div>
                 </div>
@@ -162,7 +162,9 @@ new class extends Component {
                 />
                 <div>
                     @error("form.age")
-                    <span class="text-destructive">{{ $message }}</span>
+                        <span class="text-destructive">
+                            {{ $message }}
+                        </span>
                     @enderror
                 </div>
             </div>
@@ -192,7 +194,9 @@ new class extends Component {
                     </select>
                     <div>
                         @error("form.coat_id")
-                        <span class="text-destructive">{{ $message }}</span>
+                            <span class="text-destructive">
+                                {{ $message }}
+                            </span>
                         @enderror
                     </div>
                 </div>
@@ -214,7 +218,9 @@ new class extends Component {
                 />
                 <div>
                     @error("form.admission_date")
-                    <span class="text-destructive">{{ $message }}</span>
+                        <span class="text-destructive">
+                            {{ $message }}
+                        </span>
                     @enderror
                 </div>
             </div>
@@ -246,7 +252,9 @@ new class extends Component {
                     </div>
                     <div>
                         @error("form.status")
-                        <span class="text-destructive">{{ $message }}</span>
+                            <span class="text-destructive">
+                                {{ $message }}
+                            </span>
                         @enderror
                     </div>
                 </div>

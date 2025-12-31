@@ -12,18 +12,10 @@ use Livewire\Component;
 
 new class extends Component {
     public AnimalForm $form;
-    public array $genders = [];
+    public array $genders;
     public Collection $breeds;
     public Collection $coats;
-    public array $statuses = [];
-
-    public function mount()
-    {
-        $this->genders = AnimalGender::cases();
-        $this->breeds = Breed::all();
-        $this->coats = Coat::all();
-        $this->statuses = AnimalStatus::cases();
-    }
+    public array $statuses;
 
     public function save()
     {
@@ -105,7 +97,9 @@ new class extends Component {
                     </select>
                     <div>
                         @error("form.gender")
-                            <span class="text-destructive">{{ $message }}</span>
+                            <span class="text-destructive">
+                                {{ $message }}
+                            </span>
                         @enderror
                     </div>
                 </div>
@@ -136,7 +130,9 @@ new class extends Component {
                     </select>
                     <div>
                         @error("form.breed_id")
-                            <span class="text-destructive">{{ $message }}</span>
+                            <span class="text-destructive">
+                                {{ $message }}
+                            </span>
                         @enderror
                     </div>
                 </div>
@@ -185,7 +181,9 @@ new class extends Component {
                     </select>
                     <div>
                         @error("form.coat_id")
-                            <span class="text-destructive">{{ $message }}</span>
+                            <span class="text-destructive">
+                                {{ $message }}
+                            </span>
                         @enderror
                     </div>
                 </div>
@@ -239,7 +237,9 @@ new class extends Component {
                     </div>
                     <div>
                         @error("form.status")
-                            <span class="text-destructive">{{ $message }}</span>
+                            <span class="text-destructive">
+                                {{ $message }}
+                            </span>
                         @enderror
                     </div>
                 </div>
