@@ -1,6 +1,7 @@
 <?php
 
 use App\Livewire\Forms\AnimalForm;
+use App\Livewire\Traits\WithSearch;
 use App\Models\Animal;
 use App\Models\Breed;
 use App\Models\Coat;
@@ -13,7 +14,7 @@ use Livewire\Component;
 use Livewire\WithPagination;
 
 new class extends Component {
-    use WithPagination;
+    use WithPagination, WithSearch;
 
     public AnimalForm $form;
 
@@ -50,7 +51,19 @@ new class extends Component {
     #[Computed]
     public function animals()
     {
-        return Animal::paginate($this->paginate);
+        return Animal::query()
+            ->when($this->search, function ($query) {
+                $query
+                    ->where("name", "like", "%" . $this->search . "%")
+                    ->orWhere("description", "like", "%" . $this->search . "%")
+                    ->orWhereHas("breed", function ($q) {
+                        $q->where("name", "like", "%" . $this->search . "%");
+                    })
+                    ->orWhereHas("coat", function ($q) {
+                        $q->where("name", "like", "%" . $this->search . "%");
+                    });
+            })
+            ->paginate($this->paginate);
     }
 
     #[On('open-create-modal')]
