@@ -29,21 +29,21 @@ new class extends Component {
         return Animal::paginate($this->paginate);
     }
 
-    #[On("open-create-modal")]
+    #[On('open-create-modal')]
     public function createAnimal()
     {
         $this->selectedAnimalId = null;
         $this->modalMode = "create";
     }
 
-    #[On("refresh-animals")]
+    #[On('refresh-animals')]
     public function refreshAnimals()
     {
         $this->resetPage();
         $this->closeModal();
     }
 
-    #[On("close-modal")]
+    #[On('close-modal')]
     public function closeModal()
     {
         $this->selectedAnimalId = null;
@@ -73,11 +73,11 @@ new class extends Component {
         $this->modalMode = "edit";
     }
 
-    #[On("delete-animal")]
+    #[On('delete-animal')]
     public function deleteAnimal(int $animalId)
     {
         $animal = Animal::findOrFail($animalId);
-        $this->authorize("delete", $animal);
+        $this->authorize('delete', $animal);
 
         $this->form->delete($animal);
 
@@ -89,7 +89,7 @@ new class extends Component {
     {
         foreach ($this->selectedIds as $id) {
             $animal = Animal::findOrFail($id);
-            $this->authorize("delete", $animal);
+            $this->authorize('delete', $animal);
             $this->form->delete($animal);
         }
 
@@ -105,6 +105,12 @@ new class extends Component {
         } else {
             $this->selectedIds = [];
         }
+    }
+
+    #[On('update-animal')]
+    public function handleUpdate($animalId)
+    {
+        unset($this->animals);
     }
 };
 ?>
@@ -246,11 +252,12 @@ new class extends Component {
         />
     @endif
 
-    @if ($this->selectedAnimal && $modalMode === "edit")
+    @if ($selectedAnimalId && $this->selectedAnimal && $modalMode === "edit")
         <livewire:modal.animal-edit
             :animal="$this->selectedAnimal"
-            :key="'animal-edit-'.$this->selectedAnimal->id"
+            :key="'animal-edit-'.$selectedAnimalId"
         />
+    @endif
 
     @if ($modalMode === "create")
         <livewire:modal.animal-create :key="'animal-create'" />
