@@ -14,4 +14,5 @@ return [
     'th_adopter' => 'Adopter',
     'th_status' => 'Status',
     'th_date' => 'Request date',
+    'deleted' => 'Deleted',
 ];

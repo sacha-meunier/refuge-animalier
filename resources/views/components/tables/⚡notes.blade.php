@@ -13,7 +13,7 @@ new class extends Component {
     #[Computed]
     public function notes()
     {
-        return Note::paginate($this->paginate);
+        return Note::whereHas("animal")->paginate($this->paginate);
     }
 };
 ?>

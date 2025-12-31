@@ -14,7 +14,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('content');
-            $table->foreignIdFor(Animal::class)->constrained();
+            $table->foreignIdFor(Animal::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(User::class)->constrained();
             $table->timestamps();
         });
