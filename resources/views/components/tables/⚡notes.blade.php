@@ -1,19 +1,32 @@
 <?php
 
+use App\Livewire\Traits\WithSearch;
 use App\Models\Note;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 new class extends Component {
-    use WithPagination;
+    use WithPagination, WithSearch;
 
     public int $paginate = 10;
 
     #[Computed]
     public function notes()
     {
-        return Note::whereHas("animal")->paginate($this->paginate);
+        return Note::query()
+            ->when($this->search, function ($query) {
+                $query
+                    ->where("title", "like", "%" . $this->search . "%")
+                    ->orWhere("content", "like", "%" . $this->search . "%")
+                    ->orWhereHas("animal", function ($q) {
+                        $q->where("name", "like", "%" . $this->search . "%");
+                    })
+                    ->orWhereHas("user", function ($q) {
+                        $q->where("name", "like", "%" . $this->search . "%");
+                    });
+            })
+            ->paginate($this->paginate);
     }
 };
 ?>
