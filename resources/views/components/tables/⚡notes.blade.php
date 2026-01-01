@@ -105,6 +105,15 @@ new class extends Component {
         $this->closeModal();
         unset($this->notes);
     }
+
+    #[On('switch-to-edit-mode')]
+    public function editNote(?int $noteId = null)
+    {
+        if ($noteId) {
+            $this->selectedNoteId = $noteId;
+        }
+        $this->modalMode = "edit";
+    }
 };
 ?>
 
@@ -159,7 +168,8 @@ new class extends Component {
         </thead>
         <tbody>
             @forelse ($this->notes as $note)
-                <tr class="h-14 hover:bg-muted/50 cursor-pointer" wire:key="{{ $note->id }}"
+                <tr class="h-14 hover:bg-muted/50 cursor-pointer"
+                    wire:key="note-row-{{ $note->id }}-{{ $note->updated_at->timestamp }}"
                     wire:click="showNote({{ $note->id }})">
                     <livewire:cell type="checkbox" class="w-12 pl-6 pr-4" />
 
@@ -198,6 +208,14 @@ new class extends Component {
         <livewire:modal.note-show
             :note="$this->selectedNote"
             :key="'note-show-'.$selectedNoteId"
+        />
+    @endif
+
+    @if ($selectedNoteId && $this->selectedNote && $modalMode === "edit")
+        <livewire:modal.note-edit
+            :note="$this->selectedNote"
+            :animals="$this->animals"
+            :key="'note-edit-'.$selectedNoteId"
         />
     @endif
 </div>

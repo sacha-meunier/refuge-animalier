@@ -23,11 +23,27 @@ class NoteForm extends Form
         ];
     }
 
+    public function setNote(Note $note)
+    {
+        $this->note = $note;
+        $this->title = $note->title;
+        $this->content = $note->content;
+        $this->animal_id = $note->animal_id;
+        $this->user_id = $note->user_id;
+    }
+
     public function store()
     {
         $this->validate();
 
         Note::create($this->all());
+    }
+
+    public function update()
+    {
+        $this->validate();
+
+        $this->note->update($this->all());
     }
 
     public function delete(Note $note)
