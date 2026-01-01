@@ -2,8 +2,10 @@
 
 use App\Livewire\Traits\WithSearch;
 use App\Livewire\Traits\WithSorting;
+use App\Models\Animal;
 use App\Models\Note;
 use Livewire\Attributes\Computed;
+use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -11,6 +13,7 @@ new class extends Component {
     use WithPagination, WithSearch, WithSorting;
 
     public int $paginate = 10;
+    public ?string $modalMode = "";
 
     #[Computed]
     public function notes()
@@ -44,6 +47,32 @@ new class extends Component {
                 }
             })
             ->paginate($this->paginate);
+    }
+
+    #[Computed(persist: true)]
+    public function animals()
+    {
+        return Animal::all();
+    }
+
+    #[On('open-create-modal')]
+    public function createNotes()
+    {
+        $this->modalMode = "create";
+    }
+
+    #[On('close-modal')]
+    public function closeModal()
+    {
+        $this->selectedAnimalId = null;
+        $this->modalMode = null;
+    }
+
+    #[On('refresh-notes')]
+    public function refreshNotes()
+    {
+        unset($this->notes);
+        $this->closeModal();
     }
 };
 ?>
@@ -125,4 +154,11 @@ new class extends Component {
     <div class="h-14 px-6 flex align-center">
         {{ $this->notes->links() }}
     </div>
+
+    @if ($modalMode === "create")
+        <livewire:modal.note-create
+            :animals="$this->animals"
+            :key="'note-create'"
+        />
+    @endif
 </div>
