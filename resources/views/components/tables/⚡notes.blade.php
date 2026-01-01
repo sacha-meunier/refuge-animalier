@@ -1,13 +1,14 @@
 <?php
 
 use App\Livewire\Traits\WithSearch;
+use App\Livewire\Traits\WithSorting;
 use App\Models\Note;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 new class extends Component {
-    use WithPagination, WithSearch;
+    use WithPagination, WithSearch, WithSorting;
 
     public int $paginate = 10;
 
@@ -15,6 +16,7 @@ new class extends Component {
     public function notes()
     {
         return Note::query()
+            ->with(["user", "animal"])
             ->when($this->search, function ($query) {
                 $query
                     ->where("title", "like", "%" . $this->search . "%")
@@ -25,6 +27,21 @@ new class extends Component {
                     ->orWhereHas("user", function ($q) {
                         $q->where("name", "like", "%" . $this->search . "%");
                     });
+            })
+            ->when($this->sortField, function ($query) {
+                if ($this->sortField === "users.name") {
+                    $query
+                        ->join("users", "notes.user_id", "=", "users.id")
+                        ->orderBy("users.name", $this->sortDirection)
+                        ->select("notes.*");
+                } elseif ($this->sortField === "animals.name") {
+                    $query
+                        ->join("animals", "notes.animal_id", "=", "animals.id")
+                        ->orderBy("animals.name", $this->sortDirection)
+                        ->select("notes.*");
+                } else {
+                    $query->orderBy($this->sortField, $this->sortDirection);
+                }
             })
             ->paginate($this->paginate);
     }
@@ -37,13 +54,45 @@ new class extends Component {
             <tr>
                 <livewire:cell tag="th" type="checkbox" class="w-12 pl-6 pr-4"/>
 
-                <livewire:cell tag="th" type="text" content="{{ __('pages/notes/index.th_note_title') }}" />
+                <livewire:cell
+                    tag="th"
+                    type="text"
+                    content="{{ __('pages/notes/index.th_note_title') }}"
+                    :sortable="true"
+                    sort-field="title"
+                    :sort-direction="$sortField === 'title' ? $sortDirection : ''"
+                    wire:key="th-title-{{ $sortField }}-{{ $sortDirection }}"
+                />
 
-                <livewire:cell tag="th" type="text" content="{{ __('pages/notes/index.th_animal') }}" />
+                <livewire:cell
+                    tag="th"
+                    type="text"
+                    content="{{ __('pages/notes/index.th_animal') }}"
+                    :sortable="true"
+                    sort-field="animals.name"
+                    :sort-direction="$sortField === 'animals.name' ? $sortDirection : ''"
+                    wire:key="th-animal-{{ $sortField }}-{{ $sortDirection }}"
+                />
 
-                <livewire:cell tag="th" type="text" content="{{ __('pages/notes/index.th_author') }}" />
+                <livewire:cell
+                    tag="th"
+                    type="text"
+                    content="{{ __('pages/notes/index.th_author') }}"
+                    :sortable="true"
+                    sort-field="users.name"
+                    :sort-direction="$sortField === 'users.name' ? $sortDirection : ''"
+                    wire:key="th-author-{{ $sortField }}-{{ $sortDirection }}"
+                />
 
-                <livewire:cell tag="th" type="text" content="{{ __('pages/notes/index.th_date') }}" />
+                <livewire:cell
+                    tag="th"
+                    type="text"
+                    content="{{ __('pages/notes/index.th_date') }}"
+                    :sortable="true"
+                    sort-field="created_at"
+                    :sort-direction="$sortField === 'created_at' ? $sortDirection : ''"
+                    wire:key="th-name-{{ $sortField }}-{{ $sortDirection }}"
+                />
 
                 <livewire:cell tag="th" type="text" content="" class="w-12 pl-4 pr-1"/>
             </tr>
