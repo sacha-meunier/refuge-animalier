@@ -194,6 +194,7 @@ new class extends Component {
                     :sortable="true"
                     sort-field="name"
                     :sort-direction="$sortField === 'name' ? $sortDirection : ''"
+                    wire:key="th-name-{{ $sortField }}-{{ $sortDirection }}"
                 />
 
                 <livewire:cell
@@ -203,6 +204,7 @@ new class extends Component {
                     :sortable="true"
                     sort-field="age"
                     :sort-direction="$sortField === 'age' ? $sortDirection : ''"
+                    wire:key="th-age-{{ $sortField }}-{{ $sortDirection }}"
                 />
 
                 <livewire:cell
@@ -212,6 +214,7 @@ new class extends Component {
                     :sortable="true"
                     sort-field="gender"
                     :sort-direction="$sortField === 'gender' ? $sortDirection : ''"
+                    wire:key="th-gender-{{ $sortField }}-{{ $sortDirection }}"
                 />
 
                 <livewire:cell
@@ -221,6 +224,7 @@ new class extends Component {
                     :sortable="true"
                     sort-field="status"
                     :sort-direction="$sortField === 'status' ? $sortDirection : ''"
+                    wire:key="th-status-{{ $sortField }}-{{ $sortDirection }}"
                 />
 
                 <livewire:cell
@@ -230,6 +234,7 @@ new class extends Component {
                     :sortable="true"
                     sort-field="admission_date"
                     :sort-direction="$sortField === 'admission_date' ? $sortDirection : ''"
+                    wire:key="th-admission-{{ $sortField }}-{{ $sortDirection }}"
                 />
 
                 <livewire:cell
