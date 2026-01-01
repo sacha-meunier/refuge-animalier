@@ -9,7 +9,7 @@ enum AnimalGender: string
 
     public function label(): string
     {
-        return match($this) {
+        return match ($this) {
             self::MALE => __('animals.genders.male'),
             self::FEMALE => __('animals.genders.female'),
         };

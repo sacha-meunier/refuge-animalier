@@ -27,7 +27,6 @@ test('specie has many animals', function () {
     expect($this->specie->animals)->toHaveCount(1);
 });
 
-
 test('animal belongs to breed', function () {
     expect($this->animal->breed_id)
         ->toBe($this->breed->id);

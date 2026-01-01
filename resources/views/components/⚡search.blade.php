@@ -2,9 +2,14 @@
 
 use Livewire\Component;
 
-new class extends Component
-{
+new class extends Component {
     public string $content = "Search";
+    public string $search = "";
+
+    public function updatedSearch()
+    {
+        $this->dispatch("search-updated", search: $this->search);
+    }
 };
 ?>
 
@@ -13,6 +18,7 @@ new class extends Component
 
     <input
         type="text"
+        wire:model.live.debounce.300ms="search"
         placeholder="{{ $content }}"
         class="w-full h-full pl-8 pr-4 border border-border rounded-lg bg-background text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
     />

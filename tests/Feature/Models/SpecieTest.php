@@ -29,7 +29,7 @@ test('specie can have both breeds and animals', function () {
         'specie_id' => $this->specie->id,
     ]);
     Animal::factory(3)->create([
-        'specie_id' => $this->specie->id
+        'specie_id' => $this->specie->id,
     ]);
 
     expect($this->specie->breeds)

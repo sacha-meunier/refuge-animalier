@@ -16,7 +16,7 @@ class Adoption extends Model
         'content',
         'status',
         'animal_id',
-        'contact_id'
+        'contact_id',
     ];
 
     protected $casts = [
@@ -25,7 +25,7 @@ class Adoption extends Model
 
     public function animal(): BelongsTo
     {
-        return $this->belongsTo(Animal::class);
+        return $this->belongsTo(Animal::class)->withTrashed();
     }
 
     public function contact(): BelongsTo

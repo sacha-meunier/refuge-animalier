@@ -21,7 +21,7 @@ new class extends Component {
 
     @if($showAction && $actionLabel && $actionPermission && $actionModel)
         @can($actionPermission, $actionModel)
-            <x-button type="button" variant="primary" size="sm">
+            <x-button type="button" variant="primary" size="sm" @click="$dispatch('open-create-modal')">
                 {{ $actionLabel }}
             </x-button>
         @endcan

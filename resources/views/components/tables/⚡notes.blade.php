@@ -13,7 +13,7 @@ new class extends Component {
     #[Computed]
     public function notes()
     {
-        return Note::paginate($this->paginate);
+        return Note::whereHas("animal")->paginate($this->paginate);
     }
 };
 ?>
@@ -53,7 +53,7 @@ new class extends Component {
             @empty
                 <tr>
                     <td class="h-32 text-center text-sm text-muted-foreground">
-                        {{ __("No data available") }}
+                        {{ __('pagination.no_data') }}
                     </td>
                 </tr>
             @endforelse

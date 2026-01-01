@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 
-
 Route::get('/welcome', function () {
     return view('welcome');
 })->name('welcome');
@@ -28,6 +27,7 @@ Route::domain(config('app.admin_domain'))
             Route::get('/dev/login-as/{email}', function (string $email) {
                 $user = \App\Models\User::where('email', $email)->firstOrFail();
                 Auth::login($user);
+
                 return redirect()->route('dashboard');
             })->name('dev.login-as');
         }
@@ -35,4 +35,4 @@ Route::domain(config('app.admin_domain'))
         Route::fallback(function () {
             return redirect()->route('dashboard');
         });
-});
+    });

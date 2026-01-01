@@ -9,10 +9,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Animal extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'name',
@@ -60,14 +61,14 @@ class Animal extends Model
     public function formattedAge(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->age?->diffForHumans(['parts' => 1, 'join' => true, 'syntax' => true]) ?? __('dates.not_available'),
+            get: fn () => $this->age?->diffForHumans(['parts' => 1, 'join' => true, 'syntax' => true]),
         );
     }
 
     protected function formattedAdmissionDate(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->admission_date?->diffForHumans() ?? __('dates.not_available'),
+            get: fn () => $this->admission_date?->diffForHumans(),
         );
     }
 }

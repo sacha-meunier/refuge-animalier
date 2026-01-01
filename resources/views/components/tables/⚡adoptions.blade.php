@@ -40,7 +40,8 @@ new class extends Component {
                 <tr class="h-14 hover:bg-muted/50" wire:key="{{ $adoption->id }}">
                     <livewire:cell type="checkbox" class="w-12 pl-6 pr-4" />
 
-                    <livewire:cell type="text" content="{{ $adoption->animal->name }}"/>
+                    <livewire:cell type="text" content="{{ $adoption->animal->name }}{{ $adoption->animal->trashed() ? ' (' . __('pages/adoptions/index.deleted') . ')' : '' }}"/>
+
 
                     <livewire:cell type="text" content="{{ $adoption->contact->name }}"/>
 
@@ -53,7 +54,7 @@ new class extends Component {
             @empty
                 <tr>
                     <td class="h-32 text-center text-sm text-muted-foreground">
-                        {{ __("No data available") }}
+                        {{ __('pagination.no_data') }}
                     </td>
                 </tr>
             @endforelse

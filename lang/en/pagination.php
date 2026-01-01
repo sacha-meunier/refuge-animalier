@@ -15,5 +15,8 @@ return [
 
     'previous' => '&laquo; Previous',
     'next' => 'Next &raquo;',
+    'no_data' => 'No data available',
+    'selected_singular' => 'item selected',
+    'selected_plural' => 'items selected',
 
 ];
