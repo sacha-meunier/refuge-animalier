@@ -29,4 +29,9 @@ class NoteForm extends Form
 
         Note::create($this->all());
     }
+
+    public function delete(Note $note)
+    {
+        $note->delete();
+    }
 }

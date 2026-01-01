@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\Forms\NoteForm;
 use App\Livewire\Traits\WithSearch;
 use App\Livewire\Traits\WithSorting;
 use App\Models\Animal;
@@ -12,8 +13,11 @@ use Livewire\WithPagination;
 new class extends Component {
     use WithPagination, WithSearch, WithSorting;
 
+    public NoteForm $form;
+
     public int $paginate = 10;
     public ?string $modalMode = "";
+    public ?int $selectedNoteId = null;
 
     #[Computed]
     public function notes()
@@ -58,6 +62,7 @@ new class extends Component {
     #[On('open-create-modal')]
     public function createNotes()
     {
+        $this->selectedNoteId = null;
         $this->modalMode = "create";
     }
 
@@ -73,6 +78,32 @@ new class extends Component {
     {
         unset($this->notes);
         $this->closeModal();
+    }
+
+    #[Computed]
+    public function selectedNote()
+    {
+        return $this->selectedNoteId
+            ? Note::find($this->selectedNoteId)
+            : null;
+    }
+
+    public function showNote(int $noteId)
+    {
+        $this->selectedNoteId = $noteId;
+        $this->modalMode = "show";
+    }
+
+    #[On('delete-note')]
+    public function deleteNote(int $noteId)
+    {
+        $note = Note::findOrFail($noteId);
+        $this->authorize('delete', $note);
+
+        $this->form->delete($note);
+
+        $this->closeModal();
+        unset($this->notes);
     }
 };
 ?>
@@ -128,7 +159,8 @@ new class extends Component {
         </thead>
         <tbody>
             @forelse ($this->notes as $note)
-                <tr class="h-14 hover:bg-muted/50" wire:key="{{ $note->id }}">
+                <tr class="h-14 hover:bg-muted/50 cursor-pointer" wire:key="{{ $note->id }}"
+                    wire:click="showNote({{ $note->id }})">
                     <livewire:cell type="checkbox" class="w-12 pl-6 pr-4" />
 
                     <livewire:cell type="text" content="{{ $note->title }}"/>
@@ -159,6 +191,13 @@ new class extends Component {
         <livewire:modal.note-create
             :animals="$this->animals"
             :key="'note-create'"
+        />
+    @endif
+
+    @if ($selectedNoteId && $this->selectedNote && $modalMode === "show")
+        <livewire:modal.note-show
+            :note="$this->selectedNote"
+            :key="'note-show-'.$selectedNoteId"
         />
     @endif
 </div>
