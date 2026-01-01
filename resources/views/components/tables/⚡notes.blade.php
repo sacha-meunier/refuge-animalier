@@ -91,7 +91,7 @@ new class extends Component {
                     :sortable="true"
                     sort-field="created_at"
                     :sort-direction="$sortField === 'created_at' ? $sortDirection : ''"
-                    wire:key="th-name-{{ $sortField }}-{{ $sortDirection }}"
+                    wire:key="th-date-{{ $sortField }}-{{ $sortDirection }}"
                 />
 
                 <livewire:cell tag="th" type="text" content="" class="w-12 pl-4 pr-1"/>
