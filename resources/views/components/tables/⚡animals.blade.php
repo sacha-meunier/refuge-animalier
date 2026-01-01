@@ -2,6 +2,7 @@
 
 use App\Livewire\Forms\AnimalForm;
 use App\Livewire\Traits\WithSearch;
+use App\Livewire\Traits\WithSorting;
 use App\Models\Animal;
 use App\Models\Breed;
 use App\Models\Coat;
@@ -14,7 +15,7 @@ use Livewire\Component;
 use Livewire\WithPagination;
 
 new class extends Component {
-    use WithPagination, WithSearch;
+    use WithPagination, WithSearch, WithSorting;
 
     public AnimalForm $form;
 
@@ -62,6 +63,9 @@ new class extends Component {
                     ->orWhereHas("coat", function ($q) {
                         $q->where("name", "like", "%" . $this->search . "%");
                     });
+            })
+            ->when($this->sortField, function ($query) {
+                $query->orderBy($this->sortField, $this->sortDirection);
             })
             ->paginate($this->paginate);
     }
@@ -187,30 +191,45 @@ new class extends Component {
                     tag="th"
                     type="text"
                     content="{{ __('pages/animals/index.th_animal_name') }}"
+                    :sortable="true"
+                    sort-field="name"
+                    :sort-direction="$sortField === 'name' ? $sortDirection : ''"
                 />
 
                 <livewire:cell
                     tag="th"
                     type="text"
                     content="{{ __('pages/animals/index.th_age') }}"
+                    :sortable="true"
+                    sort-field="age"
+                    :sort-direction="$sortField === 'age' ? $sortDirection : ''"
                 />
 
                 <livewire:cell
                     tag="th"
                     type="text"
                     content="{{ __('pages/animals/index.th_gender') }}"
+                    :sortable="true"
+                    sort-field="gender"
+                    :sort-direction="$sortField === 'gender' ? $sortDirection : ''"
                 />
 
                 <livewire:cell
                     tag="th"
                     type="text"
                     content="{{ __('pages/animals/index.th_status') }}"
+                    :sortable="true"
+                    sort-field="status"
+                    :sort-direction="$sortField === 'status' ? $sortDirection : ''"
                 />
 
                 <livewire:cell
                     tag="th"
                     type="text"
                     content="{{ __('pages/animals/index.th_admission_date') }}"
+                    :sortable="true"
+                    sort-field="admission_date"
+                    :sort-direction="$sortField === 'admission_date' ? $sortDirection : ''"
                 />
 
                 <livewire:cell
