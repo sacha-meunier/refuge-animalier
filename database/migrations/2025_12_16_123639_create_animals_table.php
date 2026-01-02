@@ -27,7 +27,6 @@ return new class extends Migration
             $table->foreignIdFor(Specie::class)->nullable()->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Breed::class)->nullable()->constrained()->cascadeOnDelete();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
