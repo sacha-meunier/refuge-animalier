@@ -9,6 +9,7 @@ return [
     |
     */
     'title' => 'Adoptions',
+    'header_action_label' => 'Add an adoption request',
     'action_bar_search_label' => 'Search adoption request',
     'th_animal' => 'Animal',
     'th_adopter' => 'Adopter',
