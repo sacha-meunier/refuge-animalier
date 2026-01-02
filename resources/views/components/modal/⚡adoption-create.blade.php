@@ -132,9 +132,9 @@ new class extends Component {
                                     wire:model="form.status"
                                     class="w-4 h-4 text-primary border-border focus:ring-primary"
                                 />
-                                <span class="text-sm">
+                                <x-badge :color="$status->color() ?? ''">
                                     {{ $status->label() }}
-                                </span>
+                                </x-badge>
                             </label>
                         @endforeach
                     </div>
