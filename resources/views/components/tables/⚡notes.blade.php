@@ -18,6 +18,8 @@ new class extends Component {
     public int $paginate = 10;
     public ?string $modalMode = "";
     public ?int $selectedNoteId = null;
+    public array $selectedIds = [];
+    public bool $selectAll = false;
 
     #[Computed]
     public function notes()
@@ -114,14 +116,58 @@ new class extends Component {
         }
         $this->modalMode = "edit";
     }
+
+    public function updatedSelectAll($value)
+    {
+        if ($value) {
+            $this->selectedIds = $this->notes->pluck("id")->toArray();
+        } else {
+            $this->selectedIds = [];
+        }
+    }
+
+    public function deleteNoteOrSelected(int $noteId)
+    {
+        if (count($this->selectedIds) > 0) {
+            $this->deleteSelected();
+        } else {
+            $note = Note::findOrFail($noteId);
+            $this->authorize("delete", $note);
+            $this->form->delete($note);
+            unset($this->note);
+        }
+    }
+
+    public function deleteSelected()
+    {
+        foreach ($this->selectedIds as $id) {
+            $note = Note::findOrFail($id);
+            $this->authorize('delete', $note);
+            $this->form->delete($note);
+        }
+
+        $this->selectedIds = [];
+        $this->selectAll = false;
+        unset($this->notes);
+    }
 };
 ?>
 
 <div>
-    <table class="w-full h-14 border-b border-border">
+    <table class="w-full h-14 border-b border-border" x-data="{ hoverAll: false }">
         <thead class="h-14 border-b border-border">
             <tr>
-                <livewire:cell tag="th" type="checkbox" class="w-12 pl-6 pr-4"/>
+                <th
+                    class="w-12 pl-6 pr-4 text-left text-xs font-medium text-muted-foreground tracking-wider"
+                >
+                    <input
+                        type="checkbox"
+                        class="w-4 h-4 rounded border-border text-primary focus:ring-primary focus:ring-offset-0 cursor-pointer hover:ring-2 hover:ring-primary/50 transition-all"
+                        wire:model.live="selectAll"
+                        @mouseenter="hoverAll = true"
+                        @mouseleave="hoverAll = false"
+                    />
+                </th>
 
                 <livewire:cell
                     tag="th"
@@ -170,8 +216,17 @@ new class extends Component {
             @forelse ($this->notes as $note)
                 <tr class="h-14 hover:bg-muted/50 cursor-pointer"
                     wire:key="note-row-{{ $note->id }}-{{ $note->updated_at->timestamp }}"
-                    wire:click="showNote({{ $note->id }})">
-                    <livewire:cell type="checkbox" class="w-12 pl-6 pr-4" />
+                    wire:click="showNote({{ $note->id }})"
+                >
+                    <td class="w-12 pl-6 pr-4" wire:click.stop>
+                        <input
+                            type="checkbox"
+                            class="w-4 h-4 rounded border-border text-primary focus:ring-primary focus:ring-offset-0 cursor-pointer transition-all"
+                            :class="hoverAll ? 'ring-2 ring-primary/50' : 'hover:ring-2 hover:ring-primary/50'"
+                            value="{{ $note->id }}"
+                            wire:model.live="selectedIds"
+                        />
+                    </td>
 
                     <livewire:cell type="text" content="{{ $note->title }}"/>
 
@@ -181,7 +236,32 @@ new class extends Component {
 
                     <livewire:cell type="text" content="{{ $note->formatted_date }}"/>
 
-                    <livewire:cell type="button" />
+                    <livewire:cell type="button" wire:click.stop>
+                        @can("update", $note)
+                            <x-popover-item
+                                wire:click="editNote({{ $note->id }})"
+                            >
+                                <x-svg.square-pen class="size-4"/>
+                                {{ __("modals/modals.button_edit") }}
+                            </x-popover-item>
+                        @endcan
+
+                        @can("delete", $note)
+                            <x-popover-item
+                                wire:click="deleteNoteOrSelected({{ $note->id }})"
+                                wire:confirm="{{ count($selectedIds) ? __('modals/modals.confirm_delete_multiple') : __('modals/modals.confirm_delete') }}"
+                                variant="destructive"
+                            >
+                                <x-svg.trash class="size-4"/>
+                                @if (count($selectedIds) > 0)
+                                    {{ __("modals/modals.button_delete") }}
+                                    ({{ count($selectedIds) }})
+                                @else
+                                    {{ __("modals/modals.button_delete") }}
+                                @endif
+                            </x-popover-item>
+                        @endcan
+                    </livewire:cell>
                 </tr>
             @empty
                 <tr>
