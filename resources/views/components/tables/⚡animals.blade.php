@@ -288,7 +288,6 @@ new class extends Component {
                     <livewire:cell
                         type="button"
                         wire:click.stop
-                        class="w-12 pl-4 pr-1"
                     >
                         @can("update", $animal)
                             <x-popover-item
