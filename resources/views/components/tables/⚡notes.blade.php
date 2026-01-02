@@ -79,6 +79,18 @@ new class extends Component {
         $this->resetItems();
         $this->closeModal();
     }
+
+    #[On('delete-note')]
+    public function deleteAnimal(int $noteId)
+    {
+        $note = Note::findOrFail($noteId);
+        $this->authorize('delete', $note);
+
+        $this->form->delete($note);
+
+        $this->closeModal();
+        unset($this->notes);
+    }
 };
 ?>
 
