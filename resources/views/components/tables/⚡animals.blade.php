@@ -87,6 +87,18 @@ new class extends Component {
         $this->resetItems();
         $this->closeModal();
     }
+
+    #[On('delete-animal')]
+    public function deleteAnimal(int $animalId)
+    {
+        $animal = Animal::findOrFail($animalId);
+        $this->authorize('delete', $animal);
+
+        $this->form->delete($animal);
+
+        $this->closeModal();
+        unset($this->animals);
+    }
 };
 ?>
 

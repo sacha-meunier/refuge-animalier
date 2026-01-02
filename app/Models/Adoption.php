@@ -25,7 +25,7 @@ class Adoption extends Model
 
     public function animal(): BelongsTo
     {
-        return $this->belongsTo(Animal::class)->withTrashed();
+        return $this->belongsTo(Animal::class);
     }
 
     public function contact(): BelongsTo

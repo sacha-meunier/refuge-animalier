@@ -9,7 +9,9 @@
     @can("update", $item)
         <x-popover-item wire:click="{{ $editAction }}({{ $item->id }})">
             <x-svg.square-pen class="size-4" />
+            <div class="translate-y-0.5">
             {{ __("modals/modals.button_edit") }}
+            </div>
         </x-popover-item>
     @endcan
 
@@ -20,13 +22,14 @@
             variant="destructive"
         >
             <x-svg.trash class="size-4" />
-
+            <div class="translate-y-0.5">
             @if (count($selectedIds) > 0)
                 {{ __("modals/modals.button_delete") }}
                 ({{ count($selectedIds) }})
             @else
                 {{ __("modals/modals.button_delete") }}
             @endif
+            </div>
         </x-popover-item>
     @endcan
 </x-cell>
