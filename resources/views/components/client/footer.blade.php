@@ -9,16 +9,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <!-- Logo & Description -->
             <div class="space-y-4">
-                <a
-                    href="{{ route('home') }}"
-                    class="flex items-center gap-2 px-3 py-2 -ml-3 rounded-md hover:bg-accent transition-colors select-none w-fit"
-                    aria-label="{{ config('app.name') }}"
-                >
-                    <x-svg.dog size="md" class="text-foreground" />
-                    <span class="text-base font-medium">
-                        {{ config('app.name') }}
-                    </span>
-                </a>
+                <x-client.app-logo/>
             </div>
 
             <!-- Navigation -->

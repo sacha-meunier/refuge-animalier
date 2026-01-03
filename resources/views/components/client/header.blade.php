@@ -11,16 +11,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-16">
             <!-- Logo -->
-            <a
-                href="{{ route("home") }}"
-                class="flex items-center gap-2 px-3 py-2 -ml-3 rounded-full hover:bg-accent/40 transition-colors select-none"
-                aria-label="{{ config("app.name") }}"
-            >
-                <x-svg.dog size="md" class="text-foreground" />
-                <span class="text-base font-medium hidden sm:inline">
-                    {{ config("app.name") }}
-                </span>
-            </a>
+            <x-client.app-logo/>
 
             <!-- Desktop Navigation -->
             <nav
