@@ -16,9 +16,10 @@ class ReferenceDataSeeder extends Seeder
 
     public function run(): void
     {
-        // Load species and breeds from JSON files
+        // Load species, breeds, and coats from JSON files
         $speciesData = json_decode(file_get_contents(database_path('data/species.json')), true);
         $breedsData = json_decode(file_get_contents(database_path('data/breeds.json')), true);
+        $coatsData = json_decode(file_get_contents(database_path('data/coats.json')), true);
 
         // Create species and breeds
         $breeds = [];
@@ -46,7 +47,18 @@ class ReferenceDataSeeder extends Seeder
             Breed::insert($breeds);
         }
 
-        // Create coats
-        Coat::factory($this->coatCount)->create();
+        // Create coats from JSON
+        $coats = [];
+        foreach ($coatsData as $coatName) {
+            $coats[] = [
+                'name' => $coatName,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
+        }
+
+        if (! empty($coats)) {
+            Coat::insert($coats);
+        }
     }
 }
