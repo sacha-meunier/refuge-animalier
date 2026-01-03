@@ -13,7 +13,7 @@
             </div>
 
             <!-- Navigation -->
-            <div class="space-y-4" id="footer-navigation">
+            <div class="space-y-4 scroll-mt-4" id="footer-navigation">
                 <h3 class="text-sm font-medium text-foreground">
                     {{ __('client.footer_navigation') }}
                 </h3>
