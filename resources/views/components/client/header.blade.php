@@ -25,7 +25,7 @@
             <!-- Desktop Navigation -->
             <nav
                 class="hidden md:flex items-center gap-1"
-                aria-label="{{ __("client.main_navigation") }}"
+                aria-label="{{ __("client.aria_main_nav") }}"
             >
                 <x-client.nav-link
                     href="{{ route('home') }}"
@@ -60,17 +60,17 @@
             </div>
 
             <!-- Mobile Menu Button -->
-            <button
-                type="button"
+            <a
+                href="#footer-navigation"
                 class="md:hidden p-2 -mr-2 rounded-md hover:bg-accent transition-colors touch-manipulation"
                 style="
                     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
                     touch-action: manipulation;
                 "
-                aria-label="{{ __("client.navigation_menu") }}"
-                :aria-expanded="mobileMenuOpen.toString()"
-                @click="mobileMenuOpen = !mobileMenuOpen"
+                aria-label="{{ __("client.aria_nav_menu") }}"
+                :aria-expanded="mobileMenuOpen ? 'true' : 'false'"
                 aria-controls="mobile-menu"
+                @click.prevent="mobileMenuOpen = !mobileMenuOpen"
             >
                 <span x-show="!mobileMenuOpen">
                     <x-svg.menu size="md" :open="false" />
@@ -78,7 +78,7 @@
                 <span x-show="mobileMenuOpen" style="display: none">
                     <x-svg.menu size="md" :open="true" />
                 </span>
-            </button>
+            </a>
         </div>
 
         <!-- Mobile Navigation -->
@@ -87,11 +87,12 @@
             class="md:hidden pb-4"
             x-show="mobileMenuOpen"
             x-cloak
+            style="display: none"
             @click.away="mobileMenuOpen = false"
         >
             <nav
                 class="flex flex-col gap-1"
-                aria-label="{{ __("client.main_navigation") }}"
+                aria-label="{{ __("client.aria_main_nav") }}"
             >
                 <x-client.nav-link
                     href="{{ route('home') }}"

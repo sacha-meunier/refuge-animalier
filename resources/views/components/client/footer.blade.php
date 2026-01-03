@@ -22,7 +22,7 @@
             </div>
 
             <!-- Navigation -->
-            <div class="space-y-4">
+            <div class="space-y-4" id="footer-navigation">
                 <h3 class="text-sm font-medium text-foreground">
                     {{ __('client.footer_navigation') }}
                 </h3>
