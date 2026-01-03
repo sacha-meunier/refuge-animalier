@@ -111,7 +111,7 @@
 
                 <a
                     href="{{ route("contact.create") }}"
-                    class="mx-4 mt-2 px-4 py-3 bg-primary text-primary-foreground rounded-full text-sm font-medium text-center hover:bg-primary/70 transition-colors select-none"
+                    class="mt-2 px-4 py-3 bg-primary text-primary-foreground rounded-full text-sm font-medium text-center hover:bg-primary/70 transition-colors select-none"
                 >
                     {{ __("client.nav_contact") }}
                 </a>
