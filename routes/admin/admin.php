@@ -10,13 +10,13 @@ Route::domain(config('app.admin_domain'))
         Route::livewire('/', 'pages::dashboard.index')->name('dashboard');
         Route::redirect('/dashboard', '/');
 
-        require __DIR__ . '/animals.php';
-        require __DIR__ . '/adoptions.php';
-        require __DIR__ . '/notes.php';
-        require __DIR__ . '/contacts.php';
-        require __DIR__ . '/members.php';
-        require __DIR__ . '/database.php';
-        require __DIR__ . '/settings.php';
+        require __DIR__.'/animals.php';
+        require __DIR__.'/adoptions.php';
+        require __DIR__.'/notes.php';
+        require __DIR__.'/contacts.php';
+        require __DIR__.'/members.php';
+        require __DIR__.'/database.php';
+        require __DIR__.'/settings.php';
 
         // Development only - Quick user switching
         if (config('app.debug')) {

@@ -10,9 +10,13 @@ use Livewire\Form;
 class AdoptionForm extends Form
 {
     public ?Adoption $adoption = null;
+
     public ?string $content = null;
+
     public string $status = AdoptionStatus::PENDING->value;
+
     public ?int $animal_id = null;
+
     public ?int $contact_id = null;
 
     public function rules(): array

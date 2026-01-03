@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::group([], function () {
     // Home
-    Route::get('/', fn() => view('home'))->name('home');
+    Route::get('/', fn () => view('home'))->name('home');
 
     // Animals
     Route::get('/animals', [AnimalController::class, 'index'])->name('animals.index');

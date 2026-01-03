@@ -4,8 +4,9 @@ namespace App\Livewire\Traits;
 
 trait WithSorting
 {
-    public string $sortField = "";
-    public string $sortDirection = "asc";
+    public string $sortField = '';
+
+    public string $sortDirection = 'asc';
 
     public function sortBy($field)
     {

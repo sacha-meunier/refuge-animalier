@@ -9,6 +9,7 @@ use Livewire\Attributes\On;
 trait WithModal
 {
     public ?int $selectedItemId = null;
+
     public ?string $modalMode = null;
 
     #[On('open-create-modal')]
@@ -43,7 +44,7 @@ trait WithModal
     #[Computed]
     public function selectedItem(): ?Model
     {
-        if (!$this->selectedItemId) {
+        if (! $this->selectedItemId) {
             return null;
         }
 

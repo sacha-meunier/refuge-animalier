@@ -11,13 +11,21 @@ use Livewire\Form;
 class AnimalForm extends Form
 {
     public ?Animal $animal;
+
     public ?string $name = null;
+
     public ?string $description = null;
+
     public ?string $gender = null;
+
     public ?string $age = null;
+
     public ?string $admission_date = null;
+
     public ?int $breed_id = null;
+
     public ?int $coat_id = null;
+
     public string $status = AnimalStatus::IN_PROGRESS->value;
 
     public function rules()
