@@ -12,7 +12,13 @@
 
         @vite(["resources/css/app.css", "resources/js/app.js"])
     </head>
-    <body class="min-h-screen bg-background text-foreground">
-        {{ $slot }}
+    <body class="min-h-screen bg-background text-foreground flex flex-col">
+        <x-client.header />
+
+        <main class="flex-1">
+            {{ $slot }}
+        </main>
+
+        <x-client.footer />
     </body>
 </html>
