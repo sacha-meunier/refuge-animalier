@@ -10,8 +10,8 @@ Route::group([], function () {
     Route::get('/', fn () => view('home'))->name('home');
 
     // Animals
-    Route::get('/animals', [AnimalController::class, 'index'])->name('animals.index');
-    Route::get('/animals/{animal}', [AnimalController::class, 'show'])->name('animals.show');
+    Route::get('/animals', [AnimalController::class, 'index'])->name('client.animals.index');
+    Route::get('/animals/{animal}', [AnimalController::class, 'show'])->name('client.animals.show');
 
     // Contact
     Route::get('/contact', [ContactController::class, 'create'])->name('contact.create');
