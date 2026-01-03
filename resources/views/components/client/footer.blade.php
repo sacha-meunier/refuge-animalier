@@ -95,7 +95,7 @@
         <!-- Copyright -->
         <div class="mt-12 pt-8 border-t border-border/40">
             <p class="text-sm text-muted-foreground text-center">
-                &copy; {{ date('Y') }} {{ config('app.name') }}. All rights reserved.
+                &copy; {{ date('Y') }} {{ config('app.name') }}. {{ __('client.all_rights_reserved') }}
             </p>
         </div>
     </div>
