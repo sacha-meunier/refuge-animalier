@@ -30,6 +30,7 @@ return [
     'email' => 'lespattesheureuses@gmail.com',
     'schedule_weekday' => 'Mon - Fri: 9am - 6pm',
     'schedule_weekend' => 'Weekend: 9am - 6pm',
+    'all_rights_reserved' => 'All rights reserved.',
 
     // Others
     'next' => 'Next &raquo;',

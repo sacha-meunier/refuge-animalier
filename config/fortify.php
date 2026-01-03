@@ -86,9 +86,9 @@ return [
     |
     */
 
-    'prefix' => '',
+    'prefix' => 'admin',
 
-    'domain' => 'admin.refuge-animalier.test',
+    'domain' => null,
 
     /*
     |--------------------------------------------------------------------------

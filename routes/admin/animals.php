@@ -8,7 +8,7 @@ use App\Models\Animal;
 |--------------------------------------------------------------------------
 |
 | All routes in this file are automatically wrapped with:
-| - domain: admin.refuge-animalier.test
+| - prefix: admin
 | - middleware: ['auth', 'verified']
 |
 */
