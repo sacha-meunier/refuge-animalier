@@ -1,0 +1,102 @@
+[
+  {
+    "animal": "Max",
+    "user": "Elise",
+    "note": "Vaccination à jour. Très bon comportement lors de la visite vétérinaire."
+  },
+  {
+    "animal": "Max",
+    "user": "Thomas",
+    "note": "A bien joué avec les autres chiens lors de la promenade. Très sociable."
+  },
+  {
+    "animal": "Rocky",
+    "user": "Elise",
+    "note": "Nécessite un propriétaire expérimenté. Peut être protecteur avec les inconnus."
+  },
+  {
+    "animal": "Luna",
+    "user": "Thomas",
+    "note": "Préfère les endroits calmes. A besoin de temps pour s'habituer aux nouvelles personnes."
+  },
+  {
+    "animal": "Charlie",
+    "user": "Elise",
+    "note": "Excellente interaction avec les enfants lors de la visite. Très patient et doux."
+  },
+  {
+    "animal": "Nala",
+    "user": "Thomas",
+    "note": "Adore jouer avec les balles et les plumes. Très énergique."
+  },
+  {
+    "animal": "Buddy",
+    "user": "Elise",
+    "note": "A besoin d'au moins 2 heures de promenade par jour. Très actif."
+  },
+  {
+    "animal": "Félix",
+    "user": "Thomas",
+    "note": "Très bavard ! Communique beaucoup avec des miaulements. Adore la compagnie humaine."
+  },
+  {
+    "animal": "Oscar",
+    "user": "Elise",
+    "note": "Parfait pour une personne âgée ou un appartement calme. Peu exigeant."
+  },
+  {
+    "animal": "Rex",
+    "user": "Thomas",
+    "note": "A tendance à tirer en laisse. Nécessite une éducation continue."
+  },
+  {
+    "animal": "Duke",
+    "user": "Elise",
+    "note": "Nécessite beaucoup d'exercice physique. Ne convient pas pour un petit appartement."
+  },
+  {
+    "animal": "Zeus",
+    "user": "Thomas",
+    "note": "Très bien éduqué mais impressionnant. Besoin d'un propriétaire confiant."
+  },
+  {
+    "animal": "Tigrou",
+    "user": "Elise",
+    "note": "Chat très actif qui grimpe partout. Prévoir des arbres à chat en hauteur."
+  },
+  {
+    "animal": "Daisy",
+    "user": "Thomas",
+    "note": "Adore être portée et câlinée. Très affectueuse et douce."
+  },
+  {
+    "animal": "Simba",
+    "user": "Elise",
+    "note": "Malgré sa grande taille, très doux avec les enfants. Parfait pour une famille."
+  },
+  {
+    "animal": "Archie",
+    "user": "Thomas",
+    "note": "Intelligence exceptionnelle. Apprend très vite les nouveaux ordres. Besoin de stimulation mentale."
+  },
+  {
+    "animal": "Cooper",
+    "user": "Elise",
+    "note": "Oreilles sensibles, vérifier régulièrement. Très affectueux et sociable."
+  },
+  {
+    "animal": "Brutus",
+    "user": "Thomas",
+    "note": "Très calme et posé. Bave un peu mais c'est normal pour la race."
+  },
+  {
+    "animal": "Léo",
+    "user": "Elise",
+    "note": "Adore courir ! Parfait pour quelqu'un qui fait du jogging."
+  },
+  {
+    "animal": "Noisette",
+    "user": "Thomas",
+    "note": "Chatte très joueuse et curieuse. S'adapte facilement aux nouveaux environnements."
+  }
+]
