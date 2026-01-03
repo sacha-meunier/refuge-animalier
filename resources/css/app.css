@@ -223,6 +223,10 @@
     --shadow-2xl: var(--shadow-2xl);
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 @layer components {
     .btn {
         @apply bg-primary text-primary-foreground;

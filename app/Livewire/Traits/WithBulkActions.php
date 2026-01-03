@@ -5,6 +5,7 @@ namespace App\Livewire\Traits;
 trait WithBulkActions
 {
     public array $selectedIds = [];
+
     public bool $selectAll = false;
 
     public function updatedSelectAll($value): void

@@ -8,9 +8,13 @@ use Livewire\Form;
 class NoteForm extends Form
 {
     public ?Note $note;
+
     public ?string $title = null;
+
     public ?string $content = null;
+
     public ?int $animal_id = null;
+
     public ?int $user_id = null;
 
     public function rules()

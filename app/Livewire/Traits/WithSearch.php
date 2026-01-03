@@ -6,7 +6,7 @@ use Livewire\Attributes\On;
 
 trait WithSearch
 {
-    public string $search = "";
+    public string $search = '';
 
     #[On('search-updated')]
     public function updateSearch($search)
