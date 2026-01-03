@@ -14,7 +14,7 @@ class ContactSeeder extends Seeder
 
         foreach ($contactsData as $contactData) {
             Contact::create([
-                'username' => $contactData['username'],
+                'name' => $contactData['name'],
                 'email' => $contactData['email'],
                 'phone' => $contactData['phone'],
             ]);
