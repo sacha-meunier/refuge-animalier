@@ -89,6 +89,29 @@ return [
     'apply_filters' => 'Apply',
     'reset_filters' => 'Reset',
 
+    // Animal Detail Page
+    'animal_gender' => 'Gender',
+    'animal_birth_date' => 'Birth date',
+    'animal_admission_date' => 'Admission date',
+    'animal_specie' => 'Species',
+    'animal_coat' => 'Coat',
+    'animal_description' => 'About :name',
+    'share_animal' => 'Share',
+    'schedule_visit' => 'Schedule a visit',
+    'link_copied' => 'Link copied!',
+    'share_subject' => 'Meet :name',
+    'share_body' => 'I thought you might be interested in meeting :name at :shelter.',
+
+    // Appointment Form
+    'appointment_heading' => 'Schedule a visit to meet :name',
+    'appointment_description' => 'You want to meet :name? That\'s great! Fill out this form and our team will contact you as soon as possible to organize a visit to the shelter.',
+    'appointment_prepare_title' => 'Prepare your visit',
+    'appointment_prepare_pets' => 'If you have animals, tell us about them',
+    'appointment_prepare_questions' => 'Don\'t hesitate to ask us all your questions',
+    'appointment_prepare_time' => 'Allow about 1 hour for the meeting',
+    'appointment_prepare_id' => 'Bring a piece of ID',
+    'appointment_message_placeholder' => 'Tell us about yourself, your lifestyle, your availability for a visit...',
+
     // Others
     'next' => 'Next &raquo;',
     'no_data' => 'No data available',

@@ -82,10 +82,11 @@ class AnimalController extends Controller
         return view('pages.client.animals.index', compact('animals', 'species', 'breeds', 'coats'));
     }
 
-    public function show($id)
+    public function show(Animal $animal)
     {
-        $animal = Animal::findOrFail($id);
+        // Only show published animals
+        abort_if(!$animal->published, 404);
 
-        return view('pages.client.animals.show', $animal);
+        return view('pages.client.animals.show', compact('animal'));
     }
 }
