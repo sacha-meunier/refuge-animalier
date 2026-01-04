@@ -9,7 +9,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <!-- Logo & Description -->
             <div class="space-y-4">
-                <x-client.app-logo/>
+                <x-client.app-logo class="-translate-y-2.5"/>
             </div>
 
             <!-- Navigation -->
