@@ -73,6 +73,13 @@ return [
     'form_message_placeholder' => 'Enter your message here.',
     'form_submit' => 'Send',
 
+    // Animals Page
+    'animals_heading' => 'Our animals',
+    'animals_search_placeholder' => 'Search animals...',
+    'unknown_breed' => 'Unknown breed',
+    'unknown_age' => 'Unknown age',
+    'no_animals' => 'No animals found',
+
     // Others
     'next' => 'Next &raquo;',
     'no_data' => 'No data available',
