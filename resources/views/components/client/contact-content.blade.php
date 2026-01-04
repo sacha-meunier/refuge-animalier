@@ -5,28 +5,28 @@
             <div class="sm:space-y-12">
                 <!-- Hero Section -->
                 <x-client.page-hero
-                    title="Contactez-nous"
-                    description="Vous avez des questions sur l'adoption, vous souhaitez nous aider ou vous avez trouvé un animal en détresse ? Notre équipe est là pour vous répondre et vous accompagner dans vos démarches."
+                    :title="__('client.contact_heading')"
+                    :description="__('client.contact_description')"
                 />
 
                 <!-- Contact Information -->
                 <x-client.info-section
                     class="hidden lg:block"
-                    title="Informations de contact"
+                    :title="__('client.contact_info_title')"
                     :items="[
-                        ['label' => 'Email', 'value' => 'contact@lespattesheureuses.be'],
-                        ['label' => 'Téléphone', 'value' => '0482/ 01 09 82'],
-                        ['label' => 'Adresse', 'value' => 'Rue de Genville 334, 8890 Passendale'],
+                        ['label' => __('client.contact_info_email'), 'value' => __('client.email')],
+                        ['label' => __('client.contact_info_phone'), 'value' => __('client.phone')],
+                        ['label' => __('client.contact_info_address'), 'value' => __('client.address_street') . ', ' . __('client.address_city')],
                     ]"
                 />
 
                 <!-- Opening Hours -->
                 <x-client.info-section
                     class="hidden lg:block"
-                    title="Horaires d'ouverture"
+                    :title="__('client.contact_hours_title')"
                     :items="[
-                        ['label' => 'Lundi - Vendredi', 'value' => '14h - 18h'],
-                        ['label' => 'Samedi - Dimanche', 'value' => '10h - 17h'],
+                        ['label' => __('client.contact_hours_weekday'), 'value' => __('client.contact_hours_weekday_time')],
+                        ['label' => __('client.contact_hours_weekend'), 'value' => __('client.contact_hours_weekend_time')],
                     ]"
                 />
             </div>
@@ -39,8 +39,8 @@
 
                         <x-client.form.input
                             name="name"
-                            label="Nom"
-                            placeholder="Harvey Specter"
+                            :label="__('client.form_name')"
+                            :placeholder="__('client.form_name_placeholder')"
                             :required="true"
                             autocomplete="name"
                         />
@@ -48,8 +48,8 @@
                         <x-client.form.input
                             type="email"
                             name="email"
-                            label="Email"
-                            placeholder="harvey.specter@gmail.com"
+                            :label="__('client.form_email')"
+                            :placeholder="__('client.form_email_placeholder')"
                             :required="true"
                             autocomplete="email"
                         />
@@ -57,22 +57,22 @@
                         <x-client.form.input
                             type="tel"
                             name="phone"
-                            label="Téléphone"
-                            placeholder="0482/ 01 09 82"
+                            :label="__('client.form_phone')"
+                            :placeholder="__('client.form_phone_placeholder')"
                             autocomplete="tel"
                         />
 
                         <x-client.form.textarea
                             name="message"
-                            label="Message"
-                            placeholder="Entrez votre message ici."
+                            :label="__('client.form_message')"
+                            :placeholder="__('client.form_message_placeholder')"
                             :rows="6"
                             :required="true"
                         />
 
                         <div class="flex justify-end pt-2">
                             <x-client.form.button>
-                                Envoyer
+                                {{ __("client.form_submit") }}
                             </x-client.form.button>
                         </div>
                     </form>

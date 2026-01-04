@@ -32,6 +32,47 @@ return [
     'schedule_weekend' => 'Weekend: 9am - 6pm',
     'all_rights_reserved' => 'All rights reserved.',
 
+    // Contact Page
+    'contact_heading' => 'Contact us',
+    'contact_description' => 'Do you have questions about adoption, would you like to help us or have you found an animal in distress? Our team is here to answer you and support you in your steps.',
+    'contact_info_title' => 'Contact information',
+    'contact_info_email' => 'Email',
+    'contact_info_phone' => 'Phone',
+    'contact_info_address' => 'Address',
+    'contact_hours_title' => 'Opening hours',
+    'contact_hours_weekday' => 'Monday - Friday',
+    'contact_hours_weekday_time' => '2pm - 6pm',
+    'contact_hours_weekend' => 'Saturday - Sunday',
+    'contact_hours_weekend_time' => '10am - 5pm',
+
+    // Volunteer Page
+    'volunteer_heading' => 'Become a volunteer',
+    'volunteer_description' => 'Join our team of passionate volunteers and contribute to the well-being of our residents! Whether you have a few hours per week or per month, your help is precious to offer a second chance to our animals.',
+    'volunteer_missions_title' => 'Possible missions',
+    'volunteer_mission_website' => 'Website management',
+    'volunteer_mission_website_desc' => 'Animal file management',
+    'volunteer_mission_care' => 'Animal care',
+    'volunteer_mission_care_desc' => 'Walks, games, socialization, feeding',
+    'volunteer_mission_maintenance' => 'Maintenance',
+    'volunteer_mission_maintenance_desc' => 'Cleaning enclosures, common areas',
+    'volunteer_mission_communication' => 'Communication',
+    'volunteer_mission_communication_desc' => 'Photos, social networks, writing announcements',
+    'volunteer_mission_diy' => 'DIY and gardening',
+    'volunteer_mission_diy_desc' => 'Small works, outdoor improvements',
+
+    // Form Fields
+    'form_name' => 'Name',
+    'form_name_placeholder' => 'Harvey Specter',
+    'form_email' => 'Email',
+    'form_email_placeholder' => 'harvey.specter@gmail.com',
+    'form_phone' => 'Phone',
+    'form_phone_placeholder' => '0482/ 01 09 82',
+    'form_address' => 'Address',
+    'form_address_placeholder' => 'Rue de Genville 334, 8890 Passendale',
+    'form_message' => 'Message',
+    'form_message_placeholder' => 'Enter your message here.',
+    'form_submit' => 'Send',
+
     // Others
     'next' => 'Next &raquo;',
     'no_data' => 'No data available',

@@ -5,33 +5,33 @@
             <div class="space-y-12">
                 <!-- Hero Section -->
                 <x-client.page-hero
-                    title="Devenez bénévole"
-                    description="Rejoignez notre équipe de bénévoles passionnés et contribuez au bien-être de nos pensionnaires ! Que vous ayez quelques heures par semaine ou par mois, votre aide est précieuse pour offrir une seconde chance à nos animaux."
+                    :title="__('client.volunteer_heading')"
+                    :description="__('client.volunteer_description')"
                 />
 
                 <!-- Missions Possible -->
                 <x-client.mission-list
-                    title="Missions possibles"
+                    :title="__('client.volunteer_missions_title')"
                     :missions="[
                         [
-                            'category' => 'Gestion du site internet',
-                            'description' => 'Management des fiches d\'animaux'
+                            'category' => __('client.volunteer_mission_website'),
+                            'description' => __('client.volunteer_mission_website_desc')
                         ],
                         [
-                            'category' => 'Soins des animaux',
-                            'description' => 'Promenades, jeux, socialisation, nourrissage'
+                            'category' => __('client.volunteer_mission_care'),
+                            'description' => __('client.volunteer_mission_care_desc')
                         ],
                         [
-                            'category' => 'Entretien',
-                            'description' => 'Nettoyage des enclos, espaces communs'
+                            'category' => __('client.volunteer_mission_maintenance'),
+                            'description' => __('client.volunteer_mission_maintenance_desc')
                         ],
                         [
-                            'category' => 'Communication',
-                            'description' => 'Photos, réseaux sociaux, rédaction d\'annonces'
+                            'category' => __('client.volunteer_mission_communication'),
+                            'description' => __('client.volunteer_mission_communication_desc')
                         ],
                         [
-                            'category' => 'Bricolage et jardinage',
-                            'description' => 'Petits travaux, aménagements extérieurs'
+                            'category' => __('client.volunteer_mission_diy'),
+                            'description' => __('client.volunteer_mission_diy_desc')
                         ],
                     ]"
                 />
@@ -45,8 +45,8 @@
 
                         <x-client.form.input
                             name="name"
-                            label="Nom"
-                            placeholder="Harvey Specter"
+                            :label="__('client.form_name')"
+                            :placeholder="__('client.form_name_placeholder')"
                             :required="true"
                             autocomplete="name"
                         />
@@ -54,8 +54,8 @@
                         <x-client.form.input
                             type="email"
                             name="email"
-                            label="Email"
-                            placeholder="harvey.specter@gmail.com"
+                            :label="__('client.form_email')"
+                            :placeholder="__('client.form_email_placeholder')"
                             :required="true"
                             autocomplete="email"
                         />
@@ -63,29 +63,29 @@
                         <x-client.form.input
                             type="tel"
                             name="phone"
-                            label="Téléphone"
-                            placeholder="0482/ 01 09 82"
+                            :label="__('client.form_phone')"
+                            :placeholder="__('client.form_phone_placeholder')"
                             autocomplete="tel"
                         />
 
                         <x-client.form.input
                             name="address"
-                            label="Adresse"
-                            placeholder="Rue de Genville 334, 8890 Passendale"
+                            :label="__('client.form_address')"
+                            :placeholder="__('client.form_address_placeholder')"
                             autocomplete="street-address"
                         />
 
                         <x-client.form.textarea
                             name="message"
-                            label="Message"
-                            placeholder="Entrez votre message ici."
+                            :label="__('client.form_message')"
+                            :placeholder="__('client.form_message_placeholder')"
                             :rows="6"
                             :required="true"
                         />
 
                         <div class="flex justify-end pt-2">
                             <x-client.form.button>
-                                Envoyer
+                                {{ __("client.form_submit") }}
                             </x-client.form.button>
                         </div>
                     </form>
