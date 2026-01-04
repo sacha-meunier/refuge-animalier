@@ -14,27 +14,63 @@
                 {{ __("client.animals_heading") }}
             </h1>
 
-            {{-- Search field --}}
-            <form
-                method="GET"
-                action="{{ route("client.animals.index") }}"
-                class="w-full sm:w-auto"
-            >
-                <div class="relative">
-                    <div
-                        class="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none"
-                    >
-                        <x-svg.search size="sm" class="text-muted-foreground" />
+            {{-- Search and Filters --}}
+            <div class="flex flex-wrap gap-2 w-full sm:w-auto">
+                <form
+                    method="GET"
+                    action="{{ route("client.animals.index") }}"
+                    class="grow basis-64 sm:grow-0 sm:basis-auto"
+                >
+                    {{-- Preserve filters when searching --}}
+                    @if (request("specie_id"))
+                        <input
+                            type="hidden"
+                            name="specie_id"
+                            value="{{ request("specie_id") }}"
+                        />
+                    @endif
+
+                    @if (request("breed_id"))
+                        <input
+                            type="hidden"
+                            name="breed_id"
+                            value="{{ request("breed_id") }}"
+                        />
+                    @endif
+
+                    @if (request("coat_id"))
+                        <input
+                            type="hidden"
+                            name="coat_id"
+                            value="{{ request("coat_id") }}"
+                        />
+                    @endif
+
+                    <div class="relative">
+                        <div
+                            class="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none"
+                        >
+                            <x-svg.search
+                                size="sm"
+                                class="text-muted-foreground"
+                            />
+                        </div>
+                        <input
+                            type="search"
+                            name="search"
+                            value="{{ request("search") }}"
+                            placeholder="{{ __("client.animals_search_placeholder") }}"
+                            class="w-full sm:w-64 lg:w-80 pl-11 pr-4 py-2.5 bg-background border border-border rounded-full text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors touch-target"
+                        />
                     </div>
-                    <input
-                        type="search"
-                        name="search"
-                        value="{{ request("search") }}"
-                        placeholder="{{ __("client.animals_search_placeholder") }}"
-                        class="w-full sm:w-64 lg:w-80 pl-11 pr-4 py-2.5 bg-background border border-border rounded-full text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors touch-target"
-                    />
-                </div>
-            </form>
+                </form>
+
+                <x-client.animal-filters
+                    :species="$species"
+                    :breeds="$breeds"
+                    :coats="$coats"
+                />
+            </div>
         </div>
 
         {{-- Animals grid --}}

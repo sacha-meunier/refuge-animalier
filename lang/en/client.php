@@ -79,6 +79,15 @@ return [
     'unknown_breed' => 'Unknown breed',
     'unknown_age' => 'Unknown age',
     'no_animals' => 'No animals found',
+    'filters' => 'Filters',
+    'filter_specie' => 'Species',
+    'filter_breed' => 'Breed',
+    'filter_coat' => 'Coat',
+    'all_species' => 'All species',
+    'all_breeds' => 'All breeds',
+    'all_coats' => 'All coats',
+    'apply_filters' => 'Apply',
+    'reset_filters' => 'Reset',
 
     // Others
     'next' => 'Next &raquo;',
