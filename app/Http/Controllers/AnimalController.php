@@ -55,29 +55,29 @@ class AnimalController extends Controller
         $species = Specie::withCount(['animals' => function ($query) {
             $query->where('published', true);
         }])
-        ->whereHas('animals', function ($query) {
-            $query->where('published', true);
-        })
-        ->orderBy('name')
-        ->get();
+            ->whereHas('animals', function ($query) {
+                $query->where('published', true);
+            })
+            ->orderBy('name')
+            ->get();
 
         $breeds = Breed::withCount(['animals' => function ($query) {
             $query->where('published', true);
         }])
-        ->whereHas('animals', function ($query) {
-            $query->where('published', true);
-        })
-        ->orderBy('name')
-        ->get();
+            ->whereHas('animals', function ($query) {
+                $query->where('published', true);
+            })
+            ->orderBy('name')
+            ->get();
 
         $coats = Coat::withCount(['animals' => function ($query) {
             $query->where('published', true);
         }])
-        ->whereHas('animals', function ($query) {
-            $query->where('published', true);
-        })
-        ->orderBy('name')
-        ->get();
+            ->whereHas('animals', function ($query) {
+                $query->where('published', true);
+            })
+            ->orderBy('name')
+            ->get();
 
         return view('pages.client.animals.index', compact('animals', 'species', 'breeds', 'coats'));
     }
@@ -85,7 +85,7 @@ class AnimalController extends Controller
     public function show(Animal $animal)
     {
         // Only show published animals
-        abort_if(!$animal->published, 404);
+        abort_if(! $animal->published, 404);
 
         return view('pages.client.animals.show', compact('animal'));
     }
