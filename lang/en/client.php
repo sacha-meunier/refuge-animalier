@@ -112,6 +112,10 @@ return [
     'appointment_prepare_id' => 'Bring a piece of ID',
     'appointment_message_placeholder' => 'Tell us about yourself, your lifestyle, your availability for a visit...',
 
+    // Success Messages
+    'contact_success' => 'Your message has been sent successfully! We will get back to you as soon as possible.',
+    'volunteer_success' => 'Your volunteering application has been sent successfully! We will contact you soon.',
+
     // Others
     'next' => 'Next &raquo;',
     'no_data' => 'No data available',

@@ -15,7 +15,9 @@ Route::group([], function () {
 
     // Contact
     Route::get('/contact', [ContactController::class, 'create'])->name('contact.create');
+    Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
     // Volunteer
     Route::get('/volunteer', [VolunteerController::class, 'create'])->name('volunteer.create');
+    Route::post('/volunteer', [VolunteerController::class, 'store'])->name('volunteer.store');
 });

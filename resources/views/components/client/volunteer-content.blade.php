@@ -39,8 +39,16 @@
 
             <!-- Right Column: Volunteer Form -->
             <div class="lg:pl-8">
-                <div class="bg-accent/30 border border-border/60 rounded-2xl p-4 sm:p-6 lg:p-8">
-                    <form method="POST" {{--action="{{ route('volunteer.store') }}"--}} class="space-y-6">
+                <x-client.flash-message />
+
+                <div
+                    class="bg-accent/30 border border-border/60 rounded-2xl p-4 sm:p-6 lg:p-8"
+                >
+                    <form
+                        method="POST"
+                        action="{{ route("volunteer.store") }}"
+                        class="space-y-6"
+                    >
                         @csrf
 
                         <x-client.form.input
