@@ -2,12 +2,13 @@
 
 use App\Http\Controllers\AnimalController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\VolunteerController;
 use Illuminate\Support\Facades\Route;
 
 Route::group([], function () {
     // Home
-    Route::get('/', fn () => view('home'))->name('home');
+    Route::get('/', [HomeController::class, 'index'])->name('home');
 
     // Animals
     Route::get('/animals', [AnimalController::class, 'index'])->name('client.animals.index');

@@ -112,6 +112,19 @@ return [
     'appointment_prepare_id' => 'Bring a piece of ID',
     'appointment_message_placeholder' => 'Tell us about yourself, your lifestyle, your availability for a visit...',
 
+    // Home Page
+    'home_hero_title' => 'Find the companion who will change your life',
+    'home_hero_description' => 'Search for the one who suits you among our residents. Schedule an appointment in just a few clicks.',
+    'home_hero_find_animal' => 'Find an animal',
+    'home_hero_become_volunteer' => 'Become a volunteer',
+    'home_stats_title' => 'Shelter statistics',
+    'home_stats_description' => 'Thanks to each adopter, we can offer a loving home to more and more animals. Together, let\'s make a difference.',
+    'home_stats_rescued' => 'Animals rescued this year',
+    'home_stats_adopted' => 'Animals adopted this year',
+    'home_stats_current' => 'Animals currently with us',
+    'home_animals_title' => 'Some of our residents',
+    'home_animals_description' => 'Learn about them by discovering their personality and other information through their complete profiles.',
+
     // Success Messages
     'contact_success' => 'Your message has been sent successfully! We will get back to you as soon as possible.',
     'volunteer_success' => 'Your volunteering application has been sent successfully! We will contact you soon.',
