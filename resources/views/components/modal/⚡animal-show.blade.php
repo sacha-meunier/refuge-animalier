@@ -10,6 +10,15 @@ new class extends Component {
     {
         $this->dispatch("delete-animal", animalId: $this->animal->id);
     }
+
+    public function togglePublish()
+    {
+        $this->animal->update([
+            "published" => ! $this->animal->published,
+        ]);
+
+        $this->dispatch("animal-updated");
+    }
 };
 ?>
 
@@ -99,11 +108,13 @@ new class extends Component {
         @endcan
 
         @can("publish", $animal)
-            @if ($animal->status->value === "in_progress")
-                <x-button size="sm">
-                    {{ __("modals/modals.button_publish") }}
-                </x-button>
-            @endif
+            <x-button
+                size="sm"
+                wire:click="togglePublish"
+                variant="{{ $animal->published ? 'secondary' : 'default' }}"
+            >
+                {{ $animal->published ? __("modals/modals.button_unpublish") : __("modals/modals.button_publish") }}
+            </x-button>
         @endcan
 
         @can("delete", $animal)

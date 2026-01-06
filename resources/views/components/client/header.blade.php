@@ -41,7 +41,7 @@
             <div class="hidden md:flex items-center gap-4">
                 <a
                     href="{{ route("contact.create") }}"
-                    class="px-4 py-2 bg-primary text-primary-foreground rounded-full text-sm font-medium hover:bg-primary/70 transition-colors select-none"
+                    class="px-4 py-2 bg-primary text-primary-foreground rounded-full text-sm font-medium hover:bg-primary/70 transition-colors select-none touch-target"
                 >
                     {{ __("client.nav_contact") }}
                 </a>
@@ -50,11 +50,7 @@
             <!-- Mobile Menu Button -->
             <a
                 href="#footer-navigation"
-                class="md:hidden p-2 -mr-2 rounded-md hover:bg-accent transition-colors touch-manipulation"
-                style="
-                    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-                    touch-action: manipulation;
-                "
+                class="md:hidden p-2 -mr-2 rounded-md hover:bg-accent transition-colors touch-target"
                 aria-label="{{ __("client.aria_nav_menu") }}"
             >
                 <x-svg.menu size="md" :open="false" />

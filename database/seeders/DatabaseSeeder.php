@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             ReferenceDataSeeder::class,
             AnimalSeeder::class,
+            ContactSeeder::class,
             AdoptionSeeder::class,
             NoteSeeder::class,
         ]);

@@ -15,16 +15,19 @@ class AdoptionSeeder extends Seeder
 
     public function run(): void
     {
+        // Adoptions will be created manually through the website interface
+        // as they require specific contacts and animal associations
+
         // Get all animals
-        $animals = Animal::all();
+        // $animals = Animal::all();
 
         // Only create adoptions if we have enough animals
-        if ($animals->count() >= $this->adoptionCount) {
-            $animals->random($this->adoptionCount)->each(function ($animal) {
-                Adoption::factory()->create([
-                    'animal_id' => $animal->id,
-                ]);
-            });
-        }
+        // if ($animals->count() >= $this->adoptionCount) {
+        //     $animals->random($this->adoptionCount)->each(function ($animal) {
+        //         Adoption::factory()->create([
+        //             'animal_id' => $animal->id,
+        //         ]);
+        //     });
+        // }
     }
 }

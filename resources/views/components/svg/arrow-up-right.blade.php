@@ -1,0 +1,4 @@
+<x-svg.base {{ $attributes }}>
+    <path d="M7 17L17 7"/>
+    <path d="M7 7h10v10"/>
+</x-svg.base>

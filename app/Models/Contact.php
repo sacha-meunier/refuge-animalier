@@ -12,14 +12,20 @@ class Contact extends Model
     use HasFactory;
 
     protected $fillable = [
-        'username',
+        'name',
         'email',
         'phone',
+        'address',
     ];
 
     public function adoptions(): HasMany
     {
         return $this->hasMany(Adoption::class);
+    }
+
+    public function messages(): HasMany
+    {
+        return $this->hasMany(Message::class);
     }
 
     public function formattedDate(): Attribute

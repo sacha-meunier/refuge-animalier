@@ -1,0 +1,27 @@
+[
+  {
+    "name": "Marie Dubois",
+    "email": "marie.dubois@email.com",
+    "phone": "0478123456"
+  },
+  {
+    "name": "Pierre Martin",
+    "email": "pierre.martin@email.com",
+    "phone": "0612345678"
+  },
+  {
+    "name": "Sophie Laurent",
+    "email": "sophie.laurent@email.com",
+    "phone": "0698765432"
+  },
+  {
+    "name": "Jean Petit",
+    "email": "jean.petit@email.com",
+    "phone": "0456789012"
+  },
+  {
+    "name": "Claire Rousseau",
+    "email": "claire.rousseau@email.com",
+    "phone": "0687654321"
+  }
+]

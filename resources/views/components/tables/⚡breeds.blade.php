@@ -47,11 +47,7 @@ new class extends Component {
                     <livewire:cell type="button" />
                 </tr>
             @empty
-                <tr>
-                    <td class="h-32 text-center text-sm text-muted-foreground">
-                        {{ __('pagination.no_data') }}
-                    </td>
-                </tr>
+                <x-table.empty />
             @endforelse
         </tbody>
     </table>
