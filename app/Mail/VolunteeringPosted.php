@@ -41,7 +41,7 @@ class VolunteeringPosted extends Mailable
     public function content(): Content
     {
         return new Content(
-            markdown: 'mails.volunteering-posted',
+            markdown: 'mail.volunteering-posted',
         );
     }
 
