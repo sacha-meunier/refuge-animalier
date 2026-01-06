@@ -11,7 +11,7 @@ return [
     'title_home' => 'Home',
     'title_animals' => 'Animals',
     'title_contact' => 'Contact',
-    'title_volunteer' => 'Contact',
+    'title_volunteer' => 'Volunteer',
 
     // Aria-labels
     'aria_main_nav' => 'Main navigation',
