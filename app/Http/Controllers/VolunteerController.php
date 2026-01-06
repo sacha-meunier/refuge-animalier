@@ -40,9 +40,7 @@ class VolunteerController extends Controller
                 'contact_id' => $contact->id,
             ]);
 
-            // Load the contact relation explicitly
-            /*$message->load('contact');*/
-
+            // Send mail
             Mail::to($message->contact)->send(
                 new VolunteeringPosted($message)
             );

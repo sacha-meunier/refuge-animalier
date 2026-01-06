@@ -1,16 +1,32 @@
-<p>Bonjour, nous avons bien reçu votre demande pour devenir un bénévole chez</p>
-<div>{{ config("app.name") }}. Voici les informations que vous avez partagée avec nous</div>
-<ul>
-    <li>Nom : {{ $volunteerMessage->contact->name }}</li>
-    <li>Email : {{ $volunteerMessage->contact->email }}</li>
-    <li>Téléphone : {{ $volunteerMessage->contact->phone }}</li>
+<x-mail::message>
+    # Bonjour {{ $volunteerMessage->contact->name }} 👋
+
+    Merci d'avoir manifesté votre intérêt pour devenir bénévole chez **{{ config("app.name") }}** !
+    Nous avons bien reçu votre demande et nous sommes ravis de votre engagement
+    pour aider nos animaux.
+
+    ## Récapitulatif de votre demande
+    - **Nom** : {{ $volunteerMessage->contact->name }}
+    - **Email** : {{ $volunteerMessage->contact->email }}
+    - **Téléphone** : {{ $volunteerMessage->contact->phone }}
     @if ($volunteerMessage->contact->address)
-        <li>Adresse : {{ $volunteerMessage->contact->address }}</li>
+    - **Adresse** : {{ $volunteerMessage->contact->address }}
     @endif
 
-</ul>
+    - **Date** : {{ $volunteerMessage->created_at->format("d/m/Y à H:i") }}
 
-<p>Date de demande : {{ $volunteerMessage->created_at->format("d/m/Y à H:i") }}</p>
-<p>Nous reviendrons vers vous dans les plus brefs délais. Merci,</p>
+    <x-mail::panel>
+        **Votre message** :
+        {{ $volunteerMessage->message }}
+    </x-mail::panel>
 
-<p>{{ config("app.name") }}</p>
+    ## Prochaines étapes :
+    Notre équipe va examiner votre demande et vous recontacter dans les plus
+    brefs délais pour discuter des opportunités de bénévolat disponibles.
+    En attendant, n'hésitez pas à consulter notre site pour en savoir
+    plus sur nos animaux et notre mission.
+
+    <x-mail::button :url="route('home')">Visiter notre site</x-mail::button>
+
+    Merci encore pour votre générosité ! 💚 Cordialement, L'équipe {{ config("app.name") }}
+</x-mail::message>
