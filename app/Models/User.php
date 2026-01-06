@@ -22,6 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'receive_adoption_emails',
     ];
 
     /**
@@ -45,6 +46,7 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'role' => UserRole::class,
             'password' => 'hashed',
+            'receive_adoption_emails' => 'boolean',
         ];
     }
 
