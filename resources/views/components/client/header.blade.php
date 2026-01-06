@@ -8,7 +8,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-16">
             <!-- Logo -->
-            <x-client.app-logo />
+            <x-client.app-logo/>
 
             <!-- Desktop Navigation -->
             <nav
@@ -37,7 +37,7 @@
                 </x-client.nav-link>
             </nav>
 
-            <!-- Contact Button (Desktop) -->
+            <!-- Contact Button & Language Switcher (Desktop) -->
             <div class="hidden md:flex items-center gap-4">
                 <a
                     href="{{ route("contact.create") }}"
@@ -45,16 +45,21 @@
                 >
                     {{ __("client.nav_contact") }}
                 </a>
+
+                <x-language-switcher class="sm:hidden md:block"/>
             </div>
 
             <!-- Mobile Menu Button -->
-            <a
-                href="#footer-navigation"
-                class="md:hidden p-2 -mr-2 rounded-md hover:bg-accent transition-colors touch-target"
-                aria-label="{{ __("client.aria_nav_menu") }}"
-            >
-                <x-svg.menu size="md" :open="false" />
-            </a>
+            <div class="flex gap-2 items-center md:hidden">
+                <x-language-switcher/>
+                <a
+                    href="#footer-navigation"
+                    class="p-2 -mr-2 rounded-md hover:bg-accent transition-colors touch-target"
+                    aria-label="{{ __("client.aria_nav_menu") }}"
+                >
+                    <x-svg.menu size="md" :open="false"/>
+                </a>
+            </div>
         </div>
     </div>
 </header>

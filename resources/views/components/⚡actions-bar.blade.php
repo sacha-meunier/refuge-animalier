@@ -11,28 +11,35 @@ use Livewire\Component;
  * $actionModel defines the model tied to the policy to handle the required permission.
  * */
 new class extends Component {
-    public string $searchPlaceholder = "Search";
+    public string $searchPlaceholder = "";
     public bool $showFilters = true;
     public bool $showAction = false;
     public ?string $actionLabel = null;
     public ?string $actionPermission = null;
     public mixed $actionModel = null;
+
+    public function mount()
+    {
+        if (empty($this->searchPlaceholder)) {
+            $this->searchPlaceholder = __("components.search");
+        }
+    }
 };
 ?>
 
 <div class="h-14 px-6 flex items-center justify-between border-b border-border">
     {{-- Search Input --}}
-    <livewire:search :content="$searchPlaceholder"/>
+    <livewire:search :content="$searchPlaceholder" />
 
     {{-- Actions --}}
     <div class="flex items-center gap-3">
-        @if($showFilters)
+        @if ($showFilters)
             <x-button type="button" variant="outline" size="sm">
-                Filters
+                {{ __("components.filters") }}
             </x-button>
         @endif
 
-        @if($showAction && $actionLabel && $actionPermission && $actionModel)
+        @if ($showAction && $actionLabel && $actionPermission && $actionModel)
             @can($actionPermission, $actionModel)
                 <x-button type="button" variant="primary" size="sm">
                     {{ $actionLabel }}
