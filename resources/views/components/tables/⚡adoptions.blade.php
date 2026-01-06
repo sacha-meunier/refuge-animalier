@@ -90,6 +90,16 @@ new class extends Component {
         $this->resetItems();
         $this->closeModal();
     }
+
+    #[On("open-modal")]
+    public function openModal(string $modal, array $params = [])
+    {
+        if (isset($params["adoption"])) {
+            $this->selectedItemId = $params["adoption"];
+        }
+
+        $this->modalMode = $modal;
+    }
 };
 ?>
 
@@ -178,7 +188,6 @@ new class extends Component {
         {{ $this->adoptions->links() }}
     </div>
 
-
     @if ($selectedItemId && $this->selectedItem && $modalMode === "show")
         <livewire:modal.adoption-show
             :adoption="$this->selectedItem"
@@ -201,6 +210,20 @@ new class extends Component {
             :contacts="$this->contacts"
             :statuses="$this->statuses"
             :key="'adoption-create'"
+        />
+    @endif
+
+    @if ($selectedItemId && $this->selectedItem && $modalMode === "notify-confirm")
+        <livewire:modal.adoption-notify-confirm
+            :adoption="$this->selectedItem"
+            :key="'adoption-notify-confirm-'.$selectedItemId"
+        />
+    @endif
+
+    @if ($selectedItemId && $this->selectedItem && $modalMode === "notify-compose")
+        <livewire:modal.adoption-notify-compose
+            :adoption="$this->selectedItem"
+            :key="'adoption-notify-compose-'.$selectedItemId"
         />
     @endif
 </div>

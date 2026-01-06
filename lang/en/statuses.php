@@ -12,6 +12,7 @@ return [
         'validated' => 'Validated',
         'in_progress' => 'In progress',
         'adopted' => 'Adopted',
+        'in_care' => 'In care',
     ],
     'adoptions' => [
         'pending' => 'Pending',
