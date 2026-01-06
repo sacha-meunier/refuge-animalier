@@ -136,9 +136,14 @@
             </div>
         </div>
 
+
         {{-- Appointment Form Section --}}
         <div id="schedule-visit" class="mt-16 scroll-mt-8">
-            <div class="max-w-4xl mx-auto bg-card border border-border rounded-2xl p-6 sm:p-8 lg:p-12">
+            <div
+                class="max-w-4xl mx-auto bg-card border border-border rounded-2xl p-6 sm:p-8 lg:p-12"
+            >
+                <x-client.flash-message />
+
                 <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12">
                     {{-- Left: Info --}}
                     <div class="lg:col-span-2 space-y-6">
@@ -186,13 +191,12 @@
 
                     {{-- Right: Form --}}
                     <div class="lg:col-span-3">
-                        <form method="POST" action="#" class="space-y-4">
+                        <form
+                            method="POST"
+                            action="{{ route("client.animals.store", $animal) }}"
+                            class="space-y-4"
+                        >
                             @csrf
-                            <input
-                                type="hidden"
-                                name="animal_id"
-                                value="{{ $animal->id }}"
-                            />
 
                             <x-client.form.input
                                 name="name"
