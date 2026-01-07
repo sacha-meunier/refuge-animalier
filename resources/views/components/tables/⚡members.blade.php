@@ -1,13 +1,17 @@
 <?php
 
+use App\Livewire\Traits\WithBulkActions;
+use App\Livewire\Traits\WithModal;
 use App\Livewire\Traits\WithSearch;
+use App\Livewire\Traits\WithSorting;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 new class extends Component {
-    use WithPagination, WithSearch;
+    use WithPagination, WithSearch, WithSorting, WithBulkActions, WithModal;
 
     public int $paginate = 10;
 
@@ -18,42 +22,93 @@ new class extends Component {
             ->when($this->search, function ($query) {
                 $query->where("name", "like", "%".$this->search."%");
             })
+            ->when($this->sortField, function ($query) {
+                $query->orderBy($this->sortField, $this->sortDirection);
+            })
             ->paginate($this->paginate);
+    }
+
+    protected function getModelClass(): string
+    {
+        return User::class;
+    }
+
+    protected function getItems()
+    {
+        return $this->users;
+    }
+
+    protected function resetItems(): void
+    {
+        unset($this->users);
     }
 };
 ?>
 
 <div>
-    <table class="w-full h-14 border-b border-border">
+    <table
+        class="w-full h-14 border-b border-border"
+        x-data="{ hoverAll: false }"
+    >
         <thead class="h-14 border-b border-border">
-            <tr>
-                <livewire:cell tag="th" type="checkbox" class="w-12 pl-6 pr-4"/>
+        <tr>
+            <x-table.checkbox-header/>
 
-                <livewire:cell tag="th" type="text" content="{{ __('pages/members/index.th_name') }}" />
+            <x-cell
+                tag="th"
+                type="text"
+                :content="__('pages/members/index.th_name')"
+                :sortable="true"
+                sort-field="name"
+                :sort-direction="$sortField === 'name' ? $sortDirection : ''"
+            />
 
-                <livewire:cell tag="th" type="text" content="{{ __('pages/members/index.th_email') }}" />
+            <x-cell
+                tag="th"
+                type="text"
+                :content="__('pages/members/index.th_email')"
+                :sortable="true"
+                sort-field="email"
+                :sort-direction="$sortField === 'email' ? $sortDirection : ''"
+            />
 
-                <livewire:cell tag="th" type="text" content="{{ __('pages/members/index.th_role') }}" />
+            <x-cell
+                tag="th"
+                type="text"
+                :content="__('pages/members/index.th_role')"
+                :sortable="true"
+                sort-field="role"
+                :sort-direction="$sortField === 'role' ? $sortDirection : ''"
+            />
 
-                <livewire:cell tag="th" type="text" content="" class="w-12 pl-4 pr-1"/>
-            </tr>
+            <x-cell
+                tag="th"
+                type="text"
+                content=""
+                class="w-12 pl-4 pr-1"
+            />
+        </tr>
         </thead>
         <tbody>
-            @forelse ($this->users as $user)
-                <tr class="h-14 hover:bg-muted/50" wire:key="{{ $user->id }}">
-                    <livewire:cell type="checkbox" class="w-12 pl-6 pr-4" />
+        @forelse ($this->users as $user)
+            <x-table.row :item="$user">
+                <x-table.checkbox-cell :value="$user->id"/>
 
-                    <livewire:cell type="text" content="{{ $user->name }}"/>
+                <x-cell type="text" :content="$user->name"/>
 
-                    <livewire:cell type="text" content="{{ $user->email }}"/>
+                <x-cell type="text" :content="$user->email"/>
 
-                    <livewire:cell type="badge" content="{{ $user->role->label() }}" badge-color="{{ $user->role->color() }}"/>
+                <x-cell type="badge" :content="$user->role->label() ?? __('dates.not_available')"
+                        :badge-color="$user->role->color() ?? ''"/>
 
-                    <livewire:cell type="button" />
-                </tr>
-            @empty
-                <x-table.empty />
-            @endforelse
+                <x-table.actions
+                    :item="$user"
+                    :selectedIds="$selectedIds"
+                />
+            </x-table.row>
+        @empty
+            <x-table.empty/>
+        @endforelse
         </tbody>
     </table>
 
