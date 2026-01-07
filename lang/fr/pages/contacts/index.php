@@ -14,6 +14,6 @@ return [
     'th_name' => 'Nom',
     'th_email' => 'E-mail',
     'th_phone' => 'Téléphone',
-    'th_adoptions' => 'Demandes d\'adoption',
+    'th_adoptions' => 'Demandes d’adoption',
     'th_created_at' => 'Créé le',
 ];
