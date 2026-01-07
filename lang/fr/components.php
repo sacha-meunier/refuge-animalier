@@ -27,4 +27,8 @@ return [
     // Actions bar
     'filters' => 'Filtres',
     'search' => 'Rechercher',
+
+    // Filter options
+    'all' => 'Tous',
+    'reset_filters' => 'Réinitialiser',
 ];

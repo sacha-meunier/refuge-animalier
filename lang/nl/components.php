@@ -27,4 +27,8 @@ return [
     // Actions bar
     'filters' => 'Filters',
     'search' => 'Zoeken',
+
+    // Filter options
+    'all' => 'Alle',
+    'reset_filters' => 'Resetten',
 ];

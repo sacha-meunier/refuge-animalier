@@ -14,4 +14,7 @@ return [
     'th_name' => 'Naam',
     'th_email' => 'E-mail',
     'th_role' => 'Rol',
+    'verification_status' => 'Verificatiestatus',
+    'verified' => 'Geverifieerd',
+    'not_verified' => 'Niet geverifieerd',
 ];
