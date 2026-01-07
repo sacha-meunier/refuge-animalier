@@ -15,5 +15,8 @@ return [
     'th_age' => 'Alter',
     'th_gender' => 'Geschlecht',
     'th_status' => 'Status',
+    'th_publish' => 'Veröffentlichen',
+    'th_publish_true' => 'Veröffentlicht',
+    'th_publish_false' => 'Unveröffentlicht',
     'th_admission_date' => 'Aufnahmedatum',
 ];

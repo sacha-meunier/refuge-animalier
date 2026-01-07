@@ -15,5 +15,8 @@ return [
     'th_age' => 'Leeftijd',
     'th_gender' => 'Geslacht',
     'th_status' => 'Status',
+    'th_publish' => 'Publiceren',
+    'th_publish_true' => 'Gepubliceerd',
+    'th_publish_false' => 'Ongepubliceerd',
     'th_admission_date' => 'Opnamedatum',
 ];

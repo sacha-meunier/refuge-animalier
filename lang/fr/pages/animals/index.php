@@ -15,5 +15,8 @@ return [
     'th_age' => 'Âge',
     'th_gender' => 'Sexe',
     'th_status' => 'Statut',
+    'th_publish' => 'Publication',
+    'th_publish_true' => 'Publié',
+    'th_publish_false' => 'Non publié',
     'th_admission_date' => 'Date d\'admission',
 ];
