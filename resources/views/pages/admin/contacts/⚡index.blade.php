@@ -10,10 +10,12 @@ new class extends Component {
 ?>
 
 <div class="w-full">
-    <livewire:page-header title="{{ __('pages/contacts/index.title') }}"/>
+    <livewire:page-header
+        :title="__('pages/contacts/index.title')"
+    />
     <livewire:actions-bar
-        searchPlaceholder="{{ __('pages/contacts/index.action_bar_search_label')}}"
-        showFilters="true"
+        :searchPlaceholder="__('pages/contacts/index.action_bar_search_label')"
+        :showFilters="false"
     />
     <livewire:tables.contacts/>
 </div>
