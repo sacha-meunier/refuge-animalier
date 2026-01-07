@@ -1,19 +1,24 @@
 <?php
 
+use App\Livewire\Traits\WithSearch;
 use App\Models\User;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 new class extends Component {
-    use WithPagination;
+    use WithPagination, WithSearch;
 
     public int $paginate = 10;
 
     #[Computed]
     public function users()
     {
-        return User::paginate($this->paginate);
+        return User::query()
+            ->when($this->search, function ($query) {
+                $query->where("name", "like", "%".$this->search."%");
+            })
+            ->paginate($this->paginate);
     }
 };
 ?>
