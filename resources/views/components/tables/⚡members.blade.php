@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\UserRole;
 use App\Livewire\Forms\MemberForm;
 use App\Livewire\Traits\WithBulkActions;
 use App\Livewire\Traits\WithModal;
@@ -31,6 +32,12 @@ new class extends Component {
             ->paginate($this->paginate);
     }
 
+    #[Computed(persist: true)]
+    public function roles()
+    {
+        return UserRole::cases();
+    }
+
     protected function getModelClass(): string
     {
         return User::class;
@@ -56,6 +63,13 @@ new class extends Component {
 
         $this->closeModal();
         unset($this->users);
+    }
+
+    #[On("refresh-members")]
+    public function refreshMembers()
+    {
+        $this->resetItems();
+        $this->closeModal();
     }
 };
 ?>
@@ -130,4 +144,11 @@ new class extends Component {
     <div class="h-14 px-6 flex align-center">
         {{ $this->users->links() }}
     </div>
+
+    @if ($modalMode === "create")
+        <livewire:modal.member-create
+            :roles="$this->roles"
+            :key="'member-create'"
+        />
+    @endif
 </div>

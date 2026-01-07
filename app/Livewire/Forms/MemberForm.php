@@ -3,42 +3,47 @@
 namespace App\Livewire\Forms;
 
 use App\Enums\UserRole;
+use App\Mail\NewMemberCreated;
 use App\Models\User;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Livewire\Form;
 
 class MemberForm extends Form
 {
-    public ?User $user;
-
     public ?string $name = null;
 
     public ?string $email = null;
 
     public ?string $role = null;
 
-    //public ?string $email_verified_at = '';
-
-    public ?string $password = '';
-
-    //public $two_factor_secret = '';
-
-    //public $two_factor_recovery_codes = '';
-
-    //public $two_factor_confirmed_at = '';
-
     public function rules()
     {
         return [
             'name' => 'required|min:2|max:60',
-            'email' => 'required|email|min:2|max:60',
+            'email' => 'required|email|min:2|max:60|unique:users,email',
             'role' => ['required', Rule::enum(UserRole::class)],
-            /*'email_verified_at' => 'nullable|date',*/
-            'password' => 'required',
-            /*'two_factor_secret' => 'nullable',*/
-            /*'two_factor_recovery_codes' => 'nullable',*/
-            /*'two_factor_confirmed_at' => 'nullable|date',*/
         ];
+    }
+
+    public function store()
+    {
+        $this->validate();
+
+        // Generate random password
+        $randomPassword = Str::random(12);
+
+        $user = User::create([
+            'name' => $this->name,
+            'email' => $this->email,
+            'role' => $this->role,
+            'password' => bcrypt($randomPassword),
+        ]);
+
+        // Send email with credentials
+        Mail::to($user->email)
+            ->send(new NewMemberCreated($user, $randomPassword));
     }
 
     public function delete(User $user)
