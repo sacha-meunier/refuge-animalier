@@ -18,5 +18,10 @@ return [
     'no_data' => 'No data available',
     'selected_singular' => 'item selected',
     'selected_plural' => 'items selected',
+    'showing' => 'Showing',
+    'to' => 'to',
+    'of' => 'of',
+    'results' => 'results',
+    'go_to_page' => 'Go to page :page',
 
 ];

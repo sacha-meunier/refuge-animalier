@@ -14,4 +14,12 @@ return [
 
     'previous' => '&laquo; Zurück',
     'next' => 'Weiter &raquo;',
+    'no_data' => 'Keine Daten verfügbar',
+    'selected_singular' => 'Element ausgewählt',
+    'selected_plural' => 'Elemente ausgewählt',
+    'showing' => 'Zeige',
+    'to' => 'bis',
+    'of' => 'von',
+    'results' => 'Ergebnissen',
+    'go_to_page' => 'Gehe zu Seite :page',
 ];
