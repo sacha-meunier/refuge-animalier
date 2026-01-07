@@ -9,8 +9,11 @@ use App\Enums\AnimalStatus;
 use Illuminate\Support\Collection;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 new class extends Component {
+    use WithFileUploads;
+
     public Animal $animal;
     public AnimalForm $form;
     public array $genders;
@@ -79,6 +82,25 @@ new class extends Component {
                 <div>
                     @error("form.description")
                         <span class="text-destructive">{{ $message }}</span>
+                    @enderror
+                </div>
+            </div>
+
+            {{-- Image --}}
+            <div class="mb-4">
+                <label for="image" class="block text-sm font-medium mb-2">
+                    {{ __("modals/animals/edit.field_image") }}
+                </label>
+                <input
+                    type="file"
+                    id="image"
+                    wire:model="form.image"
+                    accept="image/jpeg,image/png,image/webp"
+                    class="w-full px-3 py-2 border border-border rounded-md bg-background"
+                />
+                <div>
+                    @error("form.image")
+                    <span class="text-destructive">{{ $message }}</span>
                     @enderror
                 </div>
             </div>

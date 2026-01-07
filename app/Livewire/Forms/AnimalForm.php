@@ -4,15 +4,22 @@ namespace App\Livewire\Forms;
 
 use App\Enums\AnimalGender;
 use App\Enums\AnimalStatus;
+use App\Livewire\Traits\HandleFileUpload;
 use App\Models\Animal;
 use Illuminate\Validation\Rule;
 use Livewire\Form;
 
 class AnimalForm extends Form
 {
+    use HandleFileUpload;
+
     public ?Animal $animal;
 
     public ?string $name = null;
+
+    public mixed $image = null;
+
+    public ?string $image_path = null;
 
     public ?string $description = null;
 
@@ -39,6 +46,7 @@ class AnimalForm extends Form
             'coat_id' => 'nullable|exists:coats,id',
             'admission_date' => 'nullable|date|before_or_equal:today|after_or_equal:age',
             'status' => ['required', Rule::enum(AnimalStatus::class)],
+            'image' => 'nullable|image|mimes:jpeg,png,webp|max:5120',
         ];
     }
 
@@ -53,20 +61,52 @@ class AnimalForm extends Form
         $this->coat_id = $animal->coat?->id;
         $this->admission_date = $animal->admission_date?->format('Y-m-d');
         $this->status = $animal->status->value;
+        $this->image_path = $animal->image_path;
     }
 
     public function store()
     {
         $this->validate();
 
-        Animal::create($this->all());
+        $data = $this->all();
+
+        $animal = Animal::create($data);
+
+        if ($this->image) {
+            $filename = $this->uploadAnimalImage($this->image, $animal->id);
+            $animal->update(['image_path' => $filename]);
+        }
+
+        // Gérer l'upload de l'image
+//        if ($this->image) {
+//            // On crée d'abord l'animal pour avoir son ID
+//            $animal = Animal::create($data);
+//            $filename = $this->uploadAnimalImage($this->image, $animal->id);
+//            if ($filename) {
+//                $animal->update(['image_path' => $filename]);
+//            }
+//        } else {
+//            Animal::create($data);
+//        }
     }
 
     public function update()
     {
         $this->validate();
 
-        $this->animal->update($this->all());
+        $data = $this->all();
+
+        if ($this->image) {
+            // Replace old image
+            if ($this->animal->image_path) {
+                $this->deleteAnimalImages($this->animal->image_path);
+            }
+            // Upload new image
+            $filename = $this->uploadAnimalImage($this->image, $this->animal->id);
+            $data['image_path'] = $filename;
+        }
+
+        $this->animal->update($data);
     }
 
     public function delete(Animal $animal)

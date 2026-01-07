@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Storage;
 
 class Animal extends Model
 {
@@ -20,7 +21,7 @@ class Animal extends Model
         'age',
         'description',
         'status',
-        'pictures',
+        'image_path',
         'published',
         'admission_date',
         'coat_id',
@@ -31,7 +32,6 @@ class Animal extends Model
     protected $casts = [
         'age' => 'datetime',
         'admission_date' => 'datetime',
-        'pictures' => 'array',
         'published' => 'boolean',
         'gender' => AnimalGender::class,
         'status' => AnimalStatus::class,
@@ -68,6 +68,33 @@ class Animal extends Model
     {
         return Attribute::make(
             get: fn () => $this->admission_date?->diffForHumans(),
+        );
+    }
+
+    public function imageUrl(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->image_path
+                ? Storage::disk('animals')->url(config('image.animals.original.path') . '/' . $this->image_path . '.webp')
+                : null,
+        );
+    }
+
+    public function imageThumbnailUrl(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->image_path
+                ? Storage::disk('animals')->url(config('image.animals.variants.thumbnail.path') . '/' . $this->image_path . '.webp')
+                : null,
+        );
+    }
+
+    public function imageMediumUrl(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->image_path
+                ? Storage::disk('animals')->url(config('image.animals.variants.medium.path') . '/' . $this->image_path . '.webp')
+                : null,
         );
     }
 }
