@@ -145,6 +145,13 @@ new class extends Component {
         {{ $this->users->links() }}
     </div>
 
+    @if ($selectedItemId && $this->selectedItem && $modalMode === "show")
+        <livewire:modal.member-show
+            :member="$this->selectedItem"
+            :key="'member-show-'.$selectedItemId"
+        />
+    @endif
+
     @if ($modalMode === "create")
         <livewire:modal.member-create
             :roles="$this->roles"
