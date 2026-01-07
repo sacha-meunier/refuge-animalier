@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\Forms\MemberForm;
 use App\Livewire\Traits\WithBulkActions;
 use App\Livewire\Traits\WithModal;
 use App\Livewire\Traits\WithSearch;
@@ -7,12 +8,14 @@ use App\Livewire\Traits\WithSorting;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Attributes\Computed;
+use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 new class extends Component {
     use WithPagination, WithSearch, WithSorting, WithBulkActions, WithModal;
 
+    public MemberForm $form;
     public int $paginate = 10;
 
     #[Computed]
@@ -40,6 +43,18 @@ new class extends Component {
 
     protected function resetItems(): void
     {
+        unset($this->users);
+    }
+
+    #[On('delete-user')]
+    public function deleteUser(int $userId)
+    {
+        $user = User::findOrFail($userId);
+        $this->authorize('delete', $user);
+
+        $this->form->delete($user);
+
+        $this->closeModal();
         unset($this->users);
     }
 };
