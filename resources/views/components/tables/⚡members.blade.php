@@ -3,6 +3,7 @@
 use App\Enums\UserRole;
 use App\Livewire\Forms\MemberForm;
 use App\Livewire\Traits\WithBulkActions;
+use App\Livewire\Traits\WithFilters;
 use App\Livewire\Traits\WithModal;
 use App\Livewire\Traits\WithSearch;
 use App\Livewire\Traits\WithSorting;
@@ -14,7 +15,12 @@ use Livewire\Component;
 use Livewire\WithPagination;
 
 new class extends Component {
-    use WithPagination, WithSearch, WithSorting, WithBulkActions, WithModal;
+    use WithPagination,
+        WithSearch,
+        WithSorting,
+        WithBulkActions,
+        WithModal,
+        WithFilters;
 
     public MemberForm $form;
     public int $paginate = 10;
@@ -24,7 +30,10 @@ new class extends Component {
     {
         return User::query()
             ->when($this->search, function ($query) {
-                $query->where("name", "like", "%".$this->search."%");
+                $query->where("name", "like", "%" . $this->search . "%");
+            })
+            ->when($this->getFilterValue("role"), function ($query, $role) {
+                $query->where("role", $role);
             })
             ->when($this->sortField, function ($query) {
                 $query->orderBy($this->sortField, $this->sortDirection);
@@ -36,6 +45,21 @@ new class extends Component {
     public function roles()
     {
         return UserRole::cases();
+    }
+
+    #[Computed]
+    public function roleCounts()
+    {
+        $counts = User::query()
+            ->selectRaw("role, COUNT(*) as count")
+            ->groupBy("role")
+            ->pluck("count", "role");
+
+        return collect(UserRole::cases())->mapWithKeys(function ($role) use (
+            $counts,
+        ) {
+            return [$role->value => $counts[$role->value] ?? 0];
+        });
     }
 
     protected function getModelClass(): string
@@ -75,6 +99,49 @@ new class extends Component {
 ?>
 
 <div>
+    <x-filters-popover>
+        <div class="space-y-4">
+            {{-- Role Filter --}}
+            <div class="space-y-2">
+                <label
+                    for="roleFilter"
+                    class="block text-sm font-medium text-foreground"
+                >
+                    {{ __("pages/members/index.th_role") }}
+                </label>
+                <select
+                    id="roleFilter"
+                    wire:model.live="filters.role"
+                    wire:change="closeFilters"
+                    class="w-full px-3 py-2 bg-background border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                >
+                    <option value="">{{ __("components.all") }}</option>
+                    @foreach ($this->roles as $role)
+                        <option value="{{ $role->value }}">
+                            {{ $role->label() }}
+                            ({{ $this->roleCounts[$role->value] }})
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+
+            {{-- Reset Filters Button --}}
+            @if ($this->hasActiveFilters())
+                <div class="pt-2">
+                    <x-button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        wire:click="resetFilters"
+                        class="w-full"
+                    >
+                        {{ __("components.reset_filters") }}
+                    </x-button>
+                </div>
+            @endif
+        </div>
+    </x-filters-popover>
+
     <table
         class="w-full h-14 border-b border-border"
         x-data="{ hoverAll: false }"
