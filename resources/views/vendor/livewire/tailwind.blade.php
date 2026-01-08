@@ -67,19 +67,19 @@
             >
                 <div>
                     <p class="text-sm text-muted-foreground leading-5">
-                        <span>{!! __("Showing") !!}</span>
+                        <span>{!! __("pagination.showing") !!}</span>
                         <span class="font-medium">
                             {{ $paginator->firstItem() }}
                         </span>
-                        <span>{!! __("to") !!}</span>
+                        <span>{!! __("pagination.to") !!}</span>
                         <span class="font-medium">
                             {{ $paginator->lastItem() }}
                         </span>
-                        <span>{!! __("of") !!}</span>
+                        <span>{!! __("pagination.of") !!}</span>
                         <span class="font-medium">
                             {{ $paginator->total() }}
                         </span>
-                        <span>{!! __("results") !!}</span>
+                        <span>{!! __("pagination.results") !!}</span>
                     </p>
                 </div>
 
@@ -169,7 +169,7 @@
                                                 wire:click="gotoPage({{ $page }}, '{{ $paginator->getPageName() }}')"
                                                 x-on:click="{{ $scrollIntoViewJsSnippet }}"
                                                 class="relative inline-flex items-center px-3.5 py-2 rounded-lg -ml-px text-sm font-medium leading-5 cursor-pointer text-accent-foreground bg-accent/0 border border-border/0 hover:bg-accent focus:z-10 focus:outline-none focus:border-ring focus:ring ring-ring active:bg-accent active:border-border"
-                                                aria-label="{{ __("Go to page :page", ["page" => $page]) }}"
+                                                aria-label="{{ __("pagination.go_to_page", ["page" => $page]) }}"
                                             >
                                                 {{ $page }}
                                             </button>

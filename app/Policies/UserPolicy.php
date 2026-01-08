@@ -57,4 +57,12 @@ class UserPolicy
     {
         return $user->isAdmin() && $user->id !== $member->id;
     }
+
+    /**
+     * Determine if the user can manage email notification settings.
+     */
+    public function manageEmailNotifications(User $user): bool
+    {
+        return $user->isAdmin();
+    }
 }

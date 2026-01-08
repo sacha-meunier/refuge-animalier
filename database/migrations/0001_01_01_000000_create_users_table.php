@@ -19,6 +19,7 @@ return new class extends Migration
             $table->enum('role', UserRole::cases())->default(UserRole::VOLUNTEER);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->boolean('receive_adoption_emails')->default(true);
             $table->rememberToken();
             $table->timestamps();
         });

@@ -68,10 +68,10 @@ new class extends Component {
             @case("species")
                 {{-- Search and Actions Bar --}}
                 <livewire:actions-bar
-                    searchPlaceholder="{{ __('pages/database/index.label_search_species') }}"
-                    showFilters="true"
-                    showAction="true"
-                    actionLabel="{{ __('pages/database/index.label_action_species') }}"
+                    :searchPlaceholder="__('pages/database/index.label_search_species')"
+                    :showFilters="false"
+                    :showAction="true"
+                    :actionLabel="__('pages/database/index.label_action_species')"
                     actionPermission="create"
                     actionModel="{{ Specie::class }}"
                 />
@@ -81,10 +81,10 @@ new class extends Component {
             @case("breeds")
                 {{-- Search and Actions Bar --}}
                 <livewire:actions-bar
-                    searchPlaceholder="{{ __('pages/database/index.label_search_breeds') }}"
-                    showFilters="true"
-                    showAction="true"
-                    actionLabel="{{ __('pages/database/index.label_action_breeds') }}"
+                    :searchPlaceholder="__('pages/database/index.label_search_breeds')"
+                    :showFilters="false"
+                    :showAction="true"
+                    :actionLabel="__('pages/database/index.label_action_breeds')"
                     actionPermission="create"
                     actionModel="{{ Breed::class }}"
                 />
@@ -94,24 +94,13 @@ new class extends Component {
             @case("vaccines")
                 {{-- Search and Actions Bar --}}
                     <livewire:actions-bar
-                    searchPlaceholder="{{ __('pages/database/index.label_search_vaccines') }}"
-                    showFilters="true"
-                    showAction="true"
-                    actionLabel="{{ __('pages/database/index.label_action_vaccines') }}"
+                    :searchPlaceholder="__('pages/database/index.label_search_vaccines')"
+                    :showFilters="false"
+                    :showAction="true"
+                    :actionLabel="__('pages/database/index.label_action_vaccines')"
                     actionPermission="create"
                     :actionModel="Specie::class"
                     />
-
-                {{-- Table --}}
-                {{--
-                    <livewire:data-table
-                    :columns="$this->getVaccinesColumns()"
-                    :data="$this->vaccinesData"
-                    showCheckbox="true"
-                    showActions="true"
-                    enablePagination="true"
-                    />
-                --}}
 
                 @break
         @endswitch

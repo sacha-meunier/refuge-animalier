@@ -10,25 +10,48 @@ use Livewire\Component;
 new class extends Component {
     public Adoption $adoption;
     public AdoptionForm $form;
-    public array $statuses;
 
     public function mount(Adoption $adoption)
     {
         $this->form->setAdoption($adoption);
     }
 
+    #[Computed]
+    public function statuses()
+    {
+        return AdoptionStatus::cases();
+    }
+
     public function save()
     {
-        $this->authorize('update', $this->adoption);
+        $this->authorize("update", $this->adoption);
+
+        // Store old status value to detect changes
+        $oldStatusValue = $this->adoption->status->value;
+
         $this->form->update();
 
-        $this->dispatch('close-modal');
-        $this->dispatch('refresh-adoptions');
+        // Reload adoption to get updated status
+        $this->adoption->refresh();
+
+        // Check if status changed
+        if ($oldStatusValue !== $this->adoption->status->value) {
+            // Status changed, show notification prompt (don't close, just switch modal)
+            $this->dispatch(
+                "open-modal",
+                modal: "notify-confirm",
+                params: ["adoption" => $this->adoption->id],
+            );
+        } else {
+            // Status didn't change, just close and refresh
+            $this->dispatch("close-modal");
+            $this->dispatch("refresh-adoptions");
+        }
     }
 
     public function cancel()
     {
-        $this->dispatch('close-modal');
+        $this->dispatch("close-modal");
     }
 };
 ?>

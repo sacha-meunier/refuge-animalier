@@ -11,15 +11,15 @@ new class extends Component {
 
 <div class="w-full">
     <livewire:page-header
-        title="{{ __('pages/notes/index.title') }}"
+        :title="__('pages/notes/index.title')"
         showAction="true"
-        actionLabel="{{ __('pages/notes/index.header_action_label') }}"
+        :actionLabel="__('pages/notes/index.header_action_label')"
         actionPermission="create"
         :actionModel="Note::class"
     />
     <livewire:actions-bar
-        searchPlaceholder="{{ __('pages/notes/index.action_bar_search_label')}}"
-        showFilters="true"
+        :searchPlaceholder="__('pages/notes/index.action_bar_search_label')"
+        :showFilters="false"
     />
-    <livewire:tables.notes/>
+    <livewire:tables.notes />
 </div>

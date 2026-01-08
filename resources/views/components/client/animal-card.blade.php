@@ -7,13 +7,27 @@
     {{ $attributes->merge(["class" => "group block bg-card border border-border rounded-2xl overflow-hidden hover:shadow-lg hover:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all touch-target"]) }}
 >
     {{-- Image --}}
-    <div class="aspect-[4/3] bg-muted">
-        {{-- Placeholder for now - will be replaced with actual images later --}}
-        <div
-            class="w-full h-full flex items-center justify-center text-muted-foreground"
-        >
-            <x-svg.dog size="2xl" class="opacity-50" />
-        </div>
+    <div class="aspect-[4/3] bg-muted overflow-hidden">
+        @if ($animal->pictures && ! empty($animal->pictures))
+            <img
+                src="{{ $animal->image_thumbnail_url }}"
+                srcset="
+                    {{ $animal->image_thumbnail_url }}  150w,
+                    {{ $animal->image_medium_url }}     500w,
+                    {{ $animal->image_url }}           1000w
+                "
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                alt="{{ $animal->name }}"
+                class="w-full h-full object-cover"
+                loading="lazy"
+            />
+        @else
+            <div
+                class="w-full h-full flex items-center justify-center text-muted-foreground"
+            >
+                <x-svg.dog size="2xl" class="opacity-50" />
+            </div>
+        @endif
     </div>
 
     {{-- Content --}}

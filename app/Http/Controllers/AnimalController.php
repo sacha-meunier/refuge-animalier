@@ -2,11 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\AdoptionStatus;
+use App\Http\Requests\StoreAdoptionRequest;
+use App\Mail\AdoptionPosted;
+use App\Mail\AdoptionRequestReceived;
+use App\Models\Adoption;
 use App\Models\Animal;
 use App\Models\Breed;
 use App\Models\Coat;
+use App\Models\Contact;
 use App\Models\Specie;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class AnimalController extends Controller
 {
@@ -88,5 +97,55 @@ class AnimalController extends Controller
         abort_if(! $animal->published, 404);
 
         return view('pages.client.animals.show', compact('animal'));
+    }
+
+    /**
+     * @throws \Throwable
+     */
+    public function store(StoreAdoptionRequest $request, Animal $animal)
+    {
+        // Create adoption in transaction
+        $adoption = DB::transaction(function () use ($request, $animal) {
+            // Create or update contact
+            $contact = Contact::updateOrCreate(
+                ['email' => $request->email],
+                [
+                    'name' => $request->name,
+                    'phone' => $request->phone,
+                ]
+            );
+
+            // Create adoption request
+            return Adoption::create([
+                'content' => $request->message,
+                'status' => AdoptionStatus::PENDING,
+                'animal_id' => $animal->id,
+                'contact_id' => $contact->id,
+            ]);
+        });
+
+        // Load relations for emails (outside transaction)
+        $adoption->load(['contact', 'animal.specie', 'animal.breed']);
+
+        // Send confirmation email to contact
+        // Currently commented because of the mailtrap limitations
+        /*Mail::to($adoption->contact)->send(
+            new AdoptionPosted($adoption)
+        );*/
+
+        // Send notification email to users who opted in and have permission
+        $eligibleUsers = User::where('receive_adoption_emails', true)
+            ->get()
+            ->filter(fn($user) => $user->can('manageEmailNotifications', $user));
+
+        foreach ($eligibleUsers as $user) {
+            Mail::to($user)->send(
+                new AdoptionRequestReceived($adoption)
+            );
+        }
+
+        return redirect()
+            ->route('client.animals.show', $animal)
+            ->with('success', __('client.adoption_success'));
     }
 }

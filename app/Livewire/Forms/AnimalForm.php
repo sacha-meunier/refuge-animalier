@@ -4,15 +4,22 @@ namespace App\Livewire\Forms;
 
 use App\Enums\AnimalGender;
 use App\Enums\AnimalStatus;
+use App\Livewire\Traits\HandleFileUpload;
 use App\Models\Animal;
 use Illuminate\Validation\Rule;
 use Livewire\Form;
 
 class AnimalForm extends Form
 {
-    public ?Animal $animal;
+    use HandleFileUpload;
+
+    public ?Animal $animal = null;
 
     public ?string $name = null;
+
+    public array $images = [];
+
+    public ?array $pictures = null;
 
     public ?string $description = null;
 
@@ -39,6 +46,7 @@ class AnimalForm extends Form
             'coat_id' => 'nullable|exists:coats,id',
             'admission_date' => 'nullable|date|before_or_equal:today|after_or_equal:age',
             'status' => ['required', Rule::enum(AnimalStatus::class)],
+            'images.*' => 'nullable|image|mimes:jpeg,png,webp|max:5120',
         ];
     }
 
@@ -53,24 +61,86 @@ class AnimalForm extends Form
         $this->coat_id = $animal->coat?->id;
         $this->admission_date = $animal->admission_date?->format('Y-m-d');
         $this->status = $animal->status->value;
+        $this->pictures = $animal->pictures;
     }
 
     public function store()
     {
         $this->validate();
 
-        Animal::create($this->all());
+        $data = $this->all();
+        unset($data['images']);
+
+        $animal = Animal::create($data);
+
+        // Handle image uploads
+        if (! empty($this->images)) {
+            $pictures = [];
+            foreach ($this->images as $image) {
+                $uploadedImage = $this->uploadAnimalImage($image, $animal->id);
+                if ($uploadedImage) {
+                    $pictures[] = $uploadedImage;
+                }
+            }
+            if (! empty($pictures)) {
+                $animal->update(['pictures' => $pictures]);
+            }
+        }
     }
 
     public function update()
     {
         $this->validate();
 
-        $this->animal->update($this->all());
+        $data = $this->all();
+        unset($data['images']);
+
+        // Handle new image uploads
+        if (! empty($this->images)) {
+            $pictures = $this->pictures ?? [];
+
+            foreach ($this->images as $image) {
+                $uploadedImage = $this->uploadAnimalImage($image, $this->animal->id);
+                if ($uploadedImage) {
+                    $pictures[] = $uploadedImage;
+                }
+            }
+            $data['pictures'] = $pictures;
+        }
+
+        $this->animal->update($data);
     }
 
     public function delete(Animal $animal)
     {
+        // Delete all associated images
+        if ($animal->pictures && ! empty($animal->pictures)) {
+            $this->deleteAllAnimalImages($animal->pictures);
+        }
+
         $animal->delete();
+    }
+
+    public function addImageInput(): void
+    {
+        $this->images[] = null;
+    }
+
+    public function removeImageInput(int $index): void
+    {
+        unset($this->images[$index]);
+        $this->images = array_values($this->images);
+    }
+
+    public function removeExistingImage(int $index): void
+    {
+        if ($this->pictures && isset($this->pictures[$index])) {
+            $filename = $this->pictures[$index]['filename'] ?? null;
+            if ($filename) {
+                $this->deleteAnimalImage($filename);
+            }
+            unset($this->pictures[$index]);
+            $this->pictures = array_values($this->pictures);
+        }
     }
 }

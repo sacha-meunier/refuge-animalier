@@ -8,12 +8,27 @@
     style="scroll-snap-align: start"
 >
     {{-- Image (16/9 aspect ratio) --}}
-    <div class="aspect-video bg-muted">
-        <div
-            class="w-full h-full flex items-center justify-center text-muted-foreground"
-        >
-            <x-svg.dog size="2xl" class="opacity-50" />
-        </div>
+    <div class="aspect-video bg-muted overflow-hidden">
+        @if ($animal->pictures && ! empty($animal->pictures))
+            <img
+                src="{{ $animal->image_medium_url }}"
+                srcset="
+                    {{ $animal->image_thumbnail_url }}  150w,
+                    {{ $animal->image_medium_url }}     500w,
+                    {{ $animal->image_url }}           1000w
+                "
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                alt="{{ $animal->name }}"
+                class="w-full h-full object-cover"
+                loading="lazy"
+            />
+        @else
+            <div
+                class="w-full h-full flex items-center justify-center text-muted-foreground"
+            >
+                <x-svg.dog size="2xl" class="opacity-50" />
+            </div>
+        @endif
     </div>
 
     {{-- Content --}}

@@ -3,6 +3,7 @@
 use App\Enums\AdoptionStatus;
 use App\Livewire\Forms\AdoptionForm;
 use App\Livewire\Traits\WithBulkActions;
+use App\Livewire\Traits\WithFilters;
 use App\Livewire\Traits\WithModal;
 use App\Livewire\Traits\WithSearch;
 use App\Livewire\Traits\WithSorting;
@@ -15,7 +16,12 @@ use Livewire\Component;
 use Livewire\WithPagination;
 
 new class extends Component {
-    use WithPagination, WithSearch, WithSorting, WithBulkActions, WithModal;
+    use WithPagination,
+        WithSearch,
+        WithSorting,
+        WithBulkActions,
+        WithModal,
+        WithFilters;
 
     public AdoptionForm $form;
     public int $paginate = 10;
@@ -41,30 +47,44 @@ new class extends Component {
         return Adoption::query()
             ->when($this->search, function ($query) {
                 $query
-                    ->where("content", "like", "%".$this->search."%")
+                    ->where("content", "like", "%" . $this->search . "%")
                     ->orWhereHas("contact", function ($q) {
-                        $q->where("name", "like", "%".$this->search."%");
+                        $q->where("name", "like", "%" . $this->search . "%");
                     })
                     ->orWhereHas("animal", function ($q) {
-                        $q->where("name", "like", "%".$this->search."%");
+                        $q->where("name", "like", "%" . $this->search . "%");
                     });
             })
-            ->when($this->sortField === 'animal', function ($query) {
-                $query->join('animals', 'adoptions.animal_id', '=', 'animals.id')
-                    ->orderBy('animals.name', $this->sortDirection)
-                    ->select('adoptions.*');
+            ->when($this->getFilterValue("status"), function ($query, $status) {
+                $query->where("status", $status);
             })
-            ->when($this->sortField === 'contact', function ($query) {
-                $query->join('contacts', 'adoptions.contact_id', '=', 'contacts.id')
-                    ->orderBy('contacts.name', $this->sortDirection)
-                    ->select('adoptions.*');
+            ->when($this->sortField === "animal", function ($query) {
+                $query
+                    ->join("animals", "adoptions.animal_id", "=", "animals.id")
+                    ->orderBy("animals.name", $this->sortDirection)
+                    ->select("adoptions.*");
             })
-            ->when($this->sortField && $this->sortField !== 'animal' && $this->sortField !== 'contact', function ($query) {
-                $query->orderBy($this->sortField, $this->sortDirection);
+            ->when($this->sortField === "contact", function ($query) {
+                $query
+                    ->join(
+                        "contacts",
+                        "adoptions.contact_id",
+                        "=",
+                        "contacts.id",
+                    )
+                    ->orderBy("contacts.name", $this->sortDirection)
+                    ->select("adoptions.*");
             })
+            ->when(
+                $this->sortField &&
+                    $this->sortField !== "animal" &&
+                    $this->sortField !== "contact",
+                function ($query) {
+                    $query->orderBy($this->sortField, $this->sortDirection);
+                },
+            )
             ->paginate($this->paginate);
     }
-
 
     #[Computed(persist: true)]
     public function animals()
@@ -84,16 +104,84 @@ new class extends Component {
         return AdoptionStatus::cases();
     }
 
+    #[Computed]
+    public function statusCounts()
+    {
+        $counts = Adoption::query()
+            ->selectRaw("status, COUNT(*) as count")
+            ->groupBy("status")
+            ->pluck("count", "status");
+
+        return collect(AdoptionStatus::cases())->mapWithKeys(function (
+            $status,
+        ) use ($counts) {
+            return [$status->value => $counts[$status->value] ?? 0];
+        });
+    }
+
     #[On("refresh-adoptions")]
     public function refreshAdoptions()
     {
         $this->resetItems();
         $this->closeModal();
     }
+
+    #[On("open-modal")]
+    public function openModal(string $modal, array $params = [])
+    {
+        if (isset($params["adoption"])) {
+            $this->selectedItemId = $params["adoption"];
+        }
+
+        $this->modalMode = $modal;
+    }
 };
 ?>
 
 <div>
+    <x-filters-popover>
+        <div class="space-y-4">
+            {{-- Status Filter --}}
+            <div class="space-y-2">
+                <label
+                    for="statusFilter"
+                    class="block text-sm font-medium text-foreground"
+                >
+                    {{ __("pages/adoptions/index.th_status") }}
+                </label>
+                <select
+                    id="statusFilter"
+                    wire:model.live="filters.status"
+                    wire:change="closeFilters"
+                    class="w-full px-3 py-2 bg-background border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                >
+                    <option value="">{{ __("components.all") }}</option>
+                    @foreach ($this->statuses as $status)
+                        <option value="{{ $status->value }}">
+                            {{ $status->label() }}
+                            ({{ $this->statusCounts[$status->value] }})
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+
+            {{-- Reset Filters Button --}}
+            @if ($this->hasActiveFilters())
+                <div class="pt-2">
+                    <x-button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        wire:click="resetFilters"
+                        class="w-full"
+                    >
+                        {{ __("components.reset_filters") }}
+                    </x-button>
+                </div>
+            @endif
+        </div>
+    </x-filters-popover>
+
     <table
         class="w-full h-14 border-b border-border"
         x-data="{ hoverAll: false }"
@@ -178,7 +266,6 @@ new class extends Component {
         {{ $this->adoptions->links() }}
     </div>
 
-
     @if ($selectedItemId && $this->selectedItem && $modalMode === "show")
         <livewire:modal.adoption-show
             :adoption="$this->selectedItem"
@@ -201,6 +288,20 @@ new class extends Component {
             :contacts="$this->contacts"
             :statuses="$this->statuses"
             :key="'adoption-create'"
+        />
+    @endif
+
+    @if ($selectedItemId && $this->selectedItem && $modalMode === "notify-confirm")
+        <livewire:modal.adoption-notify-confirm
+            :adoption="$this->selectedItem"
+            :key="'adoption-notify-confirm-'.$selectedItemId"
+        />
+    @endif
+
+    @if ($selectedItemId && $this->selectedItem && $modalMode === "notify-compose")
+        <livewire:modal.adoption-notify-compose
+            :adoption="$this->selectedItem"
+            :key="'adoption-notify-compose-'.$selectedItemId"
         />
     @endif
 </div>

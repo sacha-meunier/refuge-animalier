@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Animal;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 
 new class extends Component {
@@ -93,6 +94,23 @@ new class extends Component {
         <p class="text-base font-normal text-muted-foreground">
             {{ $animal->description }}
         </p>
+
+        @if ($animal->pictures && ! empty($animal->pictures))
+            <div class="mt-7">
+                <h3 class="text-sm font-medium mb-4">
+                    {{ __("modals/animals/show.gallery") }}
+                </h3>
+                <div class="grid grid-cols-3 gap-4">
+                    @foreach ($animal->pictures as $picture)
+                        <img
+                            src="{{ Storage::disk("animals")->url(config("image.animals.variants.thumbnail.path") . "/" . $picture["filename"] . ".webp") }}"
+                            alt="{{ $animal->name }}"
+                            class="w-full h-32 object-cover rounded-lg border border-border"
+                        />
+                    @endforeach
+                </div>
+            </div>
+        @endif
     </x-modal.content>
 
     <x-modal.footer>

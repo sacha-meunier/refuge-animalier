@@ -13,6 +13,7 @@ Route::group([], function () {
     // Animals
     Route::get('/animals', [AnimalController::class, 'index'])->name('client.animals.index');
     Route::get('/animals/{animal}', [AnimalController::class, 'show'])->name('client.animals.show');
+    Route::post('/animals/{animal}', [AnimalController::class, 'store'])->name('client.animals.store');
 
     // Contact
     Route::get('/contact', [ContactController::class, 'create'])->name('contact.create');

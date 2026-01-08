@@ -14,4 +14,12 @@ return [
 
     'previous' => '&laquo; Vorige',
     'next' => 'Volgende &raquo;',
+    'no_data' => 'Geen gegevens beschikbaar',
+    'selected_singular' => 'item geselecteerd',
+    'selected_plural' => 'items geselecteerd',
+    'showing' => 'Tonen',
+    'to' => 'tot',
+    'of' => 'van',
+    'results' => 'resultaten',
+    'go_to_page' => 'Ga naar pagina :page',
 ];

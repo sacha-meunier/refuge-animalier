@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Storage;
 
 class Animal extends Model
 {
@@ -68,6 +69,46 @@ class Animal extends Model
     {
         return Attribute::make(
             get: fn () => $this->admission_date?->diffForHumans(),
+        );
+    }
+
+    public function imageUrl(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->getImageUrl('original'),
+        );
+    }
+
+    public function imageThumbnailUrl(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->getImageUrl('thumbnail'),
+        );
+    }
+
+    public function imageMediumUrl(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->getImageUrl('medium'),
+        );
+    }
+
+    private function getImageUrl(string $variant = 'original'): ?string
+    {
+        if (! $this->pictures || empty($this->pictures)) {
+            return null;
+        }
+
+        $filename = $this->pictures[0]['filename'] ?? null;
+        if (! $filename) {
+            return null;
+        }
+
+        $config = config('image.animals');
+        $variantConfig = $config['variants'][$variant] ?? $config['original'];
+
+        return Storage::disk('animals')->url(
+            $variantConfig['path'] . '/' . $filename . '.webp'
         );
     }
 }

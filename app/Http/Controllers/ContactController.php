@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Enums\MessageType;
 use App\Http\Requests\StoreContactRequest;
+use App\Mail\ContactPosted;
 use App\Models\Contact;
 use App\Models\Message;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class ContactController extends Controller
 {
@@ -31,11 +33,16 @@ class ContactController extends Controller
             );
 
             // Create message
-            Message::create([
+            $message = Message::create([
                 'type' => MessageType::CONTACT,
                 'message' => $request->message,
                 'contact_id' => $contact->id,
             ]);
+
+            // Send mail
+            Mail::to($message->contact)->send(
+                new ContactPosted($message)
+            );
         });
 
         return redirect()

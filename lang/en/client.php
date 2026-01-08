@@ -11,7 +11,7 @@ return [
     'title_home' => 'Home',
     'title_animals' => 'Animals',
     'title_contact' => 'Contact',
-    'title_volunteer' => 'Contact',
+    'title_volunteer' => 'Volunteer',
 
     // Aria-labels
     'aria_main_nav' => 'Main navigation',
@@ -128,6 +128,7 @@ return [
     // Success Messages
     'contact_success' => 'Your message has been sent successfully! We will get back to you as soon as possible.',
     'volunteer_success' => 'Your volunteering application has been sent successfully! We will contact you soon.',
+    'adoption_success' => 'Your adoption request has been sent successfully! We will contact you within 2-3 business days.',
 
     // Others
     'next' => 'Next &raquo;',
