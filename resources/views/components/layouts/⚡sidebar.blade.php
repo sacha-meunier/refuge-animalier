@@ -3,6 +3,7 @@
 use App\Models\Adoption;
 use App\Models\Animal;
 use App\Models\Contact;
+use App\Models\Message;
 use App\Models\Note;
 use App\Models\User;
 use Livewire\Component;
@@ -56,6 +57,14 @@ new class extends Component {
                         route="{{ route('notes.index') }}"
                         page="notes"
                         icon="files"
+                    />
+                @endcan
+
+                @can("view-any", Message::class)
+                    <x-sidebar_link
+                        route="{{ route('messages.index') }}"
+                        page="messages"
+                        icon="mail"
                     />
                 @endcan
 

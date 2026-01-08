@@ -13,6 +13,7 @@ Route::prefix('admin')
         require __DIR__.'/animals.php';
         require __DIR__.'/adoptions.php';
         require __DIR__.'/notes.php';
+        require __DIR__.'/messages.php';
         require __DIR__.'/contacts.php';
         require __DIR__.'/members.php';
         require __DIR__.'/database.php';

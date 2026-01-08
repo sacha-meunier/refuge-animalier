@@ -44,6 +44,13 @@ new class extends Component {
     </section>
 
     <section class="p-6 flex flex-col gap-2">
+        <h2 class="">{{ __('pages/dashboard/index.section_title_messages') }}</h2>
+        <div class="flex flex-col gap-1.5 bg-card border border-border rounded-2xl overflow-hidden">
+            <livewire:tables.messages :paginate="5"/>
+        </div>
+    </section>
+
+    <section class="p-6 flex flex-col gap-2">
         <h2 class="">{{ __('pages/dashboard/index.section_title_notes') }}</h2>
         <div class="flex flex-col gap-1.5 bg-card border border-border rounded-2xl overflow-hidden">
             <livewire:tables.notes :paginate="5"/>

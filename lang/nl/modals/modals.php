@@ -16,6 +16,7 @@ return [
     'button_save' => 'Opslaan',
     'confirm_delete' => 'Weet u zeker dat u dit dier wilt verwijderen?',
     'confirm_delete_notes' => 'Weet u zeker dat u deze notitie wilt verwijderen?',
+    'confirm_delete_messages' => 'Weet u zeker dat u dit bericht wilt verwijderen?',
     'confirm_delete_multiple' => 'Weet u zeker dat u de geselecteerde dieren wilt verwijderen?',
     'edit_animal' => 'Dier bewerken',
 ];

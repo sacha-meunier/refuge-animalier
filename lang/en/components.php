@@ -15,6 +15,7 @@ return [
     'animals' => 'Animals',
     'adoptions' => 'Adoptions',
     'notes' => 'Notes',
+    'messages' => 'Messages',
     'contacts' => 'Contacts',
     'members' => 'Members',
     'database' => 'Database',
