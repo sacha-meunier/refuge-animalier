@@ -36,9 +36,9 @@
                 class="flex gap-4 overflow-x-auto scrollbar-thin pb-4"
                 style="scroll-snap-type: x mandatory"
             >
-                {{-- Invisible spacer to align first card with header text (max-w-7xl container padding) --}}
+                {{-- Invisible spacer to align first card with header text (max-w-7xl container padding, minus gap) --}}
                 <div
-                    class="flex-shrink-0 w-0 sm:w-[calc((100vw-min(1280px,100vw-3rem))/2+1.5rem-1rem)] lg:w-[calc((100vw-min(1280px,100vw-4rem))/2+2rem-1rem)]"
+                    class="flex-shrink-0 w-0 sm:w-[calc((100vw-min(1280px,100vw-3rem))/2+1.5rem-1rem-1rem)] lg:w-[calc((100vw-min(1280px,100vw-4rem))/2+2rem-1rem-1rem)]"
                     style="scroll-snap-align: start"
                     aria-hidden="true"
                 ></div>
