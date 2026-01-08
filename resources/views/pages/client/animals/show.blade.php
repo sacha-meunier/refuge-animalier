@@ -19,18 +19,50 @@
             <div class="space-y-4">
                 {{-- Main Image --}}
                 <div class="aspect-square bg-muted rounded-2xl overflow-hidden">
-                    <div class="w-full h-full flex items-center justify-center text-muted-foreground">
-                        <x-svg.dog size="2xl" class="opacity-50 w-32 h-32" />
-                    </div>
+                    @if ($animal->pictures && ! empty($animal->pictures))
+                        <img
+                            src="{{ $animal->image_url }}"
+                            srcset="
+                                {{ $animal->image_thumbnail_url }}  150w,
+                                {{ $animal->image_medium_url }}     500w,
+                                {{ $animal->image_url }}           1000w
+                            "
+                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 50vw"
+                            alt="{{ $animal->name }}"
+                            class="w-full h-full object-cover"
+                        />
+                    @else
+                        <div
+                            class="w-full h-full flex items-center justify-center text-muted-foreground"
+                        >
+                            <x-svg.dog
+                                size="2xl"
+                                class="opacity-50 w-32 h-32"
+                            />
+                        </div>
+                    @endif
                 </div>
 
-                {{-- Thumbnail Gallery (placeholder for now) --}}
+                {{-- Thumbnail Gallery --}}
                 <div class="grid grid-cols-4 gap-2">
                     @for ($i = 0; $i < 4; $i++)
-                        <div class="aspect-square bg-muted rounded-lg overflow-hidden">
-                            <div class="w-full h-full flex items-center justify-center">
-                                <x-svg.dog size="sm" class="opacity-30" />
-                            </div>
+                        <div
+                            class="aspect-square bg-muted rounded-lg overflow-hidden"
+                        >
+                            @if ($animal->pictures && isset($animal->pictures[$i]))
+                                <img
+                                    src="{{ Storage::disk("animals")->url(config("image.animals.variants.thumbnail.path") . "/" . $animal->pictures[$i]["filename"] . ".webp") }}"
+                                    alt="{{ $animal->name }} - Image {{ $i + 1 }}"
+                                    class="w-full h-full object-cover cursor-pointer hover:opacity-80 transition-opacity"
+                                    loading="lazy"
+                                />
+                            @else
+                                <div
+                                    class="w-full h-full flex items-center justify-center"
+                                >
+                                    <x-svg.dog size="sm" class="opacity-30" />
+                                </div>
+                            @endif
                         </div>
                     @endfor
                 </div>
@@ -40,7 +72,9 @@
             <div class="space-y-6">
                 {{-- Header --}}
                 <div>
-                    <h1 class="text-4xl sm:text-5xl font-bold text-foreground mb-2">
+                    <h1
+                        class="text-4xl sm:text-5xl font-bold text-foreground mb-2"
+                    >
                         {{ $animal->name }}
                     </h1>
                     <p class="text-xl text-muted-foreground">
@@ -51,7 +85,9 @@
                 {{-- Key Info Grid --}}
                 <div class="grid grid-cols-2 gap-4">
                     @if ($animal->specie)
-                        <div class="bg-card border border-border rounded-lg p-4">
+                        <div
+                            class="bg-card border border-border rounded-lg p-4"
+                        >
                             <div class="text-sm text-muted-foreground mb-1">
                                 {{ __("client.animal_specie") }}
                             </div>
@@ -62,7 +98,9 @@
                     @endif
 
                     @if ($animal->gender)
-                        <div class="bg-card border border-border rounded-lg p-4">
+                        <div
+                            class="bg-card border border-border rounded-lg p-4"
+                        >
                             <div class="text-sm text-muted-foreground mb-1">
                                 {{ __("client.animal_gender") }}
                             </div>
@@ -73,7 +111,9 @@
                     @endif
 
                     @if ($animal->age)
-                        <div class="bg-card border border-border rounded-lg p-4">
+                        <div
+                            class="bg-card border border-border rounded-lg p-4"
+                        >
                             <div class="text-sm text-muted-foreground mb-1">
                                 {{ __("client.animal_birth_date") }}
                             </div>
@@ -84,7 +124,9 @@
                     @endif
 
                     @if ($animal->coat)
-                        <div class="bg-card border border-border rounded-lg p-4">
+                        <div
+                            class="bg-card border border-border rounded-lg p-4"
+                        >
                             <div class="text-sm text-muted-foreground mb-1">
                                 {{ __("client.animal_coat") }}
                             </div>
@@ -95,7 +137,9 @@
                     @endif
 
                     @if ($animal->admission_date)
-                        <div class="bg-card border border-border rounded-lg p-4 col-span-2">
+                        <div
+                            class="bg-card border border-border rounded-lg p-4 col-span-2"
+                        >
                             <div class="text-sm text-muted-foreground mb-1">
                                 {{ __("client.animal_admission_date") }}
                             </div>
@@ -108,9 +152,14 @@
 
                 {{-- Action Buttons --}}
                 <div class="flex flex-col sm:flex-row gap-3">
-                    <a href="#schedule-visit" class="flex-1 inline-flex items-center justify-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-full text-base font-medium hover:bg-primary/90 transition-colors touch-target">
-                        <x-svg.calendar/>
-                        <span class="translate-y-0.5">{{ __("client.schedule_visit") }}</span>
+                    <a
+                        href="#schedule-visit"
+                        class="flex-1 inline-flex items-center justify-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-full text-base font-medium hover:bg-primary/90 transition-colors touch-target"
+                    >
+                        <x-svg.calendar />
+                        <span class="translate-y-0.5">
+                            {{ __("client.schedule_visit") }}
+                        </span>
                     </a>
 
                     <x-client.share-button
@@ -128,14 +177,15 @@
                         <h2 class="text-2xl font-bold text-foreground mb-4">
                             {{ __("client.animal_description", ["name" => $animal->name]) }}
                         </h2>
-                        <div class="text-muted-foreground leading-relaxed whitespace-pre-line">
+                        <div
+                            class="text-muted-foreground leading-relaxed whitespace-pre-line"
+                        >
                             {{ $animal->description }}
                         </div>
                     </div>
                 @endif
             </div>
         </div>
-
 
         {{-- Appointment Form Section --}}
         <div id="schedule-visit" class="mt-16 scroll-mt-8">

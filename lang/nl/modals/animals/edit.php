@@ -16,4 +16,5 @@ return [
     'field_coat' => 'Vacht',
     'field_admission_date' => 'Opname',
     'field_status' => 'Adoptiestatus',
+    'field_images' => 'Afbeeldingen',
 ];

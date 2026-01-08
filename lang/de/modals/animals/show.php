@@ -9,4 +9,5 @@ return [
     |
     */
     'field_name' => 'Tiername',
+    'gallery' => 'Galerie'
 ];

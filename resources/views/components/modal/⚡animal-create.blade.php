@@ -20,6 +20,14 @@ new class extends Component {
     public Collection $coats;
     public array $statuses;
 
+    public function mount()
+    {
+        // Add default first image input
+        if (empty($this->form->images)) {
+            $this->form->addImageInput();
+        }
+    }
+
     public function save()
     {
         $this->authorize("create", Animal::class);
@@ -27,6 +35,16 @@ new class extends Component {
 
         $this->dispatch("close-modal");
         $this->dispatch("refresh-animals");
+    }
+
+    public function addImageInput()
+    {
+        $this->form->addImageInput();
+    }
+
+    public function removeImageInput(int $index)
+    {
+        $this->form->removeImageInput($index);
     }
 };
 ?>
@@ -75,23 +93,46 @@ new class extends Component {
                 </div>
             </div>
 
-            {{-- Image --}}
+            {{-- Images --}}
             <div class="mb-4">
-                <label for="image" class="block text-sm font-medium mb-2">
-                    {{ __("modals/animals/edit.field_image") }}
+                <label class="block text-sm font-medium mb-2">
+                    {{ __("modals/animals/edit.field_images") }}
                 </label>
-                <input
-                    type="file"
-                    id="image"
-                    wire:model="form.image"
-                    accept="image/jpeg,image/png,image/webp"
-                    class="w-full px-3 py-2 border border-border rounded-md bg-background"
-                />
-                <div>
-                    @error("form.image")
-                        <span class="text-destructive">{{ $message }}</span>
-                    @enderror
-                </div>
+
+                @foreach ($this->form->images as $index => $image)
+                    <div class="flex gap-2 mb-2">
+                        <input
+                            type="file"
+                            wire:model="form.images.{{ $index }}"
+                            accept="image/jpeg,image/png,image/webp"
+                            class="flex-1 px-3 py-2 border border-border rounded-md bg-background text-sm"
+                        />
+                        @if (count($this->form->images) > 1)
+                            <button
+                                type="button"
+                                wire:click="removeImageInput({{ $index }})"
+                                class="px-3 py-2 border border-destructive text-destructive rounded-md hover:bg-destructive/10 transition-colors text-sm font-medium"
+                            >
+                                {{ __("components.remove") }}
+                            </button>
+                        @endif
+                    </div>
+                    <div>
+                        @error("form.images.{{ $index }}")
+                            <span class="text-destructive text-xs">
+                                {{ $message }}
+                            </span>
+                        @enderror
+                    </div>
+                @endforeach
+
+                <button
+                    type="button"
+                    wire:click="addImageInput()"
+                    class="mt-2 px-3 py-2 border border-border bg-secondary rounded-md hover:bg-secondary/80 transition-colors text-sm font-medium"
+                >
+                    + {{ __("modals/animals/create.add_image") }}
+                </button>
             </div>
 
             {{-- Gender --}}

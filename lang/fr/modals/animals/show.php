@@ -8,5 +8,6 @@ return [
     |--------------------------------------------------------------------------
     |
     */
-    'field_name' => 'Nom de l\'animal',
+    'field_name' => 'Nom de l’animal',
+    'gallery' => 'Gallerie'
 ];

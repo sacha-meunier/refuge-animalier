@@ -8,13 +8,13 @@ use Intervention\Image\Laravel\Facades\Image;
 trait HandleFileUpload
 {
     /**
-     * Upload and handle animal image
+     * Upload and process animal image
      *
      * @param mixed $uploadedFile The uploaded file
      * @param string $animalId The animal ID
-     * @return string|null Original stored file name
+     * @return array|null Array with filename key or null on failure
      */
-    public function uploadAnimalImage($uploadedFile, $animalId): ?string
+    public function uploadAnimalImage($uploadedFile, $animalId): ?array
     {
         if (! $uploadedFile) return null;
 
@@ -50,20 +50,20 @@ trait HandleFileUpload
                     $resized->toWebp($variantConfig['quality'])
                 );
             }
-            return $filename;
+            return ['filename' => $filename];
         } catch (\Exception $exception) {
-            \Log::error("Erreur Upload Image: " . $exception->getMessage());
+            \Log::error("Image Upload Error: " . $exception->getMessage());
             return null;
         }
     }
 
     /**
-     * Delete the images of an animal
+     * Delete a specific image from an animal
      *
      * @param string|null $filename The file name
      * @return bool
      */
-    public function deleteAnimalImages(?string $filename): bool
+    public function deleteAnimalImage(?string $filename): bool
     {
         if (! $filename) {
             return true;
@@ -78,6 +78,25 @@ trait HandleFileUpload
         // Delete the variants
         foreach ($config['variants'] as $variantConfig) {
             Storage::disk($disk)->delete($variantConfig['path'] . '/' . $filename . '.' . $variantConfig['format']);
+        }
+
+        return true;
+    }
+
+    /**
+     * Delete all images of an animal
+     *
+     * @param array|null $pictures Array of pictures
+     * @return bool
+     */
+    public function deleteAllAnimalImages(?array $pictures): bool
+    {
+        if (! $pictures || empty($pictures)) {
+            return true;
+        }
+
+        foreach ($pictures as $picture) {
+            $this->deleteAnimalImage($picture['filename'] ?? null);
         }
 
         return true;

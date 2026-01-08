@@ -12,4 +12,6 @@ return [
     'select_gender' => 'Select a gender',
     'select_breed' => 'Select a breed',
     'select_coat' => 'Select a coat',
+    'no_images' => 'No images yet',
+    'add_image' => 'Add another image',
 ];

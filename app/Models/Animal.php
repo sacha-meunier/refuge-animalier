@@ -21,7 +21,7 @@ class Animal extends Model
         'age',
         'description',
         'status',
-        'image_path',
+        'pictures',
         'published',
         'admission_date',
         'coat_id',
@@ -32,6 +32,7 @@ class Animal extends Model
     protected $casts = [
         'age' => 'datetime',
         'admission_date' => 'datetime',
+        'pictures' => 'array',
         'published' => 'boolean',
         'gender' => AnimalGender::class,
         'status' => AnimalStatus::class,
@@ -74,27 +75,40 @@ class Animal extends Model
     public function imageUrl(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->image_path
-                ? Storage::disk('animals')->url(config('image.animals.original.path') . '/' . $this->image_path . '.webp')
-                : null,
+            get: fn () => $this->getImageUrl('original'),
         );
     }
 
     public function imageThumbnailUrl(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->image_path
-                ? Storage::disk('animals')->url(config('image.animals.variants.thumbnail.path') . '/' . $this->image_path . '.webp')
-                : null,
+            get: fn () => $this->getImageUrl('thumbnail'),
         );
     }
 
     public function imageMediumUrl(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->image_path
-                ? Storage::disk('animals')->url(config('image.animals.variants.medium.path') . '/' . $this->image_path . '.webp')
-                : null,
+            get: fn () => $this->getImageUrl('medium'),
+        );
+    }
+
+    private function getImageUrl(string $variant = 'original'): ?string
+    {
+        if (! $this->pictures || empty($this->pictures)) {
+            return null;
+        }
+
+        $filename = $this->pictures[0]['filename'] ?? null;
+        if (! $filename) {
+            return null;
+        }
+
+        $config = config('image.animals');
+        $variantConfig = $config['variants'][$variant] ?? $config['original'];
+
+        return Storage::disk('animals')->url(
+            $variantConfig['path'] . '/' . $filename . '.webp'
         );
     }
 }

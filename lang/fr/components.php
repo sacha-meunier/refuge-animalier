@@ -31,4 +31,7 @@ return [
     // Filter options
     'all' => 'Tous',
     'reset_filters' => 'Réinitialiser',
+
+    // Buttons
+    'remove' => 'Retirer'
 ];

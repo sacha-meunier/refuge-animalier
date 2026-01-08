@@ -16,4 +16,5 @@ return [
     'field_coat' => 'Fell',
     'field_admission_date' => 'Aufnahme',
     'field_status' => 'Adoptionsstatus',
+    'field_images' => 'Bilder',
 ];

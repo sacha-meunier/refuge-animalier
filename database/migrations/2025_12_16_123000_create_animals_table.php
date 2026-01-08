@@ -20,7 +20,7 @@ return new class extends Migration
             $table->dateTime('age')->nullable();
             $table->string('description')->nullable();
             $table->enum('status', AnimalStatus::cases())->default(AnimalStatus::IN_PROGRESS);
-            $table->string('image_path')->nullable();
+            $table->json('pictures')->nullable();
             $table->boolean('published')->nullable();
             $table->dateTime('admission_date')->nullable();
             $table->foreignIdFor(Coat::class)->nullable()->constrained()->cascadeOnDelete();

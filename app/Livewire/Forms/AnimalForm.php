@@ -13,13 +13,13 @@ class AnimalForm extends Form
 {
     use HandleFileUpload;
 
-    public ?Animal $animal;
+    public ?Animal $animal = null;
 
     public ?string $name = null;
 
-    public mixed $image = null;
+    public array $images = [];
 
-    public ?string $image_path = null;
+    public ?array $pictures = null;
 
     public ?string $description = null;
 
@@ -46,7 +46,7 @@ class AnimalForm extends Form
             'coat_id' => 'nullable|exists:coats,id',
             'admission_date' => 'nullable|date|before_or_equal:today|after_or_equal:age',
             'status' => ['required', Rule::enum(AnimalStatus::class)],
-            'image' => 'nullable|image|mimes:jpeg,png,webp|max:5120',
+            'images.*' => 'nullable|image|mimes:jpeg,png,webp|max:5120',
         ];
     }
 
@@ -61,7 +61,7 @@ class AnimalForm extends Form
         $this->coat_id = $animal->coat?->id;
         $this->admission_date = $animal->admission_date?->format('Y-m-d');
         $this->status = $animal->status->value;
-        $this->image_path = $animal->image_path;
+        $this->pictures = $animal->pictures;
     }
 
     public function store()
@@ -69,25 +69,23 @@ class AnimalForm extends Form
         $this->validate();
 
         $data = $this->all();
+        unset($data['images']);
 
         $animal = Animal::create($data);
 
-        if ($this->image) {
-            $filename = $this->uploadAnimalImage($this->image, $animal->id);
-            $animal->update(['image_path' => $filename]);
+        // Handle image uploads
+        if (! empty($this->images)) {
+            $pictures = [];
+            foreach ($this->images as $image) {
+                $uploadedImage = $this->uploadAnimalImage($image, $animal->id);
+                if ($uploadedImage) {
+                    $pictures[] = $uploadedImage;
+                }
+            }
+            if (! empty($pictures)) {
+                $animal->update(['pictures' => $pictures]);
+            }
         }
-
-        // Gérer l'upload de l'image
-//        if ($this->image) {
-//            // On crée d'abord l'animal pour avoir son ID
-//            $animal = Animal::create($data);
-//            $filename = $this->uploadAnimalImage($this->image, $animal->id);
-//            if ($filename) {
-//                $animal->update(['image_path' => $filename]);
-//            }
-//        } else {
-//            Animal::create($data);
-//        }
     }
 
     public function update()
@@ -95,15 +93,19 @@ class AnimalForm extends Form
         $this->validate();
 
         $data = $this->all();
+        unset($data['images']);
 
-        if ($this->image) {
-            // Replace old image
-            if ($this->animal->image_path) {
-                $this->deleteAnimalImages($this->animal->image_path);
+        // Handle new image uploads
+        if (! empty($this->images)) {
+            $pictures = $this->pictures ?? [];
+
+            foreach ($this->images as $image) {
+                $uploadedImage = $this->uploadAnimalImage($image, $this->animal->id);
+                if ($uploadedImage) {
+                    $pictures[] = $uploadedImage;
+                }
             }
-            // Upload new image
-            $filename = $this->uploadAnimalImage($this->image, $this->animal->id);
-            $data['image_path'] = $filename;
+            $data['pictures'] = $pictures;
         }
 
         $this->animal->update($data);
@@ -111,6 +113,34 @@ class AnimalForm extends Form
 
     public function delete(Animal $animal)
     {
+        // Delete all associated images
+        if ($animal->pictures && ! empty($animal->pictures)) {
+            $this->deleteAllAnimalImages($animal->pictures);
+        }
+
         $animal->delete();
+    }
+
+    public function addImageInput(): void
+    {
+        $this->images[] = null;
+    }
+
+    public function removeImageInput(int $index): void
+    {
+        unset($this->images[$index]);
+        $this->images = array_values($this->images);
+    }
+
+    public function removeExistingImage(int $index): void
+    {
+        if ($this->pictures && isset($this->pictures[$index])) {
+            $filename = $this->pictures[$index]['filename'] ?? null;
+            if ($filename) {
+                $this->deleteAnimalImage($filename);
+            }
+            unset($this->pictures[$index]);
+            $this->pictures = array_values($this->pictures);
+        }
     }
 }
