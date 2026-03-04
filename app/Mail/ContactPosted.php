@@ -31,7 +31,7 @@ class ContactPosted extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Contact Message Posted',
+            subject: 'Message de contact',
         );
     }
 

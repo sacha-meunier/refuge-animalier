@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Enums\AdoptionStatus;
 use App\Http\Requests\StoreAdoptionRequest;
-use App\Mail\AdoptionPosted;
 use App\Mail\AdoptionRequestReceived;
 use App\Models\Adoption;
 use App\Models\Animal;
